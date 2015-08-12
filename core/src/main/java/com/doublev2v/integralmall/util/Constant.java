@@ -12,10 +12,19 @@ public class Constant {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
+	/**
+	 * 图片基础路径
+	 */
 	public static final String BASE_PATH = prop.getProperty("imageServer.basePath");
+	/**
+	 * 图片相对路径
+	 */
 	public static final String RELATIVE_PATH = prop.getProperty("imageServer.relativePath");
+	/**
+	 * rest远程请求地址
+	 */
+	public static final String REMOTE_PATH=prop.getProperty("remotePath");
 	/**
 	 * 商品是否是实物商品：否
 	 */
@@ -65,7 +74,12 @@ public class Constant {
 	 * 积分来源(增加):兑换商品取消
 	 */
 	public static final String CONVERT_MERCHANDISE_CANCEL="兑换商品取消";
-	
+	/**
+	 * rest返回正确时的errmsg
+	 */
 	public static final String REST_MSG_OK="ok";
+	/**
+	 * rest返回正确时的errcode
+	 */
 	public static final String REST_CODE_OK="0";
 }

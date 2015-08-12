@@ -25,7 +25,7 @@
            <div class="form-group">
                <label for="seq" class="col-sm-2 control-label">用户:</label>
                <div class="col-sm-10">
-                    <p class="form-control">${t.user.username }</p>
+                    <p class="form-control">${t.user.account }</p>
                </div>
            </div>
            <div class="form-group">

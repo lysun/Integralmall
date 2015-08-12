@@ -18,7 +18,7 @@ public class IntegralDetailService {
 	 * @param count
 	 * @return
 	 */
-	public IntegralDetail createIntegralDetail(Integral integral,String origin,long count){
+	public IntegralDetail createIntegralDetail(Integral integral,long count,String origin){
 		IntegralDetail detail=new IntegralDetail();
 		detail.setIntegral(integral);
 		detail.setCount(count);

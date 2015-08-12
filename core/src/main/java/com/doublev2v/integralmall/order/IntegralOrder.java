@@ -14,6 +14,7 @@ public class IntegralOrder extends UUIDBaseModel{
 	private Date orderDate;
 	private User user;
 	private OrderMerchandise orderMerchandise;
+	private String addressId;
 	private String status;//未使用:00,已使用:01,待发货:10,已发货:11,已取消:20
 	
 	public String getStatus() {
@@ -47,6 +48,12 @@ public class IntegralOrder extends UUIDBaseModel{
 	}
 	public void setOrderMerchandise(OrderMerchandise orderMerchandise) {
 		this.orderMerchandise = orderMerchandise;
+	}
+	public String getAddressId() {
+		return addressId;
+	}
+	public void setAddressId(String addressId) {
+		this.addressId = addressId;
 	}
 	
 	

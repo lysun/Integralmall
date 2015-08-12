@@ -1,7 +1,6 @@
 package com.doublev2v.integralmall.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +23,9 @@ public class MerchandiseController{
 	 * @param size
 	 * @return
 	 */
-	@RequestMapping(value="/merchandises/actual",method=RequestMethod.GET)
-	public String merchandises(@RequestParam(defaultValue="1") Integer page, @RequestParam(defaultValue="5") Integer size) {
+	@RequestMapping(value="/giftsList",method=RequestMethod.GET)
+	public String merchandises(@RequestParam(defaultValue="1") Integer page, 
+			@RequestParam(defaultValue="5") Integer size) {
 		PagedList<MerchandiseDetail> list=service.getMerchandiseDetails(page, size, Constant.ACTUAL);
 		return RequestResult.success(list).toJson();
 	}
@@ -36,22 +36,30 @@ public class MerchandiseController{
 	 * @param localAddress
 	 * @return
 	 */
-	@RequestMapping(value="/merchandises/nearby",method=RequestMethod.GET)
-	public String merchandises(@RequestParam(defaultValue="1") Integer page, @RequestParam(defaultValue="5") Integer size,
-			String localAddress) {
+	@RequestMapping(value="/couponList",method=RequestMethod.GET)
+	public String merchandises(@RequestParam(defaultValue="1") Integer page,
+			@RequestParam(defaultValue="5") Integer size,String localAddress) {
 		PagedList<MerchandiseDetail> list=service.getNearByMerchandises(page, size,localAddress);
 		return RequestResult.success(list).toJson();
+	}
+	/**
+	 * 获取实物商品详情
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="/giftDetail",method=RequestMethod.GET)
+	public String giftDetail(String id) {
+		return RequestResult.success(service.getMerchandiseDetail(id)).toJson();
 	}
 	/**
 	 * 获取某个商品
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value="/merchandise/{id}",method=RequestMethod.GET)
-	public String merchandise(@PathVariable String id) {
+	@RequestMapping(value="/couponDetail",method=RequestMethod.GET)
+	public String couponDetail(String id) {
 		return RequestResult.success(service.getMerchandiseDetail(id)).toJson();
 	}
-	
 	
 	
 }

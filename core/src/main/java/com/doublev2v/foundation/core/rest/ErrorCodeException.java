@@ -7,6 +7,7 @@ public class ErrorCodeException extends RuntimeException {
 	private ErrorCode errorCode;
 
 	public ErrorCodeException(ErrorCode errorCode) {
+		super(errorCode.getError());
 		setErrorCode(errorCode);
 	}
 	

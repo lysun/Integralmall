@@ -2,13 +2,11 @@ package com.doublev2v.integralmall.integral;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.integralmall.user.User;
-import com.doublev2v.integralmall.util.Constant;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
 @Transactional
@@ -17,18 +15,22 @@ public class IntegralService {
 	private IntegralRepository repository;
 	@Autowired
 	IntegralDetailService integralDetailService;
+	
+	public Integral createIntegral(User user,long totalcount){
+		Integral integral=new Integral();
+		integral.setUser(user);
+		integral.setTotalcount(totalcount);
+		return repository.save(integral);
+	}
 	/**
 	 * 获取用户可用积分
 	 * @param user
 	 * @return
 	 */
-	public long getIntegralCount(String userId){
-		if(StringUtils.isBlank(userId)){
-			return 0;
-		}
-		Integral integral=repository.findIntegralByUser_id(userId);
+	public long getIntegralCount(User user){
+		Integral integral=repository.findIntegralByUser(user);
 		if(integral==null){
-			return 0;
+			integral=createIntegral(user,0);
 		}
 		return integral.getTotalcount();
 	}
@@ -38,15 +40,17 @@ public class IntegralService {
 	 * @param user
 	 * @return
 	 */
-	public Integral minusIntegralCount(User user,long usedCount){
+	public Integral minusIntegralCount(User user,long usedCount,String origin){
 		Integral integral=repository.findIntegralByUser(user);
-		if(integral==null||integral.getTotalcount()<usedCount)
+		if(integral==null){
+			integral=createIntegral(user,0);
+		}
+		if(integral.getTotalcount()<usedCount)
 			throw new ErrorCodeException(SystemErrorCodes.NOTENOUGH_INTEGRAL,"积分不足");
 		integral.setTotalcount(integral.getTotalcount()-usedCount);
 		repository.save(integral);
 		//生成积分明细记录
-		integralDetailService.createIntegralDetail(integral,
-				Constant.CONVERT_MERCHANDISE, 0-usedCount);
+		integralDetailService.createIntegralDetail(integral, 0-usedCount,origin);
 		return integral;
 	}
 	
@@ -55,13 +59,15 @@ public class IntegralService {
 	 * @param user
 	 * @return
 	 */
-	public Integral plusIntegralCount(User user,long count){
+	public Integral plusIntegralCount(User user,long count,String origin){
 		Integral integral=repository.findIntegralByUser(user);
+		if(integral==null){
+			integral=createIntegral(user,0);
+		}
 		integral.setTotalcount(integral.getTotalcount()+count);
 		repository.save(integral);
 		//生成积分明细记录
-		integralDetailService.createIntegralDetail(integral,
-						Constant.CONVERT_MERCHANDISE_CANCEL,count);
+		integralDetailService.createIntegralDetail(integral,count,origin);
 		return integral;
 	}
 }

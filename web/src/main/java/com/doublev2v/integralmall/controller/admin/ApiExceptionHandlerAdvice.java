@@ -19,7 +19,7 @@ import com.doublev2v.integralmall.util.SystemErrorCodes;
 @ControllerAdvice
 @ResponseBody
 public class ApiExceptionHandlerAdvice{
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler(Exception.class)//捕获所有异常
 	public String execute(HttpServletRequest request , Exception ex) {
 		Logger logger = LogManager.getLogger(CommonController.class);
 		logger.error(ex.getMessage(),ex);

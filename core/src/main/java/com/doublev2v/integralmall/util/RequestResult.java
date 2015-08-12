@@ -7,7 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import com.doublev2v.foundation.core.rest.ErrorCode;
 import com.doublev2v.foundation.utils.JsonSerializer;
-
+/**
+ * 用于返回页面的数据格式
+ * @author Administrator
+ *
+ */
 public class RequestResult {
 
 	private Object data;

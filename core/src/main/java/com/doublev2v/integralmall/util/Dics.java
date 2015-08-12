@@ -1,5 +1,9 @@
 package com.doublev2v.integralmall.util;
-
+/**
+ * 数据字典表中定义的type值
+ * @author Administrator
+ *
+ */
 public class Dics {
 	//商品品牌
 	public final static String MERCHANDISE_BRAND_TYPE="MERCHANDISE_BRAND";

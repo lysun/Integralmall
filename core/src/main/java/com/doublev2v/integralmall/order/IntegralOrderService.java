@@ -60,11 +60,11 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 	@Autowired
 	private IntegralOrderDetailAdapter detailAdapter;
 	/**
-	 * 直接下单
+	 * 直接下单,兑换商品
 	 * @param entity
 	 * @return
 	 */
-	public void order(String merchandiseId,String userId) {
+	public void order(String merchandiseId,String userId,String addressId) {
 		IntegralOrder order = new IntegralOrder();
 		Merchandise m=merchandiseService.getDo(merchandiseId);
 		if(Constant.UNSHELVE.equals(m.getIsShelve())||m.getExpiryDate()==null?false:m.getExpiryDate().isBefore(LocalDateTime.now()))
@@ -72,6 +72,7 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 		User user=userService.findOne(userId);
 		order.setOrderDate(new Date());
 		order.setOrderNo(UUID.randomUUID().toString());
+		order.setAddressId(addressId);
 		if(Constant.ACTUAL.equals(m.getIsActual())){
 			order.setStatus(Constant.UNDELIVER);
 		}else{
@@ -93,7 +94,8 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 		//减少库存
 		merchandiseService.updateStock(merchandiseId, 1);
 		//扣减积分
-		integralService.minusIntegralCount(user,m.getIntegralCount());
+		integralService.minusIntegralCount(user,m.getIntegralCount(),
+				Constant.CONVERT_MERCHANDISE);
 	}
 	/**
 	 * 取消订单
@@ -108,7 +110,8 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 			OrderMerchandise om=order.getOrderMerchandise();
 			Merchandise merchandise=om.getMerchandise();
 			merchandiseService.updateStock(merchandise.getId(), -1);//添加库存
-			integralService.plusIntegralCount(order.getUser(),merchandise.getIntegralCount());//积分添加
+			integralService.plusIntegralCount(order.getUser(),merchandise.getIntegralCount(),
+					Constant.CONVERT_MERCHANDISE_CANCEL);//积分添加
 		}else{//已使用、已发货、已取消的订单不可取消
 			throw new ErrorCodeException(SystemErrorCodes.ORDER_CANNOT_CANCEL,"订单不可取消");
 		}
@@ -163,8 +166,8 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 	 * @param endDate
 	 * @return
 	 */
-	private Specification<IntegralOrder> getQueryClause(String userId,
-			String search,String startDate,String endDate){
+	private Specification<IntegralOrder> getQueryClause(String userId,String search,
+			String startDate,String endDate){
         return new Specification<IntegralOrder>() {
             @Override
             public Predicate toPredicate(Root<IntegralOrder> root, CriteriaQuery<?> query, CriteriaBuilder cb) {

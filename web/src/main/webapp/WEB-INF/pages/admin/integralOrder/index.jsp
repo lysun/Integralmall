@@ -12,7 +12,7 @@
 		{{each result as value i}}
 			<tr id="{{value.id }}">
 				 <td>{{value.orderNo}}</td>
-                 <td>{{value.user.username }}</td>
+                 <td>{{value.user.account }}</td>
                  <td>{{value.orderDate }}</td>
                  <td>{{if value.status=="00"}}未使用{{/if}}
                      {{if value.status=="01"}}已使用{{/if}}
