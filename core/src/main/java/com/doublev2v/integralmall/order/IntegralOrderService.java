@@ -31,10 +31,13 @@ import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.integralmall.integral.IntegralService;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
-import com.doublev2v.integralmall.order.dto.IntegralOrderDetail;
-import com.doublev2v.integralmall.order.dto.IntegralOrderDetailAdapter;
+import com.doublev2v.integralmall.merchandise.coupon.Coupon;
+import com.doublev2v.integralmall.order.dto.IntegralOrderVO;
+import com.doublev2v.integralmall.order.dto.IntegralOrderVoAdapter;
 import com.doublev2v.integralmall.order.dto.IntegralOrderDto;
 import com.doublev2v.integralmall.order.dto.IntegralOrderDtoAdapter;
+import com.doublev2v.integralmall.order.om.OrderMerchandise;
+import com.doublev2v.integralmall.order.om.OrderMerchandiseRepository;
 import com.doublev2v.integralmall.user.User;
 import com.doublev2v.integralmall.user.UserService;
 import com.doublev2v.integralmall.util.Constant;
@@ -58,7 +61,7 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 	@Autowired
 	private IntegralOrderDtoAdapter adapter;
 	@Autowired
-	private IntegralOrderDetailAdapter detailAdapter;
+	private IntegralOrderVoAdapter detailAdapter;
 	/**
 	 * 直接下单,兑换商品
 	 * @param entity
@@ -66,25 +69,29 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 	 */
 	public void order(String merchandiseId,String userId,String addressId) {
 		IntegralOrder order = new IntegralOrder();
+		OrderMerchandise om=new OrderMerchandise();
 		Merchandise m=merchandiseService.getDo(merchandiseId);
-		if(Constant.UNSHELVE.equals(m.getIsShelve())||m.getExpiryDate()==null?false:m.getExpiryDate().isBefore(LocalDateTime.now()))
-			throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_DISABLED,"商品已过期或已下架");
+		if(Constant.UNSHELVE.equals(m.getIsShelve()))
+			throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_DISABLED,"商品已下架");
+		switch(m.getIsActual()){
+			case Constant.VIRTUAL:
+				Coupon c=(Coupon)m;
+				if(c.getExpiryDate()==null?false:c.getExpiryDate().isBefore(LocalDateTime.now()))
+					throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_DISABLED,"商品已过期");
+				order.setStatus(Constant.UNUSED);
+				om.setCouponCode(UUID.randomUUID().toString());
+				om.setExpiryDate(c.getExpiryDate());
+				break;
+			case Constant.ACTUAL:
+				order.setStatus(Constant.UNDELIVER);
+				order.setAddressId(addressId);
+				break;
+		}
 		User user=userService.findOne(userId);
+		order.setUser(user);
 		order.setOrderDate(new Date());
 		order.setOrderNo(UUID.randomUUID().toString());
-		order.setAddressId(addressId);
-		if(Constant.ACTUAL.equals(m.getIsActual())){
-			order.setStatus(Constant.UNDELIVER);
-		}else{
-			order.setStatus(Constant.UNUSED);
-		}
-		order.setUser(user);
-		OrderMerchandise om=new OrderMerchandise();
 		om.setCount(1);
-		if(Constant.VIRTUAL.equals(m.getIsActual())){
-			om.setCouponCode(UUID.randomUUID().toString());
-			om.setExpiryDate(m.getExpiryDate());
-		}
 		om.setIntegralCount(m.getIntegralCount());
 		om.setMerchandise(m);
 		om.setOrder(order);
@@ -139,7 +146,7 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 		return new PagedList<IntegralOrderDto>(list.map(adapter));
     }
 	
-	public IntegralOrderDetail getIntegralOrderDetail(String id){
+	public IntegralOrderVO getIntegralOrderDetail(String id){
 		return detailAdapter.convert(repository.findOne(id));
 	}
 	/**
@@ -149,13 +156,13 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 	 * @param userId
 	 * @return
 	 */
-	public PagedList<IntegralOrderDetail> getList(Integer pageNo,Integer pageSize,String userId){
+	public PagedList<IntegralOrderVO> getList(Integer pageNo,Integer pageSize,String userId){
 		PageRequest page=new PageRequest(pageNo-1, pageSize);
 		Page<IntegralOrder> list = repository.findAll(getQueryClause(userId,null,null,null), page);
-		List<IntegralOrderDetail> listDetail=new ArrayList<IntegralOrderDetail>();
+		List<IntegralOrderVO> listDetail=new ArrayList<IntegralOrderVO>();
 		listDetail.addAll(detailAdapter.convertSimpleList(list.getContent()));//转换dto
-		Page<IntegralOrderDetail> result=new PageImpl<IntegralOrderDetail>(listDetail,page,list.getTotalElements());
-		return new PagedList<IntegralOrderDetail>(result);
+		Page<IntegralOrderVO> result=new PageImpl<IntegralOrderVO>(listDetail,page,list.getTotalElements());
+		return new PagedList<IntegralOrderVO>(result);
 	}
 	
 	/**

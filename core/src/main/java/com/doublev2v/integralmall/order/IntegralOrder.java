@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.doublev2v.foundation.core.entity.UUIDBaseModel;
+import com.doublev2v.integralmall.order.om.OrderMerchandise;
 import com.doublev2v.integralmall.user.User;
 @Entity
 public class IntegralOrder extends UUIDBaseModel{

@@ -1,38 +1,77 @@
 package com.doublev2v.integralmall.merchandise.dto;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.doublev2v.foundation.core.dto.SimpleAbstractDtoAdater;
-import com.doublev2v.foundation.dics.CategoryItem;
-import com.doublev2v.foundation.dics.CategoryItemRepository;
-import com.doublev2v.foundation.dics.dto.CategoryItemDTOAdapter;
-import com.doublev2v.foundation.media.MediaContent;
-import com.doublev2v.foundation.media.MediaContentDto;
-import com.doublev2v.foundation.media.MediaService;
+import com.doublev2v.foundation.core.dto.polymorphic.PolymorphicDtoAdapter;
 import com.doublev2v.integralmall.merchandise.Merchandise;
-import com.doublev2v.integralmall.util.Constant;
 
 @Component
 public class MerchandiseDtoAdapter extends SimpleAbstractDtoAdater<Merchandise, MerchandiseDto> {
+	
+	@Autowired
+	private List<PolymorphicDtoAdapter<Merchandise,MerchandiseDto>> adapters;
+
+	@Override
+	public MerchandiseDto convert(Merchandise d) {
+		for (PolymorphicDtoAdapter<Merchandise, MerchandiseDto> adapter : adapters) {
+			if(adapter.support(d)){
+				return adapter.convert(d);
+			}
+		}
+		throw new RuntimeException("没有合适的转换器");
+	}
+	
+	
+	@Override
+	public Merchandise convertToDo(MerchandiseDto t) {
+		for (PolymorphicDtoAdapter<Merchandise, MerchandiseDto> adapter : adapters) {
+			if(adapter.supportT(t)){
+				return adapter.reConvert(t);
+			}
+		}
+		throw new RuntimeException("没有合适的转换器");
+	}
+	
+	@Override
+	public Merchandise update(MerchandiseDto t, Merchandise d) {
+		for (PolymorphicDtoAdapter<Merchandise, MerchandiseDto> adapter : adapters) {
+			if(adapter.supportT(t)){
+				return adapter.update(t,d);
+			}
+		}
+		throw new RuntimeException("没有合适的转换器");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 *
 	@Autowired
 	private MediaService mediaService;
 	@Autowired
 	private CategoryItemRepository categoryItemRepository;
 	@Autowired
 	private CategoryItemDTOAdapter categoryItemDTOAdapter;
+	
 	@Override
-	public MerchandiseDto postConvert(Merchandise d, MerchandiseDto t) {
-		if(d.getExpiryDate()!=null){
-			t.setExpiryTime(d.getExpiryDate().format(DateTimeFormatter.ISO_DATE));
-		}
+	public MerchandiseDto convert(Merchandise d) {
+//		if(d.getExpiryDate()!=null){
+//			t.setExpiryTime(d.getExpiryDate().format(DateTimeFormatter.ISO_DATE));
+//		}
 		if(d.getMainPicMedia()!=null){
 			MediaContentDto md=new MediaContentDto();
 			md.setId(d.getMainPicMedia().getId());
@@ -70,14 +109,20 @@ public class MerchandiseDtoAdapter extends SimpleAbstractDtoAdater<Merchandise, 
 	public Merchandise postUpdate(MerchandiseDto t, Merchandise d) {
 		try {
 			d.setIsShelve(Constant.SHELVE);//设置商品为上架
-			if(StringUtils.isBlank(t.getIsActual())){
-				d.setIsActual(Constant.VIRTUAL);
-			}
-			if(StringUtils.isNotBlank(t.getExpiryTime())){
-				LocalDateTime expiryDate=LocalDateTime.parse(t.getExpiryTime()+"T23:59:59", DateTimeFormatter.ISO_DATE_TIME);
-				d.setExpiryDate(expiryDate);
-			}else{
-				d.setExpiryDate(null);
+			switch(t.getIsActual()){
+				case Constant.VIRTUAL:
+					Coupon coupon=new Coupon();
+					if(StringUtils.isNotBlank(t.getExpiryTime())){
+						LocalDateTime expiryDate=LocalDateTime.parse(t.getExpiryTime()+"T23:59:59", DateTimeFormatter.ISO_DATE_TIME);
+						coupon.setExpiryDate(expiryDate);
+					}else{
+						coupon.setExpiryDate(null);
+					}
+					
+					break;
+				case Constant.ACTUAL:
+					Gift gift=new Gift();
+					gift.setPrice(t.getPrice());
 			}
 			if(StringUtils.isNotBlank(t.getMainpicFile().getOriginalFilename())){
 				MediaContent media=mediaService.save(t.getMainpicFile());
@@ -109,5 +154,5 @@ public class MerchandiseDtoAdapter extends SimpleAbstractDtoAdater<Merchandise, 
 			throw new RuntimeException(e);
 		}
 		return d;
-	}
+	}*/
 }

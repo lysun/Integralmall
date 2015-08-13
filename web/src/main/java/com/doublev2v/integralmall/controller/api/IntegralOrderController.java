@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.integralmall.order.IntegralOrderService;
-import com.doublev2v.integralmall.order.dto.IntegralOrderDetail;
-import com.doublev2v.integralmall.user.UserTokenService;
+import com.doublev2v.integralmall.order.dto.IntegralOrderVO;
+import com.doublev2v.integralmall.user.token.UserTokenService;
 import com.doublev2v.integralmall.util.RequestResult;
 
 @RestController("integralOrderRestController")
@@ -43,7 +43,7 @@ public class IntegralOrderController{
 	public String integralOrders(@RequestParam(defaultValue="1") Integer page,
 			@RequestParam(defaultValue="5") Integer size,String token) throws ParseException {
 		String userId=userTokenService.getUser(token).getId();
-		PagedList<IntegralOrderDetail> list=service.getList(page, size, userId);
+		PagedList<IntegralOrderVO> list=service.getList(page, size, userId);
 		return RequestResult.success(list).toJson();
 	}
 

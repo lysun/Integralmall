@@ -1,25 +1,25 @@
 package com.doublev2v.foundation.core.dto;
 
-public class SimpleAbstractDtoAdater<D, T> extends AbstractDtoAdapter<D, T>{
+public abstract class SimpleAbstractDtoAdater<D, T> extends AbstractDtoAdapter<D, T>{
 
 	@Override
 	public T postConvert(D d, T t) {
-		return null;
+		return t;
 	}
 
 	@Override
 	public T convertSimple(D d) {
-		return null;
+		return convert(d);
 	}
 
 	@Override
 	public D postConvertToDo(T t, D d) {
-		return null;
+		return d;
 	}
 
 	@Override
 	public D postUpdate(T t, D d) {
-		return null;
+		return d;
 	}
 	
 

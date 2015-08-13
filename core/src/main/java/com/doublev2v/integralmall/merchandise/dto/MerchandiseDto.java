@@ -18,18 +18,12 @@ public class MerchandiseDto implements Identified<String>{
 	@JsonIgnore
 	private String brandId;//商品品牌id
 	private String name;//商品名称
-	private String shopName;//商户名称
 	private String isActual;
 	private long integralCount;//所需积分
 	private long stock;//库存
 	private String original;//渠道专享
-	private String address;//地址
-	private String longitude;//经度
-	private String latitude;//纬度
 	private String remark;//简介
 	private String isShelve;
-	private String price;//价格
-	private String expiryTime;//有效期
 	private MediaContentDto mainPicDto;
 	@JsonIgnore
 	private MultipartFile mainpicFile;
@@ -103,12 +97,6 @@ public class MerchandiseDto implements Identified<String>{
 	public void setStock(long stock) {
 		this.stock = stock;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
 	public String getRemark() {
 		return remark;
 	}
@@ -120,18 +108,6 @@ public class MerchandiseDto implements Identified<String>{
 	}
 	public void setIsShelve(String isShelve) {
 		this.isShelve = isShelve;
-	}
-	public String getPrice() {
-		return price;
-	}
-	public void setPrice(String price) {
-		this.price = price;
-	}
-	public String getExpiryTime() {
-		return expiryTime;
-	}
-	public void setExpiryTime(String expiryTime) {
-		this.expiryTime = expiryTime;
 	}
 	public Set<MediaContentDto> getMediaDtos() {
 		return mediaDtos;
@@ -151,29 +127,11 @@ public class MerchandiseDto implements Identified<String>{
 	public void setMainPicDto(MediaContentDto mainPicDto) {
 		this.mainPicDto = mainPicDto;
 	}
-	public String getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-	public String getLatitude() {
-		return latitude;
-	}
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
 	public MultipartFile getMainpicFile() {
 		return mainpicFile;
 	}
 	public void setMainpicFile(MultipartFile mainpicFile) {
 		this.mainpicFile = mainpicFile;
-	}
-	public String getShopName() {
-		return shopName;
-	}
-	public void setShopName(String shopName) {
-		this.shopName = shopName;
 	}
 	
 	

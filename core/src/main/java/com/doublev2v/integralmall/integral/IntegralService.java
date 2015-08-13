@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
+import com.doublev2v.integralmall.integral.detail.IntegralDetailService;
 import com.doublev2v.integralmall.user.User;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service

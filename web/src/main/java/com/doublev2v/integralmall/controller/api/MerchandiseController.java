@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseDetail;
+import com.doublev2v.integralmall.merchandise.dto.MerchandiseVO;
 import com.doublev2v.integralmall.util.Constant;
 import com.doublev2v.integralmall.util.RequestResult;
 @RestController("merchandiseRestController")
@@ -26,7 +26,7 @@ public class MerchandiseController{
 	@RequestMapping(value="/giftsList",method=RequestMethod.GET)
 	public String merchandises(@RequestParam(defaultValue="1") Integer page, 
 			@RequestParam(defaultValue="5") Integer size) {
-		PagedList<MerchandiseDetail> list=service.getMerchandiseDetails(page, size, Constant.ACTUAL);
+		PagedList<MerchandiseVO> list=service.getMerchandiseVOs(page, size, Constant.ACTUAL);
 		return RequestResult.success(list).toJson();
 	}
 	/**
@@ -39,7 +39,7 @@ public class MerchandiseController{
 	@RequestMapping(value="/couponList",method=RequestMethod.GET)
 	public String merchandises(@RequestParam(defaultValue="1") Integer page,
 			@RequestParam(defaultValue="5") Integer size,String localAddress) {
-		PagedList<MerchandiseDetail> list=service.getNearByMerchandises(page, size,localAddress);
+		PagedList<MerchandiseVO> list=service.getNearByMerchandises(page, size,localAddress);
 		return RequestResult.success(list).toJson();
 	}
 	/**
@@ -49,7 +49,7 @@ public class MerchandiseController{
 	 */
 	@RequestMapping(value="/giftDetail",method=RequestMethod.GET)
 	public String giftDetail(String id) {
-		return RequestResult.success(service.getMerchandiseDetail(id)).toJson();
+		return RequestResult.success(service.getMerchandiseVO(id)).toJson();
 	}
 	/**
 	 * 获取某个商品
@@ -58,7 +58,7 @@ public class MerchandiseController{
 	 */
 	@RequestMapping(value="/couponDetail",method=RequestMethod.GET)
 	public String couponDetail(String id) {
-		return RequestResult.success(service.getMerchandiseDetail(id)).toJson();
+		return RequestResult.success(service.getMerchandiseVO(id)).toJson();
 	}
 	
 	

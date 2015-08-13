@@ -16,7 +16,9 @@ import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.service.PagingService;
 import com.doublev2v.foundation.dics.CategoryItemService;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
+import com.doublev2v.integralmall.merchandise.coupon.dto.CouponDto;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
+import com.doublev2v.integralmall.merchandise.gift.dto.GiftDto;
 import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
 @Controller
@@ -56,24 +58,51 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 		return RequestResult.success(list).toJson();
 	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public ModelAndView add() {
-		String viewPath=getBasePath()+"add";
+	@RequestMapping(value="/{type}/add",method=RequestMethod.GET)
+	public ModelAndView add(@PathVariable String type) {
+		String viewPath=getBasePath()+type+"/add";
 		ModelAndView view=new ModelAndView(viewPath);
 		view.addObject("brands", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_BRAND_TYPE));
 		view.addObject("classifies", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_CLASSIFY_TYPE));
 		return view;
 	}
 	
-	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
-	public ModelAndView edit(@PathVariable String id) {
-		String viewPath=getBasePath()+"edit";
+	@RequestMapping(value="/{type}/{id}/edit",method=RequestMethod.GET)
+	public ModelAndView edit(@PathVariable String type,@PathVariable String id) {
+		String viewPath=getBasePath()+type+"/edit";
 		ModelAndView view=new ModelAndView(viewPath);
 		MerchandiseDto t=getService().findOne(id);
 		view.addObject("t", t);
 		view.addObject("brands", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_BRAND_TYPE));
 		view.addObject("classifies", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_CLASSIFY_TYPE));
 		return view;
+	}
+	@RequestMapping(value="/{type}/{id}",method=RequestMethod.GET)
+	public ModelAndView info(@PathVariable String type,@PathVariable String id) {
+		String viewPath=getBasePath()+type+"/info";
+		ModelAndView view=new ModelAndView(viewPath);
+		view.addObject("t", getService().findOne(id));
+		return view;
+	}
+	@RequestMapping(value="/coupon",method=RequestMethod.POST)
+	public ModelAndView add(CouponDto t) {
+		getService().add(t);
+		return index();
+	}
+	@RequestMapping(value="/gift",method=RequestMethod.POST)
+	public ModelAndView add(GiftDto t) {
+		getService().add(t);
+		return index();
+	}
+	@RequestMapping(value="/coupon/{id}",method=RequestMethod.POST)
+	public ModelAndView edit(CouponDto t) {
+		getService().update(t);
+		return info("coupon",t.getId());
+	}
+	@RequestMapping(value="/gift/{id}",method=RequestMethod.POST)
+	public ModelAndView edit(GiftDto t) {
+		getService().update(t);
+		return info("gift",t.getId());
 	}
 	
 	/**

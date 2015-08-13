@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.doublev2v.foundation.core.dto.SimpleAbstractDtoAdater;
 import com.doublev2v.integralmall.order.IntegralOrder;
+import com.doublev2v.integralmall.order.om.dto.OrderMerchandiseDtoAdapter;
 
 @Component
 public class IntegralOrderDtoAdapter extends SimpleAbstractDtoAdater<IntegralOrder, IntegralOrderDto> {

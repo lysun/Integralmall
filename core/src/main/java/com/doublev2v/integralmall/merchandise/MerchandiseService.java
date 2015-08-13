@@ -27,10 +27,11 @@ import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.foundation.media.MediaService;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseDetail;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseDetailAdapter;
+import com.doublev2v.integralmall.merchandise.coupon.vo.CouponVO;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoAdapter;
+import com.doublev2v.integralmall.merchandise.dto.MerchandiseVO;
+import com.doublev2v.integralmall.merchandise.dto.MerchandiseVoAdapter;
 import com.doublev2v.integralmall.util.Constant;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
@@ -44,7 +45,7 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
 	@Autowired
 	private MerchandiseDtoAdapter adapter;
 	@Autowired
-	private MerchandiseDetailAdapter detailAdapter;
+	private MerchandiseVoAdapter voAdapter;
 	/**
 	 * 根据条件返回上架商品列表
 	 * @param pageNo
@@ -72,14 +73,14 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
 	 * @param isActual
 	 * @return
 	 */
-	public PagedList<MerchandiseDetail> getMerchandiseDetails(Integer pageNo,Integer pageSize,
+	public PagedList<MerchandiseVO> getMerchandiseVOs(Integer pageNo,Integer pageSize,
 			String isActual){
 		PageRequest page=new PageRequest(pageNo-1, pageSize);
 		Page<Merchandise> list=repository.findAll(getQueryClause(isActual,null),page);
-		List<MerchandiseDetail> listDetail=
-				new ArrayList<MerchandiseDetail>(detailAdapter.convertSimpleList(list.getContent()));
-		Page<MerchandiseDetail> result=new PageImpl<MerchandiseDetail>(listDetail,page,list.getTotalElements());
-		return new PagedList<MerchandiseDetail>(result);
+		List<MerchandiseVO> listDetail=
+				new ArrayList<MerchandiseVO>(voAdapter.convertSimpleList(list.getContent()));
+		Page<MerchandiseVO> result=new PageImpl<MerchandiseVO>(listDetail,page,list.getTotalElements());
+		return new PagedList<MerchandiseVO>(result);
 	}
 	/**
 	 * 返回前端需要的附近商家
@@ -88,20 +89,20 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
 	 * @param localAddress
 	 * @return
 	 */
-	public PagedList<MerchandiseDetail> getNearByMerchandises(Integer pageNo,Integer pageSize,
+	public PagedList<MerchandiseVO> getNearByMerchandises(Integer pageNo,Integer pageSize,
 			String localAddress){
 		PageRequest page=new PageRequest(pageNo-1, pageSize);
 		Page<Merchandise> list=repository.findAll(getQueryClause(Constant.VIRTUAL,null),page);
-		List<MerchandiseDetail> listDto=
-				new ArrayList<MerchandiseDetail>(detailAdapter.convertSimpleList(list.getContent()));
+		List<MerchandiseVO> listDto=
+				new ArrayList<MerchandiseVO>(voAdapter.convertSimpleList(list.getContent()));
 		if(StringUtils.isNotBlank(localAddress)){
 			double lng_a=Double.valueOf(localAddress.split(",")[0]);
 			double lat_a=Double.valueOf(localAddress.split(",")[1]);
-			listDto.forEach((t)->t.setDistance(t.calculateDistance(lng_a, lat_a)));//将每一个dto对象的distance计算出来并赋值
-			Collections.sort(listDto,(a,b)->Double.compare(a.getDistance(), b.getDistance()));//根据距离排序
+			listDto.forEach((t)->((CouponVO)t).setDistance(((CouponVO)t).calculateDistance(lng_a, lat_a)));//将每一个dto对象的distance计算出来并赋值
+			Collections.sort(listDto,(a,b)->Double.compare(((CouponVO)a).getDistance(), ((CouponVO)b).getDistance()));//根据距离排序
 		}
-		Page<MerchandiseDetail>  result=new PageImpl<MerchandiseDetail>(listDto,page,list.getTotalElements());
-		return new PagedList<MerchandiseDetail>(result);
+		Page<MerchandiseVO>  result=new PageImpl<MerchandiseVO>(listDto,page,list.getTotalElements());
+		return new PagedList<MerchandiseVO>(result);
 	}
 
 	/**
@@ -148,8 +149,10 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
 		return repository.findOne(id);
 	}
 	
-	public MerchandiseDetail getMerchandiseDetail(String id){
-		return detailAdapter.convert(getDo(id));
+	public MerchandiseVO getMerchandiseVO(String id){
+		if(getDo(id)==null)
+			return null;
+		return voAdapter.convert(getDo(id));
 	}
 	/**
 	 * 返回查询条件Specification
@@ -165,10 +168,11 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
             public Predicate toPredicate(Root<Merchandise> root, CriteriaQuery<?> query,
             		CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
-                predicate.add(cb.equal(root.get("isShelve").as(String.class), Constant.SHELVE));
+                
                 if(StringUtils.isNotBlank(isActual)){
                 	predicate.add(cb.equal(root.get("isActual").as(String.class), isActual));
-    			}
+                }
+                predicate.add(cb.equal(root.get("isShelve").as(String.class), Constant.SHELVE));
                 if(StringUtils.isNotBlank(search)){
                 	predicate.add(cb.like(root.get("name").as(String.class), "%" + search + "%"));
                 }
