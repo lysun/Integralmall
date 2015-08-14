@@ -10,7 +10,7 @@ import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.dics.CategoryRepository;
 
 @Component
-public class CategoryItemDTOConverter extends SimpleDtoConverter<CategoryItem, CategoryItemDto> {
+public class CategoryItemDtoConverter extends SimpleDtoConverter<CategoryItem, CategoryItemDto> {
 
 	@Autowired
 	private CategoryRepository categoryRepository;

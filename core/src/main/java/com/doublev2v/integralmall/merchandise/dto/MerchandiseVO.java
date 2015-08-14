@@ -2,10 +2,11 @@ package com.doublev2v.integralmall.merchandise.dto;
 
 import java.util.Set;
 
+import com.doublev2v.foundation.core.entity.Identified;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-public class MerchandiseVO {
+public class MerchandiseVO implements Identified<String>{
 
 	private String id;
 	private String name;

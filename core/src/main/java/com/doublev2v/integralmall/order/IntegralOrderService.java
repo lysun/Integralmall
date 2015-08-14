@@ -18,24 +18,21 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.doublev2v.foundation.core.dto.DtoPagingService;
-import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
+import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 import com.doublev2v.integralmall.integral.IntegralService;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
 import com.doublev2v.integralmall.merchandise.coupon.Coupon;
-import com.doublev2v.integralmall.order.dto.IntegralOrderVO;
-import com.doublev2v.integralmall.order.dto.IntegralOrderVoConverter;
-import com.doublev2v.integralmall.order.dto.IntegralOrderDto;
 import com.doublev2v.integralmall.order.dto.IntegralOrderDtoConverter;
+import com.doublev2v.integralmall.order.dto.IntegralOrderVoConverter;
 import com.doublev2v.integralmall.order.om.OrderMerchandise;
 import com.doublev2v.integralmall.order.om.OrderMerchandiseRepository;
 import com.doublev2v.integralmall.user.User;
@@ -46,7 +43,7 @@ import com.doublev2v.integralmall.util.SystemErrorCodes;
 
 @Service
 @Transactional
-public class IntegralOrderService extends DtoPagingService<IntegralOrder,IntegralOrderDto,String>{
+public class IntegralOrderService extends AbstractPagingAndSortingService<IntegralOrder,String>{
 	
 	@Autowired
 	private IntegralOrderRepository repository;
@@ -70,7 +67,7 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 	public void order(String merchandiseId,String userId,String addressId) {
 		IntegralOrder order = new IntegralOrder();
 		OrderMerchandise om=new OrderMerchandise();
-		Merchandise m=merchandiseService.getDo(merchandiseId);
+		Merchandise m=merchandiseService.findOne(merchandiseId);
 		if(Constant.UNSHELVE.equals(m.getIsShelve()))
 			throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_UNSHELVE,"商品已下架");
 		switch(m.getIsActual()){
@@ -136,19 +133,16 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 	 * @param seq
 	 * @return
 	 */
-	public PagedList<IntegralOrderDto> getList(Integer pageNo,Integer pageSize,String userId,
+	public Page<IntegralOrder> getList(Integer pageNo,Integer pageSize,String userId,
 			String search,String startDate,String endDate,String orderBy,Direction seq){
 		PageRequest page=new PageRequest(pageNo-1, pageSize);
 		if(orderBy!=null){
 			page=new PageRequest(pageNo-1, pageSize,new Sort(seq, orderBy));
 		}
 		Page<IntegralOrder> list = repository.findAll(getQueryClause(userId,search,startDate,endDate), page);
-		return new PagedList<IntegralOrderDto>(list.map(converter));
+		return list;
     }
 	
-	public IntegralOrderVO getIntegralOrderDetail(String id){
-		return voAdapter.convert(repository.findOne(id));
-	}
 	/**
 	 * 获取当前用户的订单的客户端列表
 	 * @param pageNo
@@ -156,13 +150,8 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 	 * @param userId
 	 * @return
 	 */
-	public PagedList<IntegralOrderVO> getList(Integer pageNo,Integer pageSize,String userId){
-		PageRequest page=new PageRequest(pageNo-1, pageSize);
-		Page<IntegralOrder> list = repository.findAll(getQueryClause(userId,null,null,null), page);
-		List<IntegralOrderVO> listDetail=new ArrayList<IntegralOrderVO>();
-		listDetail.addAll(voAdapter.convertSimples(list.getContent()));//转换dto
-		Page<IntegralOrderVO> result=new PageImpl<IntegralOrderVO>(listDetail,page,list.getTotalElements());
-		return new PagedList<IntegralOrderVO>(result);
+	public Page<IntegralOrder> getList(Pageable page,String userId){
+		return repository.findAll(getQueryClause(userId,null,null,null), page);
 	}
 	
 	/**

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.service.PagingService;
-import com.doublev2v.integralmall.order.IntegralOrderService;
 import com.doublev2v.integralmall.order.dto.IntegralOrderDto;
+import com.doublev2v.integralmall.order.dto.IntegralOrderDtoService;
 import com.doublev2v.integralmall.util.RequestResult;
 
 @Controller
@@ -21,7 +21,7 @@ import com.doublev2v.integralmall.util.RequestResult;
 public class IntegralOrderController extends CommonController<IntegralOrderDto>{
 
 	@Autowired
-	private IntegralOrderService service;
+	private IntegralOrderDtoService service;
 
 	@Override
 	protected PagingService<IntegralOrderDto, String> getService() {

@@ -127,7 +127,7 @@ public class ControllerTest {
 	    		.perform(MockMvcRequestBuilders
 	    				.post("/exchangeCoupon")
 	    				.param("merchandiseId", "4040409e4ef31284014ef314eff50004")
-	    				.param("addressId", "ssssss")
+	    				.param("addressId", "1111111111")
 	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  

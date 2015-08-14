@@ -13,16 +13,16 @@ import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.dics.CategoryRepository;
 
 @Component
-public class CategoryDTOConverter extends SimpleDtoConverter<Category, CategoryDTO> {
+public class CategoryDtoConverter extends SimpleDtoConverter<Category, CategoryDto> {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
 	@Autowired
-	private CategoryItemDTOConverter categoryItemDTOAdapter;
+	private CategoryItemDtoConverter categoryItemDTOAdapter;
 	
 
 	@Override
-	public CategoryDTO postConvert(Category d, CategoryDTO t) {
+	public CategoryDto postConvert(Category d, CategoryDto t) {
 		Category parent=d.getParent();
 		String parentid=parent==null?null:parent.getId();
 		t.setParentid(parentid);
@@ -34,7 +34,7 @@ public class CategoryDTOConverter extends SimpleDtoConverter<Category, CategoryD
 		}		
 		Set<Category> subCategorys=d.getSubCategories();
 		if(subCategorys!=null) {
-			Set<CategoryDTO> subCategoryDTOs=new HashSet<CategoryDTO>();
+			Set<CategoryDto> subCategoryDTOs=new HashSet<CategoryDto>();
 			subCategoryDTOs.addAll(convertTs(subCategorys));
 			t.setSubCategories(subCategoryDTOs);
 		}		
@@ -42,12 +42,12 @@ public class CategoryDTOConverter extends SimpleDtoConverter<Category, CategoryD
 	}
 
 	@Override
-	public Category postConvertD(CategoryDTO t, Category d) {
+	public Category postConvertD(CategoryDto t, Category d) {
 		return postUpdate(t,d);
 	}
 
 	@Override
-	public Category postUpdate(CategoryDTO t, Category d) {
+	public Category postUpdate(CategoryDto t, Category d) {
 		String parentid=t.getParentid();
 		Category parent=null;
 		if(StringUtils.isNotEmpty(parentid)) {

@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.doublev2v.foundation.core.dto.DtoPagingService;
-import com.doublev2v.foundation.dics.dto.CategoryDTO;
+import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 
 @Service
 @Transactional
-public class CategoryService extends DtoPagingService<Category, CategoryDTO, String> {
+public class CategoryService extends AbstractPagingAndSortingService<Category, String> {
 
 	@Autowired
 	public void setCategoryRepository(CategoryRepository repository) {
@@ -26,10 +25,9 @@ public class CategoryService extends DtoPagingService<Category, CategoryDTO, Str
 	 * @param type
 	 * @return
 	 */
-	public CategoryDTO getByType(String type) {
+	public Category getByType(String type) {
 		Category d=getRepository().getByType(type);
-		CategoryDTO t=converter.convert(d);
-		return t;
+		return d;
 	}
 	
 	public void deleteByType(String type) {

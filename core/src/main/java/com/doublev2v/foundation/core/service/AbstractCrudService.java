@@ -31,7 +31,13 @@ public abstract class AbstractCrudService<T,ID extends Serializable> implements 
 		if(entities==null)return null;
 		return getRepository().save(entities);
 	}
-
+	
+	@Override
+	public T update(T entity) {
+		if(entity==null)return null;
+		return getRepository().save(entity);
+	}
+	
 	@Override
 	public T findOne(ID id) {
 		if(id==null)return null;

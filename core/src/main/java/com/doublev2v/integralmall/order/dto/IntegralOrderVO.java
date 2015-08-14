@@ -2,10 +2,11 @@ package com.doublev2v.integralmall.order.dto;
 
 import java.util.Date;
 
+import com.doublev2v.foundation.core.entity.Identified;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-public class IntegralOrderVO {
+public class IntegralOrderVO implements Identified<String>{
 	private String id;
 	@JsonInclude(Include.NON_NULL)
 	private String orderNo;

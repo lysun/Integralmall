@@ -2,7 +2,6 @@ package com.doublev2v.integralmall.merchandise;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -15,39 +14,28 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.doublev2v.foundation.core.dto.DtoPagingService;
-import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
+import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.foundation.media.MediaService;
-import com.doublev2v.integralmall.merchandise.coupon.vo.CouponVO;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoConverter;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseVO;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseVoConverter;
 import com.doublev2v.integralmall.util.Constant;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
 @Transactional
-public class MerchandiseService extends DtoPagingService<Merchandise,MerchandiseDto,String>{
-
+public class MerchandiseService extends AbstractPagingAndSortingService<Merchandise,String>{
 	@Autowired
 	private MerchandiseRepository repository;
 	@Autowired
 	private MediaService mediaService;
-	@Autowired
-	private MerchandiseDtoConverter adapter;
-	@Autowired
-	private MerchandiseVoConverter voAdapter;
 	/**
-	 * 根据条件返回上架商品列表
+	 * 根据条件返回上架商品列表（后台）
 	 * @param pageNo
 	 * @param pageSize
 	 * @param search
@@ -55,54 +43,24 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
 	 * @param seq
 	 * @return
 	 */
-	public PagedList<MerchandiseDto> getList(Integer pageNo,Integer pageSize,String isActual,
+	public Page<Merchandise> getList(Integer pageNo,Integer pageSize,String isActual,
 			String search,String orderBy,Direction seq){
 		PageRequest page=new PageRequest(pageNo-1, pageSize);
-		if(orderBy!=null){
+		if(StringUtils.isNotBlank(orderBy)){
 			page=new PageRequest(pageNo-1, pageSize,new Sort(seq,orderBy));
 		}
-		Page<Merchandise> list = repository.findAll(getQueryClause(isActual,search), page);
-		Page<MerchandiseDto> result=list.map(adapter);
-		return new PagedList<MerchandiseDto>(result);
+		return repository.findAll(getQueryClause(isActual,search), page);
 	}
 
 	/**
-	 * 返回前端需要的实物商品
+	 * 接口所需列表数据
 	 * @param pageNo
 	 * @param pageSize
 	 * @param isActual
 	 * @return
 	 */
-	public PagedList<MerchandiseVO> getMerchandiseVOs(Integer pageNo,Integer pageSize,
-			String isActual){
-		PageRequest page=new PageRequest(pageNo-1, pageSize);
-		Page<Merchandise> list=repository.findAll(getQueryClause(isActual,null),page);
-		List<MerchandiseVO> listDetail=
-				new ArrayList<MerchandiseVO>(voAdapter.convertSimples(list.getContent()));
-		Page<MerchandiseVO> result=new PageImpl<MerchandiseVO>(listDetail,page,list.getTotalElements());
-		return new PagedList<MerchandiseVO>(result);
-	}
-	/**
-	 * 返回前端需要的附近商家
-	 * @param pageNo
-	 * @param pageSize
-	 * @param localAddress
-	 * @return
-	 */
-	public PagedList<MerchandiseVO> getNearByMerchandises(Integer pageNo,Integer pageSize,
-			String localAddress){
-		PageRequest page=new PageRequest(pageNo-1, pageSize);
-		Page<Merchandise> list=repository.findAll(getQueryClause(Constant.VIRTUAL,null),page);
-		List<MerchandiseVO> listDto=
-				new ArrayList<MerchandiseVO>(voAdapter.convertSimples(list.getContent()));
-		if(StringUtils.isNotBlank(localAddress)){
-			double lng_a=Double.valueOf(localAddress.split(",")[0]);
-			double lat_a=Double.valueOf(localAddress.split(",")[1]);
-			listDto.forEach((t)->((CouponVO)t).setDistance(((CouponVO)t).calculateDistance(lng_a, lat_a)));//将每一个dto对象的distance计算出来并赋值
-			Collections.sort(listDto,(a,b)->Double.compare(((CouponVO)a).getDistance(), ((CouponVO)b).getDistance()));//根据距离排序
-		}
-		Page<MerchandiseVO>  result=new PageImpl<MerchandiseVO>(listDto,page,list.getTotalElements());
-		return new PagedList<MerchandiseVO>(result);
+	public Page<Merchandise> getMerchandises(Pageable page,String isActual){
+		return repository.findAll(getQueryClause(isActual,null),page);
 	}
 
 	/**
@@ -132,7 +90,7 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
 	 * @throws IOException 
 	 */
 	public Merchandise deleteMedia(String id,String mediaid) throws IOException {
-		Merchandise d=getDo(id);
+		Merchandise d=findOne(id);
 		Set<MediaContent> medias=d.getMedias();
 		for(MediaContent media:medias){
 			if(media.getId().equals(mediaid)){
@@ -144,15 +102,6 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
 		repository.save(d);
 		mediaService.delete(mediaid);
 		return d;
-	}
-	public Merchandise getDo(String id){
-		return repository.findOne(id);
-	}
-	
-	public MerchandiseVO getMerchandiseVO(String id){
-		if(getDo(id)==null)
-			return null;
-		return voAdapter.convert(getDo(id));
 	}
 	/**
 	 * 返回查询条件Specification
@@ -183,4 +132,5 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
             }
         };
     }
+
 }

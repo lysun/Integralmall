@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.doublev2v.foundation.core.dto.polymorphism.SimplePolymorphismConverter;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.dics.CategoryItemRepository;
-import com.doublev2v.foundation.dics.dto.CategoryItemDTOConverter;
+import com.doublev2v.foundation.dics.dto.CategoryItemDtoConverter;
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.foundation.media.MediaContentDto;
 import com.doublev2v.foundation.media.MediaService;
@@ -27,7 +27,7 @@ public class GiftDtoConverter extends SimplePolymorphismConverter<Gift,GiftDto,M
 	@Autowired
 	private CategoryItemRepository categoryItemRepository;
 	@Autowired
-	private CategoryItemDTOConverter categoryItemDTOAdapter;
+	private CategoryItemDtoConverter categoryItemDTOAdapter;
 	@Override
 	public MerchandiseDto postConvert(Merchandise d, MerchandiseDto t) {
 		GiftDto gt=(GiftDto)t;

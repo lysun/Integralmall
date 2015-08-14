@@ -1,18 +1,16 @@
 package com.doublev2v.foundation.dics;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.doublev2v.foundation.core.dto.DtoPagingService;
-import com.doublev2v.foundation.dics.dto.CategoryItemDto;
+import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 
 @Service
 @Transactional
-public class CategoryItemService extends DtoPagingService<CategoryItem, CategoryItemDto, String> {
+public class CategoryItemService extends AbstractPagingAndSortingService<CategoryItem, String> {
 
 	@Autowired
 	public void setCategoryItemRepository(CategoryItemRepository repository) {
@@ -24,11 +22,7 @@ public class CategoryItemService extends DtoPagingService<CategoryItem, Category
 		return (CategoryItemRepository)super.getRepository();
 	}
 	
-	public List<CategoryItemDto> getCategoryItemsByType(String type) {
-		List<CategoryItem> items=getRepository().findByCategoryType(type);
-		if(items==null) return null;
-		List<CategoryItemDto> result=new ArrayList<CategoryItemDto>();
-		result.addAll(converter.convertTs(items));
-		return result;
+	public List<CategoryItem> getCategoryItemsByType(String type) {
+		return getRepository().findByCategoryType(type);
 	}
 }

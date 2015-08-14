@@ -14,10 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.service.PagingService;
-import com.doublev2v.foundation.dics.CategoryItemService;
+import com.doublev2v.foundation.dics.CategoryItemDtoService;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
 import com.doublev2v.integralmall.merchandise.coupon.dto.CouponDto;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
+import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoConverter;
+import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoService;
 import com.doublev2v.integralmall.merchandise.gift.dto.GiftDto;
 import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
@@ -26,13 +28,17 @@ import com.doublev2v.integralmall.util.RequestResult;
 public class MerchandiseController extends CommonController<MerchandiseDto> {
 
 	@Autowired
+	private MerchandiseDtoService dtoService;
+	@Autowired
 	private MerchandiseService service;
 	@Autowired
-	private CategoryItemService categoryItemService;
+	private CategoryItemDtoService categoryItemService;
+	@Autowired
+	private MerchandiseDtoConverter dtoConverter;
 	
 	@Override
 	protected PagingService<MerchandiseDto, String> getService() {
-		return service;
+		return dtoService;
 	}
 
 	@Override
@@ -54,8 +60,8 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 	public String merchandises(@RequestParam(defaultValue="1") Integer page, @RequestParam(defaultValue="12") Integer size,
 			 @RequestParam(defaultValue="") String search,@RequestParam(required=false) String isActual,
 			 @RequestParam(required=false)String orderBy, @RequestParam(required=false)Direction seq) {
-		PagedList<MerchandiseDto> list=service.getList(page, size, isActual,search, orderBy, seq);
-		return RequestResult.success(list).toJson();
+		PagedList<MerchandiseDto> pageList=dtoService.getList(page, size, isActual,search, orderBy, seq);
+		return RequestResult.success(pageList).toJson();
 	}
 	
 	@RequestMapping(value="/{type}/add",method=RequestMethod.GET)
