@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.doublev2v.foundation.core.dto.SimpleDtoConverter;
+import com.doublev2v.foundation.core.dto.common.SimpleDtoConverter;
 import com.doublev2v.foundation.dics.Category;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.dics.CategoryRepository;

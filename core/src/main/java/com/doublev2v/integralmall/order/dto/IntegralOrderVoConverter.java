@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import com.doublev2v.foundation.core.dto.SimpleDtoConverter;
+import com.doublev2v.foundation.core.dto.common.SimpleDtoConverter;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.coupon.Coupon;
 import com.doublev2v.integralmall.order.IntegralOrder;

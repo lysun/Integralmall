@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.doublev2v.foundation.core.dto.service.AbstractDtoPagingService;
+import com.doublev2v.foundation.core.dto.AbstractDtoPagingService;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.integralmall.order.IntegralOrder;
 import com.doublev2v.integralmall.order.IntegralOrderService;

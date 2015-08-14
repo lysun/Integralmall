@@ -3,8 +3,8 @@ package com.doublev2v.foundation.core.dto.polymorphism;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import com.doublev2v.foundation.core.dto.AbstractDtoAdapter;
-import com.doublev2v.foundation.core.dto.BeanMapper;
+import com.doublev2v.foundation.core.dto.adapter.AbstractDtoAdapter;
+import com.doublev2v.foundation.core.dto.dozer.BeanMapper;
 /**
  * 多态转换器实现
  * @author Administrator

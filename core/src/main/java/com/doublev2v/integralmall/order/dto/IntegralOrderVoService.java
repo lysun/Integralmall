@@ -9,7 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.doublev2v.foundation.core.dto.service.AbstractDtoPagingService;
+import com.doublev2v.foundation.core.dto.AbstractDtoPagingService;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.integralmall.order.IntegralOrder;
 import com.doublev2v.integralmall.order.IntegralOrderService;

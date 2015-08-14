@@ -3,7 +3,7 @@ package com.doublev2v.integralmall.order.dto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.doublev2v.foundation.core.dto.SimpleDtoConverter;
+import com.doublev2v.foundation.core.dto.common.SimpleDtoConverter;
 import com.doublev2v.integralmall.order.IntegralOrder;
 import com.doublev2v.integralmall.order.om.dto.OrderMerchandiseDtoAdapter;
 
