@@ -28,7 +28,7 @@ public class CategoryService extends DtoPagingService<Category, CategoryDTO, Str
 	 */
 	public CategoryDTO getByType(String type) {
 		Category d=getRepository().getByType(type);
-		CategoryDTO t=adapter.convert(d);
+		CategoryDTO t=converter.convert(d);
 		return t;
 	}
 	

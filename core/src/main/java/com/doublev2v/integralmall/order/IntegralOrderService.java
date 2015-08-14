@@ -33,9 +33,9 @@ import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
 import com.doublev2v.integralmall.merchandise.coupon.Coupon;
 import com.doublev2v.integralmall.order.dto.IntegralOrderVO;
-import com.doublev2v.integralmall.order.dto.IntegralOrderVoAdapter;
+import com.doublev2v.integralmall.order.dto.IntegralOrderVoConverter;
 import com.doublev2v.integralmall.order.dto.IntegralOrderDto;
-import com.doublev2v.integralmall.order.dto.IntegralOrderDtoAdapter;
+import com.doublev2v.integralmall.order.dto.IntegralOrderDtoConverter;
 import com.doublev2v.integralmall.order.om.OrderMerchandise;
 import com.doublev2v.integralmall.order.om.OrderMerchandiseRepository;
 import com.doublev2v.integralmall.user.User;
@@ -59,9 +59,9 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 	@Autowired
 	private IntegralService integralService;
 	@Autowired
-	private IntegralOrderDtoAdapter adapter;
+	private IntegralOrderDtoConverter converter;
 	@Autowired
-	private IntegralOrderVoAdapter detailAdapter;
+	private IntegralOrderVoConverter voAdapter;
 	/**
 	 * 直接下单,兑换商品
 	 * @param entity
@@ -72,12 +72,12 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 		OrderMerchandise om=new OrderMerchandise();
 		Merchandise m=merchandiseService.getDo(merchandiseId);
 		if(Constant.UNSHELVE.equals(m.getIsShelve()))
-			throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_DISABLED,"商品已下架");
+			throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_UNSHELVE,"商品已下架");
 		switch(m.getIsActual()){
 			case Constant.VIRTUAL:
 				Coupon c=(Coupon)m;
 				if(c.getExpiryDate()==null?false:c.getExpiryDate().isBefore(LocalDateTime.now()))
-					throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_DISABLED,"商品已过期");
+					throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_EXPIRE,"商品已过期");
 				order.setStatus(Constant.UNUSED);
 				om.setCouponCode(UUID.randomUUID().toString());
 				om.setExpiryDate(c.getExpiryDate());
@@ -143,11 +143,11 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 			page=new PageRequest(pageNo-1, pageSize,new Sort(seq, orderBy));
 		}
 		Page<IntegralOrder> list = repository.findAll(getQueryClause(userId,search,startDate,endDate), page);
-		return new PagedList<IntegralOrderDto>(list.map(adapter));
+		return new PagedList<IntegralOrderDto>(list.map(converter));
     }
 	
 	public IntegralOrderVO getIntegralOrderDetail(String id){
-		return detailAdapter.convert(repository.findOne(id));
+		return voAdapter.convert(repository.findOne(id));
 	}
 	/**
 	 * 获取当前用户的订单的客户端列表
@@ -160,7 +160,7 @@ public class IntegralOrderService extends DtoPagingService<IntegralOrder,Integra
 		PageRequest page=new PageRequest(pageNo-1, pageSize);
 		Page<IntegralOrder> list = repository.findAll(getQueryClause(userId,null,null,null), page);
 		List<IntegralOrderVO> listDetail=new ArrayList<IntegralOrderVO>();
-		listDetail.addAll(detailAdapter.convertSimpleList(list.getContent()));//转换dto
+		listDetail.addAll(voAdapter.convertSimples(list.getContent()));//转换dto
 		Page<IntegralOrderVO> result=new PageImpl<IntegralOrderVO>(listDetail,page,list.getTotalElements());
 		return new PagedList<IntegralOrderVO>(result);
 	}

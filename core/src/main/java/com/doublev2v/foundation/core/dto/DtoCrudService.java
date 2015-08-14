@@ -24,14 +24,14 @@ public abstract class DtoCrudService<D extends Identified<ID>, T extends Identif
 	}
 
 	@Autowired
-	protected DtoAdapter<D, T> adapter;
+	protected DtoConverter<D, T> converter;
 
 	@Override
 	public T add(T entity) {
 		if(entity==null) return null;
-		D d=adapter.convertToDo(entity);
+		D d=converter.convertD(entity);
 		d=getRepository().save(d);
-		entity=adapter.convert(d);
+		entity=converter.convert(d);
 		return entity;
 	}
 
@@ -41,25 +41,25 @@ public abstract class DtoCrudService<D extends Identified<ID>, T extends Identif
 		ID id=entity.getId();
 		D d=getRepository().findOne(id);
 		if(d==null) return null;
-		d=adapter.update(entity, d);
+		d=converter.update(entity, d);
 		d=getRepository().save(d);
-		entity=adapter.convert(d);
+		entity=converter.convert(d);
 		return entity;
 	}
 
 	@Override
 	public Iterable<T> addAll(Iterable<T> entities) {
 		if(entities==null) return null;
-		Iterable<D> ds=adapter.convertToList(entities);
+		Iterable<D> ds=converter.convertDs(entities);
 		ds=getRepository().save(ds);
-		return adapter.convertDoList(ds);
+		return converter.convertTs(ds);
 	}
 
 	@Override
 	public T findOne(ID id) {
 		D d=getRepository().findOne(id);
 		if(d==null) return null;
-		return adapter.convert(d);
+		return converter.convert(d);
 	}
 
 	@Override
@@ -71,14 +71,14 @@ public abstract class DtoCrudService<D extends Identified<ID>, T extends Identif
 	public Iterable<T> findAll() {
 		Iterable<D> all=getRepository().findAll();
 		if(all==null)return null;
-		return adapter.convertDoList(all);
+		return converter.convertTs(all);
 	}
 
 	@Override
 	public Iterable<T> findAll(Iterable<ID> ids) {
 		Iterable<D> all=getRepository().findAll(ids);
 		if(all==null)return null;
-		return adapter.convertDoList(all);
+		return converter.convertTs(all);
 	}
 
 	@Override

@@ -27,7 +27,7 @@ public abstract class DtoPagingService<D extends Identified<ID>, T extends Ident
 	public PagedList<T> findPage(int page, int size) {
 		PageRequest request=new PageRequest(page-1, size);
 		Page<D> list=getRepository().findAll(request);
-		Page<T> result=list.map(adapter);
+		Page<T> result=list.map(converter);
 		return new PagedList<>(result);
 	}
 }

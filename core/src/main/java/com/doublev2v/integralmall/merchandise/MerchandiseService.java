@@ -29,9 +29,9 @@ import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.foundation.media.MediaService;
 import com.doublev2v.integralmall.merchandise.coupon.vo.CouponVO;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoAdapter;
+import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoConverter;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseVO;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseVoAdapter;
+import com.doublev2v.integralmall.merchandise.dto.MerchandiseVoConverter;
 import com.doublev2v.integralmall.util.Constant;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
@@ -43,9 +43,9 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
 	@Autowired
 	private MediaService mediaService;
 	@Autowired
-	private MerchandiseDtoAdapter adapter;
+	private MerchandiseDtoConverter adapter;
 	@Autowired
-	private MerchandiseVoAdapter voAdapter;
+	private MerchandiseVoConverter voAdapter;
 	/**
 	 * 根据条件返回上架商品列表
 	 * @param pageNo
@@ -78,7 +78,7 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
 		PageRequest page=new PageRequest(pageNo-1, pageSize);
 		Page<Merchandise> list=repository.findAll(getQueryClause(isActual,null),page);
 		List<MerchandiseVO> listDetail=
-				new ArrayList<MerchandiseVO>(voAdapter.convertSimpleList(list.getContent()));
+				new ArrayList<MerchandiseVO>(voAdapter.convertSimples(list.getContent()));
 		Page<MerchandiseVO> result=new PageImpl<MerchandiseVO>(listDetail,page,list.getTotalElements());
 		return new PagedList<MerchandiseVO>(result);
 	}
@@ -94,7 +94,7 @@ public class MerchandiseService extends DtoPagingService<Merchandise,Merchandise
 		PageRequest page=new PageRequest(pageNo-1, pageSize);
 		Page<Merchandise> list=repository.findAll(getQueryClause(Constant.VIRTUAL,null),page);
 		List<MerchandiseVO> listDto=
-				new ArrayList<MerchandiseVO>(voAdapter.convertSimpleList(list.getContent()));
+				new ArrayList<MerchandiseVO>(voAdapter.convertSimples(list.getContent()));
 		if(StringUtils.isNotBlank(localAddress)){
 			double lng_a=Double.valueOf(localAddress.split(",")[0]);
 			double lat_a=Double.valueOf(localAddress.split(",")[1]);

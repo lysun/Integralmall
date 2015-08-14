@@ -28,7 +28,7 @@ public class CategoryItemService extends DtoPagingService<CategoryItem, Category
 		List<CategoryItem> items=getRepository().findByCategoryType(type);
 		if(items==null) return null;
 		List<CategoryItemDto> result=new ArrayList<CategoryItemDto>();
-		result.addAll(adapter.convertDoList(items));
+		result.addAll(converter.convertTs(items));
 		return result;
 	}
 }

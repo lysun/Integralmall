@@ -5,51 +5,19 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+/**
+ * 用于简化IConverter转换器的各子接口实现的适配器
+ * @author Administrator
+ *
+ * @param <D>
+ * @param <T>
+ */
+public abstract class AbstractDtoAdapter<D, T>{
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
-public abstract class AbstractDtoAdapter<D, T> implements DtoAdapter<D, T> {
-	
-	protected static Logger logger=LoggerFactory.getLogger(AbstractDtoAdapter.class);
-
-	@Override
-	public Collection<T> convertDoList(Iterable<? extends D> ds) {
-		if(ds==null)return null;
-		List<T> ts=new ArrayList<T>();
-		for (D d : ds) {
-			T t=convert(d);
-			ts.add(t);
-		}
-		return ts;
-	}
-	@Override
-	public Collection<T> convertSimpleList(Iterable<? extends D> ds) {
-		if(ds==null)return null;
-		List<T> ts=new ArrayList<T>();
-		for (D d : ds) {
-			T t=convertSimple(d);
-			ts.add(t);
-		}
-		return ts;
-	}
-	@Override
-	public Collection<D> convertToList(Iterable<? extends T> ts) {
-		if(ts==null)return null;
-		List<D> ds=new ArrayList<D>();
-		for (T t : ts) {
-			D d=convertToDo(t);
-			ds.add(d);
-		}
-		return ds;
-	}
-	
-	@Override
-	public T convert(D source) {
-		if(source==null)return null;
-		T t=BeanMapper.map(source, getTClass());
-		return postConvert(source, t);
+	public T convert(D d) {
+		if(d==null)return null;
+		T t=BeanMapper.map(d, getTClass());
+		return postConvert(d, t);
 	}
 	
 	/**
@@ -59,44 +27,60 @@ public abstract class AbstractDtoAdapter<D, T> implements DtoAdapter<D, T> {
 	 * @return
 	 */
 	public abstract T postConvert(D d, T t);
-	/**
-	 * 自定义转换，针对于集合中的对象只转部分信息
-	 * @param d
-	 * @param t
-	 * @return
-	 */
-	public abstract T convertSimple(D d);
-	
-	@Override
-	public D convertToDo(T t) {
+
+	public D convertD(T t) {
 		if(t==null)return null;
 		D d=BeanMapper.map(t, getDClass());
-		return postConvertToDo(t, d);
+		return postConvertD(t, d);
 	}
+
+	public abstract D postConvertD(T t,D d);
 	
-	/**
-	 * 在dozer转换完一般属性之后，将dto的特殊属性转换给do
-	 * @param t
-	 * @param d
-	 * @return
-	 */
-	public abstract D postConvertToDo(T t, D d);
-	
-	@Override
 	public D update(T t, D d) {
-		if(t==null || d==null)return null;
 		BeanMapper.copy(t, d);
-		return postUpdate(t, d);
+		return postUpdate(t,d);
 	}
-	
 	/**
-	 * 在dozer转换完一般属性之后，将dto的特殊属性更新给do
-	 * @param t
+	 * 子类继承用于提供额外的属性转换
 	 * @param d
+	 * @param t
 	 * @return
 	 */
-	public abstract D postUpdate(T t, D d);
-	
+	public abstract D postUpdate(T t,D d);
+
+	public T convertSimple(D d){
+		if(d==null)return null;
+		T t=BeanMapper.map(d, getTClass());
+		return postConvert(d, t);
+	}
+
+	public Collection<D> convertDs(Iterable<? extends T> ts) {
+		if(ts==null)return null;
+		List<D> ds=new ArrayList<D>();
+		for(T t:ts){
+			ds.add(convertD(t));
+		}
+		return ds;
+	}
+
+	public Collection<T> convertTs(Iterable<? extends D> ds) {
+		if(ds==null)return null;
+		List<T> ts=new ArrayList<T>();
+		for(D d:ds){
+			ts.add(convert(d));
+		}
+		return ts;
+	}
+
+	public Collection<T> convertSimples(Iterable<? extends D> ds) {
+		if(ds==null)return null;
+		List<T> ts=new ArrayList<T>();
+		for(D d:ds){
+			ts.add(convertSimple(d));
+		}
+		return ts;
+	}
+
 	/**
 	 * 获取do运行时类型
 	 * @return
