@@ -82,4 +82,8 @@ public class Constant {
 	 * rest返回正确时的errcode
 	 */
 	public static final String REST_CODE_OK="0";
+	
+	public static final String ROLE_ADMIN="ROLE_ADMIN";
+	public static final String ROLE_ADD="ROLE_ADD";
+	public static final String ROLE_VIEW="ROLE_VIEW";
 }

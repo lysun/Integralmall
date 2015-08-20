@@ -46,6 +46,7 @@ public abstract class AbstractCrudService<T,ID extends Serializable> implements 
 
 	@Override
 	public boolean exists(ID id) {
+		if(id==null)return false;
 		return getRepository().exists(id);
 	}
 

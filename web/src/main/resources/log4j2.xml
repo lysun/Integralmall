@@ -2,15 +2,10 @@
 <configuration status="debug">  
   <appenders>   
     <RollingFile name="TomcatRollingFile" fileName="${sys:catalina.home}/logs/integralmall/app.log"    
-                 filePattern="log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">    
+                 filePattern="${sys:catalina.home}/logs/integralmall/$${date:yyyy-MM}/app-%d{yyyy-MM-dd}_%i.log.gz">    
       <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>    
-      <SizeBasedTriggeringPolicy size="500 MB" />    
+      <SizeBasedTriggeringPolicy size="50MB" />    
     </RollingFile> 
-    <RollingFile name="RollingFile" fileName="logs/app.log"
-                     filePattern="log/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
-            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
-            <SizeBasedTriggeringPolicy size="50MB"/>
-    </RollingFile>
   </appenders>  
   <loggers>  
     <root level="info">  

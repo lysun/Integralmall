@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -23,10 +25,10 @@ public class ServiceTest {
 	
 	@Test
 	public void test(){
-		Page<Merchandise> list=m.getList(1, 12,Constant.VIRTUAL, "", "",null);
+		Pageable page=new PageRequest(1, 12);
+		Page<Merchandise> list=m.findPage(page,Constant.VIRTUAL, null, null,null);
 		for(Merchandise m:list.getContent()){
 			System.out.println(m);
-			
 		}
 	}
 }

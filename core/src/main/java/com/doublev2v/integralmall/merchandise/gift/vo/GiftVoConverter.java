@@ -22,8 +22,8 @@ public class GiftVoConverter extends SimplePolymorphismConverter<Gift, GiftVO,Me
 		GiftVO t=new GiftVO();
 		t.setId(g.getId());
 		t.setName(g.getName());
-		t.setIntegralCount(g.getIntegralCount());
-		t.setStock(g.getStock());
+		t.setIntegralCount(String.valueOf(g.getIntegralCount()));
+		t.setStock(String.valueOf(g.getStock()));
 		t.setRemark(g.getRemark());
 		if(g.getMedias()!=null){
 			Set<String> set=new HashSet<String>();
@@ -41,8 +41,8 @@ public class GiftVoConverter extends SimplePolymorphismConverter<Gift, GiftVO,Me
 		GiftVO t=new GiftVO();
 		t.setId(g.getId());
 		t.setName(g.getName());
-		t.setIntegralCount(g.getIntegralCount());
-		t.setStock(g.getStock());
+		t.setIntegralCount(String.valueOf(g.getIntegralCount()));
+		t.setStock(String.valueOf(g.getStock()));
 		if(g.getBrand()!=null){
 			t.setBrandName(g.getBrand().getName());
 		}
@@ -52,7 +52,7 @@ public class GiftVoConverter extends SimplePolymorphismConverter<Gift, GiftVO,Me
 		if(d.getMainPicMedia()!=null){
 			t.setMainPic(g.getMainPicMedia().getUrl());
 		}
-		t.setPrice(g.getPrice());
+		t.setPrice(String.valueOf(g.getPrice()));
 		return t;
 	}
 	

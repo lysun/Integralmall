@@ -26,7 +26,7 @@ public class PagedList<T> {
 	public PagedList(Page<T> page) {
 		this.totalCount=page.getTotalElements();
 		this.totalPages=page.getTotalPages();
-		this.page=page.getNumber();
+		this.page=page.getNumber()+1;//Page中获取的页数是从0开始的
 		this.size=page.getSize();
 		this.result=page.getContent();
 	}

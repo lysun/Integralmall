@@ -48,10 +48,10 @@ public class IntegralOrderController extends CommonController<IntegralOrderDto>{
 	@RequestMapping(value="/getlistdata",method=RequestMethod.GET)
 	@ResponseBody
 	public String integralOrders(@RequestParam(defaultValue="1") Integer page, @RequestParam(defaultValue="12") Integer size,
-			@RequestParam(required=false) String userId,@RequestParam(defaultValue="") String search,
-			@RequestParam(required=false)String startDate, @RequestParam(required=false)String endDate, 
-			@RequestParam(required=false)String orderBy, @RequestParam(required=false)Direction seq) throws ParseException {
-		PagedList<IntegralOrderDto> list=service.getList(page, size, userId, search,startDate,endDate, orderBy, seq);
+			@RequestParam(defaultValue="") String search,@RequestParam(required=false)String startDate,
+			@RequestParam(required=false)String endDate,@RequestParam(required=false)String orderBy, 
+			@RequestParam(required=false)Direction seq) throws ParseException {
+		PagedList<IntegralOrderDto> list=service.getList(page, size, search,startDate,endDate, orderBy, seq);
 		return RequestResult.success(list).toJson();
 	}
 }

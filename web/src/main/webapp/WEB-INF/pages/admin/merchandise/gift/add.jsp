@@ -3,9 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-<my:admin tab="integral">
+<my:admin tab="merchandise">
 	<jsp:attribute name="nav">
-		<my:integral-nav tab="merchandise"></my:integral-nav>
+		<my:merchandise-nav tab="shelve"></my:merchandise-nav>
 	</jsp:attribute>
 	<jsp:attribute name="script">
 	<script>

@@ -35,32 +35,20 @@ public class MerchandiseService extends AbstractPagingAndSortingService<Merchand
 	@Autowired
 	private MediaService mediaService;
 	/**
-	 * 根据条件返回上架商品列表（后台）
-	 * @param pageNo
-	 * @param pageSize
+	 * 根据条件返回上架商品列表
+	 * @param page
+	 * @param isActual
 	 * @param search
 	 * @param orderBy
 	 * @param seq
 	 * @return
 	 */
-	public Page<Merchandise> getList(Integer pageNo,Integer pageSize,String isActual,
+	public Page<Merchandise> findPage(Pageable page,String isActual,
 			String search,String orderBy,Direction seq){
-		PageRequest page=new PageRequest(pageNo-1, pageSize);
 		if(StringUtils.isNotBlank(orderBy)){
-			page=new PageRequest(pageNo-1, pageSize,new Sort(seq,orderBy));
+			page=new PageRequest(page.getPageNumber(), page.getPageSize(),new Sort(seq,orderBy));
 		}
 		return repository.findAll(getQueryClause(isActual,search), page);
-	}
-
-	/**
-	 * 接口所需列表数据
-	 * @param pageNo
-	 * @param pageSize
-	 * @param isActual
-	 * @return
-	 */
-	public Page<Merchandise> getMerchandises(Pageable page,String isActual){
-		return repository.findAll(getQueryClause(isActual,null),page);
 	}
 
 	/**

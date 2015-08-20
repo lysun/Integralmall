@@ -9,6 +9,7 @@ import com.doublev2v.foundation.core.rest.ErrorCode;
 public class SystemErrorCodes {
 	public static final ErrorCode SERVER_EXCEPTION;
 	public static final ErrorCode UNLOGIN;
+	public static final ErrorCode IIIEGAL_ARGUMENT;
 	public static final ErrorCode NOTENOUGH_INTEGRAL;
 	public static final ErrorCode NOTENOUGH_STOCK;
 	public static final ErrorCode MERCHANDISE_EXPIRE;
@@ -22,7 +23,8 @@ public class SystemErrorCodes {
 		 * 系统相关的异常，1**
 		 */
 		SERVER_EXCEPTION=new ErrorCode(100, "服务器异常，请稍后再试");
-		UNLOGIN=new ErrorCode(101, "对不起，请先登录");
+		UNLOGIN=new ErrorCode(101, "用户未登录");
+		IIIEGAL_ARGUMENT=new ErrorCode(101, "传入的参数不正确");
 		/**
 		 * 商品相关的异常，2**
 		 */

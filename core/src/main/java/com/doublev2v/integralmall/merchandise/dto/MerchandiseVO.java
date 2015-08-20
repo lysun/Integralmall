@@ -10,8 +10,8 @@ public class MerchandiseVO implements Identified<String>{
 
 	private String id;
 	private String name;
-	private long integralCount;//所需积分
-	private long stock;
+	private String integralCount;//所需积分
+	private String stock;
 	@JsonInclude(Include.NON_NULL)//如果为空就不参与序列化
 	private String mainPic;
 	@JsonInclude(Include.NON_NULL)//如果为空就不参与序列化
@@ -30,16 +30,16 @@ public class MerchandiseVO implements Identified<String>{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public long getIntegralCount() {
+	public String getIntegralCount() {
 		return integralCount;
 	}
-	public void setIntegralCount(long integralCount) {
+	public void setIntegralCount(String integralCount) {
 		this.integralCount = integralCount;
 	}
-	public long getStock() {
+	public String getStock() {
 		return stock;
 	}
-	public void setStock(long stock) {
+	public void setStock(String stock) {
 		this.stock = stock;
 	}
 	public String getMainPic() {

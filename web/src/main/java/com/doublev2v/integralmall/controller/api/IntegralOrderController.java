@@ -12,7 +12,8 @@ import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.integralmall.order.IntegralOrderService;
 import com.doublev2v.integralmall.order.dto.IntegralOrderVO;
 import com.doublev2v.integralmall.order.dto.IntegralOrderVoService;
-import com.doublev2v.integralmall.user.token.UserTokenService;
+import com.doublev2v.integralmall.userinfo.UserInfo;
+import com.doublev2v.integralmall.userinfo.token.UserInfoTokenService;
 import com.doublev2v.integralmall.util.RequestResult;
 
 @RestController("integralOrderRestController")
@@ -23,14 +24,14 @@ public class IntegralOrderController{
 	@Autowired
 	private IntegralOrderService service;
 	@Autowired
-	private UserTokenService userTokenService;
+	private UserInfoTokenService userTokenService;
 	/**
 	 * 兑换商品
 	 */
 	@RequestMapping(value="/exchangeCoupon",method=RequestMethod.POST)
 	public String createIntegralOrder(String merchandiseId,String token,String addressId) {
-		String userId=userTokenService.getUser(token).getId();
-		service.order(merchandiseId,userId,addressId);
+		UserInfo user=userTokenService.getUser(token);
+		service.order(user,merchandiseId,addressId);
 		return RequestResult.success(null).toJson();
 	}
 	
@@ -45,8 +46,8 @@ public class IntegralOrderController{
 	@RequestMapping(value="/myCouponsList",method=RequestMethod.GET)
 	public String integralOrders(@RequestParam(defaultValue="1") Integer page,
 			@RequestParam(defaultValue="5") Integer size,String token) throws ParseException {
-		String userId=userTokenService.getUser(token).getId();
-		PagedList<IntegralOrderVO> list=voService.getList(page, size, userId);
+		UserInfo user=userTokenService.getUser(token);
+		PagedList<IntegralOrderVO> list=voService.getList(page, size, user);
 		return RequestResult.success(list).toJson();
 	}
 

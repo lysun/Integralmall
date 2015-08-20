@@ -78,7 +78,7 @@ public class ControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.get("/couponList")
-	    				.param("localAddress", "116,37"))
+	    				.param("localAddress", "116.1,37"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();  
@@ -126,7 +126,7 @@ public class ControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.post("/exchangeCoupon")
-	    				.param("merchandiseId", "4040409e4ef31284014ef314eff50004")
+	    				.param("merchandiseId", "4040409e4f2a66e3014f2a6fa1e90002")
 	    				.param("addressId", "1111111111")
 	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 

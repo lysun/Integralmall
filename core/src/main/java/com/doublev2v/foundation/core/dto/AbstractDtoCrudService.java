@@ -53,12 +53,14 @@ public class AbstractDtoCrudService<D extends Identified<ID>, T extends Identifi
 	}
 	@Override
 	public T findOne(ID id) {
+		if(id==null) return null;
 		D d=service.findOne(id);
 		if(d==null) return null;
 		return converter.convert(d);
 	}
 	@Override
 	public boolean exists(ID id) {
+		if(id==null) return false;
 		return service.exists(id);
 	}
 	@Override
@@ -69,6 +71,7 @@ public class AbstractDtoCrudService<D extends Identified<ID>, T extends Identifi
 	}
 	@Override
 	public Iterable<T> findAll(Iterable<ID> ids) {
+		if(ids==null)return null;
 		Iterable<D> all=service.findAll(ids);
 		if(all==null)return null;
 		return converter.convertTs(all);

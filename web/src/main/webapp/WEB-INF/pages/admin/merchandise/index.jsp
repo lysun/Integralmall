@@ -3,9 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-<my:admin tab="integral">
+<my:admin tab="merchandise">
 	<jsp:attribute name="nav">
-		<my:integral-nav tab="merchandise"></my:integral-nav>
+		<my:merchandise-nav tab="shelve"></my:merchandise-nav>
 	</jsp:attribute>
 	<jsp:attribute name="script">
 		<script id="template" type="text/html">
@@ -24,17 +24,6 @@
 		{{/each}}
 		</script>
 		<script>
-		function ajax(url,params,type,showData){
-			$.ajax({
-				url:url,
-				data:params,
-				type:type,
-				dataType:"json",
-				success:function(data){
-					showData(data);
-				}
-			});
-		}
 		var params="";
 		$(function(){
 			//初始化页面请求列表数据
@@ -121,9 +110,11 @@
 	</jsp:attribute>
 	<jsp:body>
 		<div class="btn-group">
+		   <c:if test="${authName eq 'ROLE_ADMIN'||authName eq 'ROLE_ADD'}">
 		   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 		      	添加<span class="caret"></span>
 		   </button>
+		   </c:if>
 		   <ul class="dropdown-menu" role="menu">
 		      <li><a href="<c:url value="/admin/merchandise/coupon/add"/>">优惠券</a></li>
 		      <li><a href="<c:url value="/admin/merchandise/gift/add"/>">实物商品</a></li>

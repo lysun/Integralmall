@@ -31,12 +31,10 @@ import com.doublev2v.integralmall.integral.IntegralService;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
 import com.doublev2v.integralmall.merchandise.coupon.Coupon;
-import com.doublev2v.integralmall.order.dto.IntegralOrderDtoConverter;
-import com.doublev2v.integralmall.order.dto.IntegralOrderVoConverter;
 import com.doublev2v.integralmall.order.om.OrderMerchandise;
 import com.doublev2v.integralmall.order.om.OrderMerchandiseRepository;
-import com.doublev2v.integralmall.user.User;
-import com.doublev2v.integralmall.user.UserService;
+import com.doublev2v.integralmall.userinfo.UserInfo;
+import com.doublev2v.integralmall.userinfo.UserInfoService;
 import com.doublev2v.integralmall.util.Constant;
 import com.doublev2v.integralmall.util.DateUtil;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
@@ -48,28 +46,30 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 	@Autowired
 	private IntegralOrderRepository repository;
 	@Autowired
-	private UserService userService;
+	private UserInfoService userService;
 	@Autowired
 	private OrderMerchandiseRepository orderMerchandiseRepository;
 	@Autowired
 	private MerchandiseService merchandiseService;
 	@Autowired
 	private IntegralService integralService;
-	@Autowired
-	private IntegralOrderDtoConverter converter;
-	@Autowired
-	private IntegralOrderVoConverter voAdapter;
 	/**
-	 * 直接下单,兑换商品
+	 * 下单,兑换商品
 	 * @param entity
 	 * @return
 	 */
-	public void order(String merchandiseId,String userId,String addressId) {
-		IntegralOrder order = new IntegralOrder();
-		OrderMerchandise om=new OrderMerchandise();
+	public void order(UserInfo user,String merchandiseId,String addressId) {
+		if(StringUtils.isBlank(merchandiseId)||merchandiseService.findOne(merchandiseId)==null)
+			throw new ErrorCodeException(SystemErrorCodes.IIIEGAL_ARGUMENT,"传入商品参数不正确");
 		Merchandise m=merchandiseService.findOne(merchandiseId);
 		if(Constant.UNSHELVE.equals(m.getIsShelve()))
 			throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_UNSHELVE,"商品已下架");
+		//减少库存
+		merchandiseService.updateStock(merchandiseId, 1);
+		//扣减积分
+		integralService.minusIntegralCount(user,m.getIntegralCount(),Constant.CONVERT_MERCHANDISE);
+		IntegralOrder order = new IntegralOrder();
+		OrderMerchandise om=new OrderMerchandise();
 		switch(m.getIsActual()){
 			case Constant.VIRTUAL:
 				Coupon c=(Coupon)m;
@@ -80,11 +80,12 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 				om.setExpiryDate(c.getExpiryDate());
 				break;
 			case Constant.ACTUAL:
-				order.setStatus(Constant.UNDELIVER);
+				if(StringUtils.isBlank(addressId))//实物必须有收货地址
+					throw new ErrorCodeException(SystemErrorCodes.IIIEGAL_ARGUMENT,"传入地址参数不正确");
 				order.setAddressId(addressId);
+				order.setStatus(Constant.UNDELIVER);
 				break;
 		}
-		User user=userService.findOne(userId);
 		order.setUser(user);
 		order.setOrderDate(new Date());
 		order.setOrderNo(UUID.randomUUID().toString());
@@ -95,17 +96,15 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 		order.setOrderMerchandise(om);
 		repository.save(order);//保存订单
 		orderMerchandiseRepository.save(om);
-		//减少库存
-		merchandiseService.updateStock(merchandiseId, 1);
-		//扣减积分
-		integralService.minusIntegralCount(user,m.getIntegralCount(),
-				Constant.CONVERT_MERCHANDISE);
+		
 	}
 	/**
 	 * 取消订单
 	 * @param id
 	 */
 	public void cancelOrder(String id) {
+		if(StringUtils.isBlank(id)||repository.findOne(id)==null)
+			throw new ErrorCodeException(SystemErrorCodes.IIIEGAL_ARGUMENT);
 		IntegralOrder order=repository.findOne(id);
 		if(Constant.UNUSED.equals(order.getStatus())||
 				Constant.UNDELIVER.equals(order.getStatus())){
@@ -117,14 +116,13 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 			integralService.plusIntegralCount(order.getUser(),merchandise.getIntegralCount(),
 					Constant.CONVERT_MERCHANDISE_CANCEL);//积分添加
 		}else{//已使用、已发货、已取消的订单不可取消
-			throw new ErrorCodeException(SystemErrorCodes.ORDER_CANNOT_CANCEL,"订单不可取消");
+			throw new ErrorCodeException(SystemErrorCodes.ORDER_CANNOT_CANCEL,"订单已取消或已生效，不可取消");
 		}
 	}	
 
 	/**
-	 * 获取列表数据
-	 * @param pageNo
-	 * @param pageSize
+	 *  获取列表数据
+	 * @param page
 	 * @param userId
 	 * @param search
 	 * @param startDate
@@ -133,27 +131,32 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 	 * @param seq
 	 * @return
 	 */
-	public Page<IntegralOrder> getList(Integer pageNo,Integer pageSize,String userId,
-			String search,String startDate,String endDate,String orderBy,Direction seq){
-		PageRequest page=new PageRequest(pageNo-1, pageSize);
+	public Page<IntegralOrder> findPage(Pageable page,UserInfo user,String search,
+			String startDate,String endDate,String orderBy,Direction seq){
 		if(orderBy!=null){
-			page=new PageRequest(pageNo-1, pageSize,new Sort(seq, orderBy));
+			page=new PageRequest(page.getPageNumber(), page.getPageSize(),new Sort(seq, orderBy));
 		}
-		Page<IntegralOrder> list = repository.findAll(getQueryClause(userId,search,startDate,endDate), page);
-		return list;
+		return repository.findAll(getQueryClause(user,search,startDate,endDate), page);
     }
 	
 	/**
-	 * 获取当前用户的订单的客户端列表
-	 * @param pageNo
-	 * @param pageSize
-	 * @param userId
-	 * @return
+	 * 根据兑换码使用商品
+	 * @param couponCode
 	 */
-	public Page<IntegralOrder> getList(Pageable page,String userId){
-		return repository.findAll(getQueryClause(userId,null,null,null), page);
+	public void useCashCoupon(String couponCode){
+		if(StringUtils.isBlank(couponCode)||orderMerchandiseRepository.findByCouponCode(couponCode)==null)
+			throw new ErrorCodeException(SystemErrorCodes.COUPONCODE_CANNOT_USE,"兑换码不可用");
+		OrderMerchandise orderMerchandise=orderMerchandiseRepository.findByCouponCode(couponCode);
+		IntegralOrder integralOrder=orderMerchandise.getOrder();
+		if(Constant.UNUSED.equals(integralOrder.getStatus())){
+			integralOrder.setStatus(Constant.USED);
+			orderMerchandise.setUsageDate(new Date());
+			orderMerchandiseRepository.save(orderMerchandise);
+			repository.save(integralOrder);
+		}else{
+			throw new ErrorCodeException(SystemErrorCodes.COUPONCODE_CANNOT_USE,"兑换码不可用");
+		}
 	}
-	
 	/**
 	 * 返回查询条件Specification
 	 * @param userId
@@ -162,14 +165,14 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 	 * @param endDate
 	 * @return
 	 */
-	private Specification<IntegralOrder> getQueryClause(String userId,String search,
+	private Specification<IntegralOrder> getQueryClause(UserInfo user,String search,
 			String startDate,String endDate){
         return new Specification<IntegralOrder>() {
             @Override
             public Predicate toPredicate(Root<IntegralOrder> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
-                if(StringUtils.isNotBlank(userId)){
-                	predicate.add(cb.equal(root.get("user").as(User.class), userService.findOne(userId)));
+                if(user!=null){
+                	predicate.add(cb.equal(root.get("user").as(UserInfo.class), user));
                 }
                 try {
 	                if(StringUtils.isNotBlank(startDate)){
@@ -183,7 +186,7 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 				}
                 if (StringUtils.isNotBlank(search)){
                     //两张表关联查询
-                    Join<IntegralOrder,User> userJoin = root.join(root.getModel().getSingularAttribute("user",User.class),JoinType.LEFT);
+                    Join<IntegralOrder,UserInfo> userJoin = root.join(root.getModel().getSingularAttribute("user",UserInfo.class),JoinType.LEFT);
                     predicate.add(cb.or(cb.like(userJoin.get("username").as(String.class), "%" + search + "%"),
                     		cb.like(root.get("orderNo").as(String.class), "%" + search + "%")));
                 }

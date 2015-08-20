@@ -16,9 +16,9 @@ public class OrderMerchandise extends UUIDBaseModel{
 	private Merchandise merchandise;
 	private int count;//兑换数量
 	private long integralCount;//消耗的积分数量
-	private String couponCode;//兑换码(消费凭证)
-	private LocalDateTime expiryDate;//有效期
-	private Date usageDate;//针对优惠券 使用时间
+	private String couponCode;//兑换码(针对优惠券:消费凭证)
+	private LocalDateTime expiryDate;//有效期(针对优惠券)
+	private Date usageDate;//使用时间(针对优惠券)
 	private IntegralOrder order;
 	
 	@OneToOne

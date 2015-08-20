@@ -20,8 +20,8 @@ public class CouponVoConverter extends SimplePolymorphismConverter<Coupon, Coupo
 		Coupon c=(Coupon)d;
 		t.setId(c.getId());
 		t.setName(c.getName());
-		t.setIntegralCount(c.getIntegralCount());
-		t.setStock(c.getStock());
+		t.setIntegralCount(String.valueOf(c.getIntegralCount()));
+		t.setStock(String.valueOf(c.getStock()));
 		t.setRemark(c.getRemark());
 		if(d.getMedias()!=null){
 			Set<String> set=new HashSet<String>();
@@ -51,10 +51,10 @@ public class CouponVoConverter extends SimplePolymorphismConverter<Coupon, Coupo
 	public MerchandiseVO convertSimple(Merchandise d) {
 		Coupon c=(Coupon)d;
 		CouponVO t=new CouponVO();
-		t.setId(d.getId());
-		t.setName(d.getName());
-		t.setIntegralCount(d.getIntegralCount());
-		t.setStock(d.getStock());
+		t.setId(c.getId());
+		t.setName(c.getName());
+		t.setIntegralCount(String.valueOf(c.getIntegralCount()));
+		t.setStock(String.valueOf(c.getStock()));
 		if(c.getBrand()!=null){
 			t.setBrandName(c.getBrand().getName());
 		}

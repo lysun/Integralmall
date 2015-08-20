@@ -16,17 +16,23 @@
     <jsp:invoke fragment="style"></jsp:invoke>
 </head>
 <body>	
+	<nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">后台管理</a>
+        </div>
+         <div style="margin-right:80px;">
+	     <ul class="nav navbar-nav navbar-left">
+	   		<li <c:if test="${tab eq 'merchandise' }">class="active"</c:if>><a href="<c:url value='/admin/merchandise'/>">商品管理</a></li>
+    		<li <c:if test="${tab eq 'integralOrder' }">class="active"</c:if>><a href="<c:url value='/admin/integralOrder'/>">积分订单管理</a></li>
+	   		<c:if test="${authName eq 'ROLE_ADMIN' }">
+    		<li <c:if test="${tab eq 'user' }">class="active"</c:if>><a href="<c:url value='/admin/user'/>">用户管理</a></li>
+    		</c:if>
+		</ul>
+	    <p class="navbar-text navbar-right"><a href="<c:url value='/logout'/>">退出</a></p>
+	   </div>
+    </nav>
     <div class="container-fluid">
-        <nav class="navbar navbar-default">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="<c:url value='/admin'/>">后台管理</a>
-            </div>
-            <div>
-                <ul class="nav nav-tabs">
-                    <li <c:if test="${tab eq 'integral' }">class="active"</c:if>><a href="<c:url value='/admin/merchandise'/>">积分商城</a></li>
-                </ul>
-            </div>
-        </nav>
+        
         <div class="row">
             <div class="col-sm-2">
             	<jsp:invoke fragment="nav"/>                

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.integralmall.integral.detail.IntegralDetailService;
-import com.doublev2v.integralmall.user.User;
+import com.doublev2v.integralmall.userinfo.UserInfo;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
 @Transactional
@@ -17,7 +17,7 @@ public class IntegralService {
 	@Autowired
 	IntegralDetailService integralDetailService;
 	
-	public Integral createIntegral(User user,long totalcount){
+	public Integral createIntegral(UserInfo user,long totalcount){
 		Integral integral=new Integral();
 		integral.setUser(user);
 		integral.setTotalcount(totalcount);
@@ -28,7 +28,7 @@ public class IntegralService {
 	 * @param user
 	 * @return
 	 */
-	public long getIntegralCount(User user){
+	public long getIntegralCount(UserInfo user){
 		Integral integral=repository.findIntegralByUser(user);
 		if(integral==null){
 			integral=createIntegral(user,0);
@@ -41,7 +41,7 @@ public class IntegralService {
 	 * @param user
 	 * @return
 	 */
-	public Integral minusIntegralCount(User user,long usedCount,String origin){
+	public Integral minusIntegralCount(UserInfo user,long usedCount,String origin){
 		Integral integral=repository.findIntegralByUser(user);
 		if(integral==null){
 			integral=createIntegral(user,0);
@@ -60,7 +60,7 @@ public class IntegralService {
 	 * @param user
 	 * @return
 	 */
-	public Integral plusIntegralCount(User user,long count,String origin){
+	public Integral plusIntegralCount(UserInfo user,long count,String origin){
 		Integral integral=repository.findIntegralByUser(user);
 		if(integral==null){
 			integral=createIntegral(user,0);

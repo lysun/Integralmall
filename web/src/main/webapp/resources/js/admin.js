@@ -1,7 +1,15 @@
-/**
- * create by ytm
- */
 
+function ajax(url,params,type,showData){
+	$.ajax({
+		url:url,
+		data:params,
+		type:type,
+		dataType:"json",
+		success:function(data){
+			showData(data);
+		}
+	});
+}
 /**
  * 自动执行的方法
  */

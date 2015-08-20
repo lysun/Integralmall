@@ -2,6 +2,8 @@ package com.doublev2v.integralmall.merchandise.dto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,8 @@ public class MerchandiseDtoService extends AbstractDtoPagingService<Merchandise,
 
 	public PagedList<MerchandiseDto> getList(Integer pageNo,Integer pageSize,String isActual,
 			String search,String orderBy,Direction seq){
-		Page<Merchandise> list = service.getList(pageNo, pageSize, isActual, search, orderBy, seq);
+		Pageable page=new PageRequest(pageNo-1, pageSize);
+		Page<Merchandise> list = service.findPage(page, isActual, search, orderBy, seq);
 		Page<MerchandiseDto> result=list.map(dtoConverter);
 		return new PagedList<MerchandiseDto>(result);
 	}
