@@ -7,11 +7,6 @@
 <jsp:attribute name="nav">
 		<my:user-nav tab="user"></my:user-nav>
 	</jsp:attribute>
-	<jsp:attribute name="script">
-		<script>
-			
-		</script>
-	</jsp:attribute>
 	<jsp:body>
 		<form action="./" role="form" class="form-horizontal" method="post">
            <div class="form-group">

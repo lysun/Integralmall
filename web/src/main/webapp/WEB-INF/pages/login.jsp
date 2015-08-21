@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>backetend</title>
     <link href="<c:url value='/resources/css/bootstrap.min.css'/>" type="text/css" rel="stylesheet"/>
-    
 </head>
 <body>	
 	<div class="container" style="margin-top:10em;">

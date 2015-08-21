@@ -38,7 +38,7 @@ public abstract class CommonController<T extends Identified<String>> {
 	public ModelAndView index() {
 		String viewPath=getBasePath()+"index";
 		ModelAndView view=new ModelAndView(viewPath);
-		return auth(view);
+		return loadAuths(view);
 	}
 	
 	/**
@@ -49,7 +49,7 @@ public abstract class CommonController<T extends Identified<String>> {
 	public ModelAndView add() {
 		String viewPath=getBasePath()+"add";
 		ModelAndView view=new ModelAndView(viewPath);
-		return auth(view);
+		return loadAuths(view);
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public abstract class CommonController<T extends Identified<String>> {
 		ModelAndView view=new ModelAndView(viewPath);
 		T t=getService().findOne(id);
 		view.addObject("t", t);
-		return auth(view);
+		return loadAuths(view);
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public abstract class CommonController<T extends Identified<String>> {
 		ModelAndView view=new ModelAndView(viewPath);
 		T t=getService().findOne(id);
 		view.addObject("t", t);
-		return auth(view);
+		return loadAuths(view);
 	}
 	
 	/**
@@ -115,11 +115,11 @@ public abstract class CommonController<T extends Identified<String>> {
 	}
 
 	/**
-	 * 将菜单的权限加上
+	 * 加载后台上方菜单权限
 	 * @param view
 	 * @return
 	 */
-	public ModelAndView auth(ModelAndView view){
+	public ModelAndView loadAuths(ModelAndView view){
 		//判断用户是否有录入员的权限
 		User user=UserSecurityContext.getUser();
 		String authName="";
