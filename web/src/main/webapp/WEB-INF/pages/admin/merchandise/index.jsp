@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %> 
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <my:admin tab="merchandise">
@@ -109,17 +110,16 @@
 		</script>
 	</jsp:attribute>
 	<jsp:body>
+		<shiro:hasPermission name="merchandise:create">
 		<div class="btn-group">
-		   <c:if test="${authName eq 'ROLE_ADMIN'||authName eq 'ROLE_ADD'}">
-		   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		      	添加<span class="caret"></span>
-		   </button>
-		   </c:if>
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			      添加<span class="caret"></span></button>
 		   <ul class="dropdown-menu" role="menu">
 		      <li><a href="<c:url value="/admin/merchandise/coupon/add"/>">优惠券</a></li>
 		      <li><a href="<c:url value="/admin/merchandise/gift/add"/>">实物商品</a></li>
 		   </ul>
 	    </div>
+	    </shiro:hasPermission> 
 		<button id="orderByUpdateTime" class="btn btn-default">按照更新时间</button>
 		<button id="orderByStock" class="btn btn-default">按照商品库存倒序</button>
 		<button id="orderByIntegral" class="btn btn-default">按照所需积分</button>

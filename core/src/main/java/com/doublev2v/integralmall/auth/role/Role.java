@@ -1,6 +1,5 @@
 package com.doublev2v.integralmall.auth.role;
 
-import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -11,17 +10,17 @@ import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.doublev2v.integralmall.auth.authority.Authority;
+import com.doublev2v.integralmall.auth.permission.Permission;
 import com.doublev2v.integralmall.auth.user.User;
 
 
 @Entity
-public class Role implements Serializable{
+public class Role{
 
 	private String id;
 	private String name;
 	private String description;
-	private Set<Authority> authorities;
+	private Set<Permission> perms;
 	private Set<User> users;
 	@Id
 	@GenericGenerator(name="idGenerator",strategy="uuid")
@@ -45,17 +44,18 @@ public class Role implements Serializable{
 		this.description = description;
 	}
 	@ManyToMany
-	@JoinTable(name="role_auth")
-	public Set<Authority> getAuthorities() {
-		return authorities;
+	@JoinTable(name="role_perm")
+	public Set<Permission> getPerms() {
+		return perms;
 	}
-	public void setAuthorities(Set<Authority> authorities) {
-		this.authorities = authorities;
+	public void setPerms(Set<Permission> perms) {
+		this.perms = perms;
 	}
 	@ManyToMany(mappedBy="roles")
 	public Set<User> getUsers() {
 		return users;
 	}
+	
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}

@@ -30,6 +30,7 @@
 		<dozer.version>5.5.1</dozer.version>
 		<guava.version>18.0</guava.version>
 		<jersey.version>2.15</jersey.version>
+		<shiro.version>1.2.4</shiro.version>
 		<!-- Plugin的属性 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
@@ -108,7 +109,11 @@
 				<artifactId>spring-aop</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-			
+			<dependency>
+	            <groupId>org.springframework</groupId>
+	            <artifactId>spring-context-support</artifactId>
+	            <version>${spring.version}</version>
+	        </dependency>
 
 			<!-- PERSISTENCE begin -->
 			<!-- hibernate -->
@@ -196,7 +201,7 @@
 				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-
+			
 			<!-- j2ee web spec -->
 			<!-- update to servlet 3.0 for spring 4.0 MockHttpServletRequest  -->
 			<dependency>
@@ -427,7 +432,23 @@
 				<artifactId>guava</artifactId>
 				<version>${guava.version}</version>
 			</dependency>
-
+			
+			<!-- shiro -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-core</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>  
+			    <groupId>org.apache.shiro</groupId>  
+			    <artifactId>shiro-web</artifactId>  
+			    <version>${shiro.version}</version>  
+			</dependency>  
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
 			<!-- commons-pool -->
 			<!-- email -->
 			<dependency>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd"
+	default-lazy-init="true">
+    
+    <!-- Shiro的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">  
+        <property name="securityManager" ref="securityManager" />  
+        <property name="successUrl" value="/admin/merchandise" />  
+        <property name="loginUrl" value="/login" />  
+        <property name="unauthorizedUrl" value="/login" />
+        <!-- filterChainDefinitions用于声明url和filter的关系 -->
+        <property name="filterChainDefinitions">  
+            <value>  
+                /login=anon
+                /logout=logout
+                /admin/user/**=authc,roles["ROLE_ADMIN"]
+                /admin/**=authc
+            </value>
+        </property>  
+    </bean> 
+    <bean id="userRealm" class="com.doublev2v.integralmall.auth.realm.UserRealm">
+    	<property name="userService" ref="userService"/>
+    </bean>  
+    <!-- 安全管理器 -->  
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	    <property name="realms">  
+	        <list><ref bean="userRealm"/></list>  
+	    </property>  
+        <!-- 需要使用cache的话加上这句  
+        <property name="cacheManager" ref="shiroEhcacheManager" />  
+         -->  
+    </bean>  
+  
+    <!-- 用户授权信息Cache, 采用EhCache，需要的话就配置上此信息   
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">  
+        <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml" />  
+    </bean>  
+    -->  
+    
+    <!-- Shiro生命周期处理器-->  
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />  
+    <bean  class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"  
+        depends-on="lifecycleBeanPostProcessor">  
+        <property name="proxyTargetClass" value="true" />  
+    </bean> 
+    
+    
+</beans>  

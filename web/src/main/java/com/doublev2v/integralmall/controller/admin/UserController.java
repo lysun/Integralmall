@@ -33,18 +33,12 @@ public class UserController extends CommonController<UserDto> {
 		return "admin/user/";
 	}
 	
-	@RequestMapping(value="",method=RequestMethod.POST)
-	public ModelAndView add(UserDto t) {
-		service.add(t);
-		return index();
-	}
-	
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public ModelAndView add() {
 		String viewPath=getBasePath()+"add";
 		ModelAndView view=new ModelAndView(viewPath);
 		view.addObject("roles", roleService.findAll());
-		return loadAuths(view);
+		return view;
 	}
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public ModelAndView edit(@PathVariable String id) {
@@ -52,15 +46,9 @@ public class UserController extends CommonController<UserDto> {
 		ModelAndView view=new ModelAndView(viewPath);
 		view.addObject("t", service.findOne(id));
 		view.addObject("roles", roleService.findAll());
-		return loadAuths(view);
+		return view;
 	}
-	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ModelAndView info(@PathVariable String id) {
-		String viewPath=getBasePath()+"info";
-		ModelAndView view=new ModelAndView(viewPath);
-		view.addObject("t", service.findOne(id));
-		return loadAuths(view);
-	}
+
 	@RequestMapping(value="/getlistdata",method=RequestMethod.GET)
 	@ResponseBody
 	public String getUsers(@RequestParam(defaultValue="1") Integer page, @RequestParam(defaultValue="12") Integer size) {

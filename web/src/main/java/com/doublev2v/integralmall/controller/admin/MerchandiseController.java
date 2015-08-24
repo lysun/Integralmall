@@ -70,7 +70,7 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 		ModelAndView view=new ModelAndView(viewPath);
 		view.addObject("brands", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_BRAND_TYPE));
 		view.addObject("classifies", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_CLASSIFY_TYPE));
-		return loadAuths(view);
+		return view;
 	}
 	
 	@RequestMapping(value="/{type}/{id}/edit",method=RequestMethod.GET)
@@ -81,14 +81,14 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 		view.addObject("t", t);
 		view.addObject("brands", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_BRAND_TYPE));
 		view.addObject("classifies", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_CLASSIFY_TYPE));
-		return loadAuths(view);
+		return view;
 	}
 	@RequestMapping(value="/{type}/{id}",method=RequestMethod.GET)
 	public ModelAndView info(@PathVariable String type,@PathVariable String id) {
 		String viewPath=getBasePath()+type+"/info";
 		ModelAndView view=new ModelAndView(viewPath);
 		view.addObject("t", getService().findOne(id));
-		return loadAuths(view);
+		return view;
 	}
 	@RequestMapping(value="/coupon",method=RequestMethod.POST)
 	public ModelAndView add(CouponDto t) {

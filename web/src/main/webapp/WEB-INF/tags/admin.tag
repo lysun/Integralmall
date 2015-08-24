@@ -1,5 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>  
 <%@ attribute name="tab" %>
 <%@ attribute name="nav" fragment="true" %>
 <%@ attribute name="script" fragment="true" %>
@@ -22,13 +23,18 @@
         </div>
          <div style="margin-right:80px;">
 	     <ul class="nav navbar-nav navbar-left">
+	     	<shiro:hasPermission name="merchandise:*">
 	   		<li <c:if test="${tab eq 'merchandise' }">class="active"</c:if>><a href="<c:url value='/admin/merchandise'/>">商品管理</a></li>
+	   		</shiro:hasPermission>
+	   		<shiro:hasPermission name="integralOrder:*">
     		<li <c:if test="${tab eq 'integralOrder' }">class="active"</c:if>><a href="<c:url value='/admin/integralOrder'/>">积分订单管理</a></li>
-	   		<c:if test="${authName eq 'ROLE_ADMIN' }">
-    		<li <c:if test="${tab eq 'user' }">class="active"</c:if>><a href="<c:url value='/admin/user'/>">用户管理</a></li>
-    		</c:if>
+    		</shiro:hasPermission>
+	   		<shiro:hasPermission name="user:*">
+				<li <c:if test="${tab eq 'user' }">class="active"</c:if>><a href="<c:url value='/admin/user'/>">用户管理</a></li>
+			</shiro:hasPermission>
 		</ul>
 	    <p class="navbar-text navbar-right"><a href="<c:url value='/logout'/>">退出</a></p>
+	    <p class="navbar-text navbar-right"><shiro:principal/>,欢迎您</p>
 	   </div>
     </nav>
     <div class="container-fluid">

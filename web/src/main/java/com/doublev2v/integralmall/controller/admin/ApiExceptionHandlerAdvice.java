@@ -16,18 +16,18 @@ import com.doublev2v.integralmall.util.SystemErrorCodes;
  * @author Administrator
  *
  */
-@ControllerAdvice
-@ResponseBody
+//@ControllerAdvice
+//@ResponseBody
 public class ApiExceptionHandlerAdvice{
 	@ExceptionHandler(Exception.class)//捕获所有异常
 	public String execute(HttpServletRequest request , Exception ex) {
-		Logger logger = LogManager.getLogger(CommonController.class);
+		Logger logger = LogManager.getLogger(ApiExceptionHandlerAdvice.class);
 		logger.error(ex.getMessage(),ex);
 		if(ex instanceof ErrorCodeException){
 			ErrorCodeException eex=(ErrorCodeException)ex;
 			return RequestResult.error(null,eex.getErrorCode(),eex.getMessage()).toJson();
 		}
-		return RequestResult.error(null,SystemErrorCodes.SERVER_EXCEPTION, SystemErrorCodes.SERVER_EXCEPTION.getError()).toJson();
+		return RequestResult.error(null,SystemErrorCodes.SERVER_EXCEPTION, ex.getMessage()).toJson();
 
 	}
 	

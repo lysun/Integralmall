@@ -4,13 +4,16 @@
       xmlns:p="http://www.springframework.org/schema/p"   
       xmlns:context="http://www.springframework.org/schema/context"  
       xmlns:mvc="http://www.springframework.org/schema/mvc"
+      xmlns:aop="http://www.springframework.org/schema/aop"
       xsi:schemaLocation="  
           http://www.springframework.org/schema/beans   
           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd  
           http://www.springframework.org/schema/context   
           http://www.springframework.org/schema/context/spring-context-4.1.xsd  
           http://www.springframework.org/schema/mvc  
-          http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd"  
+          http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+          http://www.springframework.org/schema/aop 
+		  http://www.springframework.org/schema/aop/spring-aop-4.1.xsd"  
       default-autowire="byType" >
    <mvc:annotation-driven>
    <!-- 以下配置可以解决@ResponseBody中文乱码问题  -->
@@ -36,7 +39,13 @@
 	<mvc:default-servlet-handler />
     <!-- 上传文件组件 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-      
+
+    <!-- 添加Shiro Spring AOP权限注解的支持 ,如@RequiresRoles("admin") -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/> 
+    <bean  class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
+        <property name="securityManager" ref="securityManager" />  
+    </bean>
+    
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
    		<property name="prefix">
    			<value>/WEB-INF/pages/</value>

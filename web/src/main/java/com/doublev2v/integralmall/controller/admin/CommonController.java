@@ -1,7 +1,6 @@
 package com.doublev2v.integralmall.controller.admin;
 
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,9 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.doublev2v.foundation.core.entity.Identified;
 import com.doublev2v.foundation.core.rest.RequestResult;
 import com.doublev2v.foundation.core.service.PagingService;
-import com.doublev2v.integralmall.auth.UserSecurityContext;
-import com.doublev2v.integralmall.auth.user.User;
-import com.doublev2v.integralmall.util.Constant;
 
 
 public abstract class CommonController<T extends Identified<String>> {
@@ -38,7 +34,7 @@ public abstract class CommonController<T extends Identified<String>> {
 	public ModelAndView index() {
 		String viewPath=getBasePath()+"index";
 		ModelAndView view=new ModelAndView(viewPath);
-		return loadAuths(view);
+		return view;
 	}
 	
 	/**
@@ -49,7 +45,7 @@ public abstract class CommonController<T extends Identified<String>> {
 	public ModelAndView add() {
 		String viewPath=getBasePath()+"add";
 		ModelAndView view=new ModelAndView(viewPath);
-		return loadAuths(view);
+		return view;
 	}
 	
 	/**
@@ -63,7 +59,7 @@ public abstract class CommonController<T extends Identified<String>> {
 		ModelAndView view=new ModelAndView(viewPath);
 		T t=getService().findOne(id);
 		view.addObject("t", t);
-		return loadAuths(view);
+		return view;
 	}
 	
 	/**
@@ -77,7 +73,7 @@ public abstract class CommonController<T extends Identified<String>> {
 		ModelAndView view=new ModelAndView(viewPath);
 		T t=getService().findOne(id);
 		view.addObject("t", t);
-		return loadAuths(view);
+		return view;
 	}
 	
 	/**
@@ -114,27 +110,4 @@ public abstract class CommonController<T extends Identified<String>> {
 		return index();
 	}
 
-	/**
-	 * 加载后台上方菜单权限
-	 * @param view
-	 * @return
-	 */
-	public ModelAndView loadAuths(ModelAndView view){
-		//判断用户是否有录入员的权限
-		User user=UserSecurityContext.getUser();
-		String authName="";
-		for(GrantedAuthority auth:user.getAuthorities()){
-			if(Constant.ROLE_VIEW.equals(auth.getAuthority())&&!authName.equals(Constant.ROLE_ADD)){
-				authName=Constant.ROLE_VIEW;
-			}
-			if(Constant.ROLE_ADD.equals(auth.getAuthority())){
-				authName=Constant.ROLE_ADD;
-			}
-			if(Constant.ROLE_ADMIN.equals(auth.getAuthority())){
-				authName=Constant.ROLE_ADMIN;
-				break;
-			}	
-		}
-		return view.addObject("authName",authName);
-	}
 }

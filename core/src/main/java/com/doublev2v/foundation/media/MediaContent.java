@@ -158,8 +158,6 @@ public class MediaContent extends BaseModel {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public void setUrl(String url) {
-	}
 	
 	
 	
