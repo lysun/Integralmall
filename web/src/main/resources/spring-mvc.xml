@@ -40,12 +40,9 @@
     <!-- 上传文件组件 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
-    <!-- 添加Shiro Spring AOP权限注解的支持 ,如@RequiresRoles("admin") -->
+    <!-- 添加Shiro Spring AOP权限注解的支持 ,如@RequiresRoles("admin")等 -->
     <aop:aspectj-autoproxy proxy-target-class="true"/> 
-    <bean  class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
-        <property name="securityManager" ref="securityManager" />  
-    </bean>
-    
+   
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
    		<property name="prefix">
    			<value>/WEB-INF/pages/</value>

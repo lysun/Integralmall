@@ -16,7 +16,7 @@ public class UserDtoConverter extends SimpleDtoConverter<User, UserDto> {
 	@Autowired
 	private RoleRepository roleRepository;
 	public UserDto postConvert(User d,UserDto t){
-		t.setUserRole(d.getRoles().iterator().next());
+		t.setUserRole(d.getRoles().iterator().next());//暂时每个用户只有一个角色
 		return t;
 	}
 	public User postConvertD(UserDto t,User d){

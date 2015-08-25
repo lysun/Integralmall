@@ -16,8 +16,8 @@ import com.doublev2v.integralmall.util.SystemErrorCodes;
  * @author Administrator
  *
  */
-//@ControllerAdvice
-//@ResponseBody
+@ControllerAdvice
+@ResponseBody
 public class ApiExceptionHandlerAdvice{
 	@ExceptionHandler(Exception.class)//捕获所有异常
 	public String execute(HttpServletRequest request , Exception ex) {

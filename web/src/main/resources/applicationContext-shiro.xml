@@ -12,10 +12,22 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd"
 	default-lazy-init="true">
     
+    <!-- 安全管理器 -->  
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	    <property name="realms">  
+	        <list><ref bean="userRealm"/></list>  
+	    </property>  
+        <property name="cacheManager" ref="shiroEhcacheManager" /> 
+    </bean>  
+  
+	<bean id="userRealm" class="com.doublev2v.integralmall.auth.realm.UserRealm">
+    	<property name="userService" ref="userService"/>
+    </bean>  
+   
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">  
         <property name="securityManager" ref="securityManager" />  
-        <property name="successUrl" value="/admin/merchandise" />  
+        <property name="successUrl" value="/admin" />  
         <property name="loginUrl" value="/login" />  
         <property name="unauthorizedUrl" value="/login" />
         <!-- filterChainDefinitions用于声明url和filter的关系 -->
@@ -23,36 +35,25 @@
             <value>  
                 /login=anon
                 /logout=logout
-                /admin/user/**=authc,roles["ROLE_ADMIN"]
+                /admin/user/**=authc,perms["user:*"]
+                /admin/merchandise/**=authc,perms["merchandise:*"]
+                /admin/integralOrder/**=authc,perms["integralOrder:*"]
                 /admin/**=authc
             </value>
         </property>  
     </bean> 
-    <bean id="userRealm" class="com.doublev2v.integralmall.auth.realm.UserRealm">
-    	<property name="userService" ref="userService"/>
-    </bean>  
-    <!-- 安全管理器 -->  
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-	    <property name="realms">  
-	        <list><ref bean="userRealm"/></list>  
-	    </property>  
-        <!-- 需要使用cache的话加上这句  
-        <property name="cacheManager" ref="shiroEhcacheManager" />  
-         -->  
-    </bean>  
-  
-    <!-- 用户授权信息Cache, 采用EhCache，需要的话就配置上此信息   
+       
+    <!-- 用户授权信息Cache, 采用EhCache -->  
     <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">  
         <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml" />  
-    </bean>  
-    -->  
+    </bean>
     
     <!-- Shiro生命周期处理器-->  
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />  
-    <bean  class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"  
-        depends-on="lifecycleBeanPostProcessor">  
-        <property name="proxyTargetClass" value="true" />  
-    </bean> 
     
+    <!-- shiro aop -->
+    <bean  class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
+        <property name="securityManager" ref="securityManager" />  
+    </bean>
     
 </beans>  

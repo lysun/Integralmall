@@ -22,27 +22,31 @@ public class LoginController{
 	public ModelAndView loginView(){
 		return new ModelAndView("login");
 	}
-	 @RequestMapping(value = "/login", method = RequestMethod.POST)  
-	    public ModelAndView submit(String username, String password) {
-	    	User user = userService.findByUsername(username);
-	    	if(user==null)
-	    		throw new IllegalArgumentException("传入参数错误");
-	        try {
-	            // 如果登陆成功  
-	            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-	                UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user  
-	                        .getPassword());  
-	                Subject subject = SecurityUtils.getSubject();  
-	                subject.login(token);
-	                
-	                return new ModelAndView("redirect:/admin/merchandise");  
-	            }  
-	        } catch (Exception e) {  
-	            e.printStackTrace();  
-	        }  
-	  
-	        return new ModelAndView("redirect:/login");  
-	    } 
+	@RequestMapping(value="/admin",method=RequestMethod.GET)
+	public ModelAndView admin(){
+		return new ModelAndView("admin/index");
+	}
+	@RequestMapping(value = "/login", method = RequestMethod.POST)  
+	public ModelAndView submit(String username, String password) {
+	    User user = userService.findByUsername(username);
+    	if(user==null)
+    		throw new IllegalArgumentException("传入参数错误");
+        try {
+            // 如果登陆成功  
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user  
+                        .getPassword());  
+                Subject subject = SecurityUtils.getSubject();  
+                subject.login(token);
+                subject.getSession().setTimeout(1000*60*30);//设置session有效时间为30分钟
+                return new ModelAndView("redirect:/admin");  
+            }  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+  
+        return new ModelAndView("redirect:/login");  
+    } 
 	    
 	
 }
