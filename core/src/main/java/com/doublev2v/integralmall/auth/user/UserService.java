@@ -30,7 +30,7 @@ public class UserService extends AbstractPagingAndSortingService<User, String>{
 		User user=findByUsername(username);
 		if (user.getRoles() != null) {
         	for(Role r:user.getRoles()){
-        		roles.add(r.getName());
+        		roles.add(r.getCode());
         		
         	}
         }else

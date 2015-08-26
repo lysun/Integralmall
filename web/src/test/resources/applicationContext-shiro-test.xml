@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
+    default-lazy-init="false">
+    
+    <!-- 专为junit测试用的securityManager-->
+    <bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager">
+    	<property name="realm" ref="userRealm"/>
+    	<property name="cacheManager" ref="shiroEhcacheManager" /> 
+    </bean>
+	
+	<bean id="userRealm" class="com.doublev2v.integralmall.auth.realm.UserRealm">
+    	<property name="userService" ref="userService"/>
+    </bean>  
+   
+    <!-- Shiro的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">  
+        <property name="securityManager" ref="securityManager" />  
+        <property name="successUrl" value="/admin" />  
+        <property name="loginUrl" value="/login" />  
+        <property name="unauthorizedUrl" value="/login" />
+        <!-- filterChainDefinitions用于声明url和filter的关系 -->
+        <property name="filterChainDefinitions">  
+            <value>  
+                /login=anon
+                /logout=logout
+                /admin/user/**=authc,roles["ROLE_ADMIN"]
+                /admin/merchandise/**=authc,perms["menu:manager:merchandise"]
+                /admin/integralOrder/**=authc,perms["menu:manager:integralOrder"]
+                /admin/**=authc
+            </value>
+        </property>  
+    </bean> 
+       
+    <!-- 用户授权信息Cache, 采用EhCache -->  
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">  
+        <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml" />  
+    </bean>
+    
+    <!-- Shiro生命周期处理器-->  
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />  
+    
+    <!-- shiro aop -->
+    <bean  class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
+        <property name="securityManager" ref="securityManager" />  
+    </bean>
+</beans>

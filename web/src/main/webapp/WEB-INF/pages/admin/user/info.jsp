@@ -22,9 +22,11 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="password" class="col-sm-2 control-label">角色:</label>
+               <label for="type" class="col-sm-2 control-label">拥有角色:</label>
                <div class="col-sm-10">
-                   <p class="form-control">${t.userRole.name }</p>
+                    <c:forEach items="${t.roleDtos}" var="roleDto">
+	               		<div class="col-sm-10">${roleDto.name}(${roleDto.code})</div>
+	               	</c:forEach>
                </div>
            </div>
        </form>

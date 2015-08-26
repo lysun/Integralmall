@@ -1,4 +1,4 @@
-
+/**通用ajax方法*/
 function ajax(url,params,type,showData){
 	$.ajax({
 		url:url,
@@ -10,36 +10,8 @@ function ajax(url,params,type,showData){
 		}
 	});
 }
-/**
- * 自动执行的方法
- */
-$(function(){
-	 $("#put").ajaxForm({
-		 type:"put",
-		 success:function() {
-			 alert("保存成功！");
-			 //window.location.href="../";
-		 },
-		 error:function() {
-			 alert("保存失败！");
-		 }
-	 });
-	 /*
-	 $("#put").submit(function(e){	 
-		 $(this).ajaxForm({
-			 type:"put",
-			 success:function() {
-				 alert("保存成功！");
-				 window.location.href="../";
-			 },
-			 error:function() {
-				 alert("保存失败！");
-			 }
-		 });
-		 e.preventDefault();
-	 });*/
-});
 
+/**通用列表页面删除方法*/
 function del(url,id) {
 	bootbox.confirm("确定要删除它吗？",
 			function(result){
@@ -47,8 +19,13 @@ function del(url,id) {
 		$.ajax({
 	        url:url+"/"+id,
 	        type:"DELETE",
-	        success:function() {
-	            $("#"+id).remove();
+	        dataType:"json",
+	        success:function(data) {
+	        	if(data.errcode=="0"){
+	        		$("#"+id).remove();
+	        	}else{
+	        		alert("此用户不能删除");
+	        	}
 	        },
 	        error:function() {
 	            alert("删除失败！");
@@ -57,32 +34,8 @@ function del(url,id) {
 	});    
 }
 
-function post(url,success,error) {
-	$.ajax({
-		url:url,
-		type:"post",
-		dataType:"json",
-		success:function(data) {
-			if(data.errcode=="0") {
-				success(data.data);
-			} else {
-				if(error) {
-					error(data.errcode,data.errmsg,data.errmsg);
-				} else {
-					alert(data);
-				}
-			}
-		},
-		error:function() {
-			alert("请求失败！");
-		}
-	});
-}
 
-
-/**
- * ajax请求分页
- */
+/**通用列表页面分页*/
 var url_params="";
 function pagination(totalPages,size,url,params,callback) {
 	url_params=params;

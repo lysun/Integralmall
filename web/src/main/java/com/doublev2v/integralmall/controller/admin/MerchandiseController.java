@@ -16,11 +16,11 @@ import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.service.PagingService;
 import com.doublev2v.foundation.dics.CategoryItemDtoService;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
-import com.doublev2v.integralmall.merchandise.coupon.dto.CouponDto;
+import com.doublev2v.integralmall.merchandise.coupon.CouponDto;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoConverter;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoService;
-import com.doublev2v.integralmall.merchandise.gift.dto.GiftDto;
+import com.doublev2v.integralmall.merchandise.gift.GiftDto;
 import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
 @Controller

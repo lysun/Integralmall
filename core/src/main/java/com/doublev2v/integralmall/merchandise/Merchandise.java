@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.media.MediaContent;
+import com.doublev2v.integralmall.shop.Shop;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="is_actual",discriminatorType=DiscriminatorType.STRING)
@@ -32,6 +33,7 @@ public class Merchandise extends UUIDBaseModel{
 	private MediaContent mainPicMedia;
 	private Set<MediaContent> medias;
 	private String isActual;
+	private Shop shop;
 	public String getSeq() {
 		return seq;
 	}
@@ -109,6 +111,13 @@ public class Merchandise extends UUIDBaseModel{
 	}
 	public void setIsActual(String isActual) {
 		this.isActual = isActual;
+	}
+	@ManyToOne
+	public Shop getShop() {
+		return shop;
+	}
+	public void setShop(Shop shop) {
+		this.shop = shop;
 	}
 		
 }

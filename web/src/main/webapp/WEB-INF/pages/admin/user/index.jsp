@@ -12,8 +12,6 @@
 		{{each result as value i}}
 			<tr id="{{value.id }}">
                  <td>{{value.username }}</td>
-                 <td>{{value.password }}</td>
-                 <td>{{value.userRole.name }}</td>
                  <td><a href="<c:url value='/admin/user/{{value.id }}/edit'/>">修改</a>|
                      <a href="<c:url value='/admin/user/{{value.id }}'/>">查看</a>|
                      <a onclick="del('<c:url value="/admin/user"/>','{{value.id }}')">删除</a>
@@ -23,7 +21,7 @@
 		</script>
 		<script>
 			$(function(){
-				ajax('<c:url value="/admin/user/getlistdata"/>',null,"get",showList);
+				ajax('<c:url value="/admin/user/getlist"/>',null,"get",showList);
 			});
 
 			function showList(data){
@@ -31,7 +29,7 @@
 				$("tbody").html("");
 				$("tbody").append(html);
 				//初始化分页
-				pagination(data.data.totalPages,data.data.size,'<c:url value="/admin/user/getlistdata"/>',
+				pagination(data.data.totalPages,data.data.size,'<c:url value="/admin/user/getlist"/>',
 						null,showList);
 			}
 		</script>
@@ -42,8 +40,6 @@
             <thead>
                 <tr>
                     <th>用户名</th>
-                    <th>密码</th>
-                    <th>角色</th>
                     <th>操作</th>
                 </tr>
             </thead>                        

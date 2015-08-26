@@ -1,33 +1,16 @@
 package com.doublev2v.integralmall.auth.permission;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 
 @Entity
-public class Permission {
-
-	private String id;
+public class Permission extends UUIDBaseModel{
 	private String name;
 	private String code;
-	public Permission() {
-	}
-	
-	public Permission(String code) {
-		this.code = code;
-	}
+	private String description;
+	private PermType type;
 
-	@Id
-	@GenericGenerator(name="idGenerator",strategy="uuid")
-	@GeneratedValue(generator="idGenerator")
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}
@@ -39,6 +22,22 @@ public class Permission {
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public PermType getType() {
+		return type;
+	}
+
+	public void setType(PermType type) {
+		this.type = type;
 	}
 	
 	

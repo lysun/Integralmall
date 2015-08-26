@@ -83,7 +83,9 @@ public class Constant {
 	 */
 	public static final String REST_CODE_OK="0";
 	
-	public static final String ROLE_ADMIN="ROLE_ADMIN";
-	public static final String ROLE_ADD="ROLE_ADD";
-	public static final String ROLE_VIEW="ROLE_VIEW";
+	/**
+	 * 数据库中的角色定义
+	 */
+	public static final String ROLE_SHOP_USER="ROLE_SHOP";
+	public static final String ROLE_SYSTEM_USER="ROLE_SYSTEM";
 }

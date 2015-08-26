@@ -17,7 +17,7 @@ import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
-import com.doublev2v.integralmall.merchandise.coupon.vo.CouponVO;
+import com.doublev2v.integralmall.merchandise.coupon.CouponVO;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
 public class MerchandiseVoService extends AbstractDtoPagingService<Merchandise,MerchandiseVO,String>{

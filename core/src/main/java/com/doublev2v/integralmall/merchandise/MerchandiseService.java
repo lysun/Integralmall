@@ -12,6 +12,7 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,10 @@ import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.foundation.media.MediaService;
+import com.doublev2v.integralmall.auth.realm.ShiroContext;
+import com.doublev2v.integralmall.auth.user.User;
+import com.doublev2v.integralmall.shop.Shop;
+import com.doublev2v.integralmall.shop.ShopService;
 import com.doublev2v.integralmall.util.Constant;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
@@ -34,6 +39,21 @@ public class MerchandiseService extends AbstractPagingAndSortingService<Merchand
 	private MerchandiseRepository repository;
 	@Autowired
 	private MediaService mediaService;
+	@Autowired
+	private ShopService shopService;
+
+	@Override
+	public Merchandise add(Merchandise d) {
+		if(d==null)return null;
+		d.setIsShelve(Constant.SHELVE);//设置商品为上架
+		Shop shop=shopService.getShopByUser(ShiroContext.getAuthorizatedUser());
+		if(shop==null)
+			throw new ErrorCodeException(SystemErrorCodes.SERVER_EXCEPTION, "请先完善店铺信息");
+		d.setShop(shop);
+		return getRepository().save(d);
+	}
+	
+	
 	/**
 	 * 根据条件返回上架商品列表
 	 * @param page
@@ -105,7 +125,13 @@ public class MerchandiseService extends AbstractPagingAndSortingService<Merchand
             public Predicate toPredicate(Root<Merchandise> root, CriteriaQuery<?> query,
             		CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
-                
+                //针对当前系统用户User为店铺用户则只能查看当前店铺的商品
+                User user=ShiroContext.getCurrentUser();
+                if(user!=null){
+                	if(SecurityUtils.getSubject().hasRole(Constant.ROLE_SHOP_USER)){
+                    	predicate.add(cb.equal(root.get("shop").as(Shop.class), shopService.getShopByUser(user)));
+                    }
+                }
                 if(StringUtils.isNotBlank(isActual)){
                 	predicate.add(cb.equal(root.get("isActual").as(String.class), isActual));
                 }

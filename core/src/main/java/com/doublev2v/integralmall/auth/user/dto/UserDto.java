@@ -1,15 +1,17 @@
 package com.doublev2v.integralmall.auth.user.dto;
 
+import java.util.Set;
+
 import com.doublev2v.foundation.core.entity.Identified;
-import com.doublev2v.integralmall.auth.role.Role;
+import com.doublev2v.integralmall.auth.role.dto.RoleDto;
 
 public class UserDto implements Identified<String>{
 
 	private String id;
 	private String username;
 	private String password;
-	private Role userRole;
-	private String roleId;
+	private Set<RoleDto> roleDtos;
+	private Set<String> roleIds;
 	public String getId() {
 		return id;
 	}
@@ -28,17 +30,18 @@ public class UserDto implements Identified<String>{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getRoleId() {
-		return roleId;
+	public Set<RoleDto> getRoleDtos() {
+		return roleDtos;
 	}
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
+	public void setRoleDtos(Set<RoleDto> roleDtos) {
+		this.roleDtos = roleDtos;
 	}
-	public Role getUserRole() {
-		return userRole;
+	public Set<String> getRoleIds() {
+		return roleIds;
 	}
-	public void setUserRole(Role userRole) {
-		this.userRole = userRole;
+	public void setRoleIds(Set<String> roleIds) {
+		this.roleIds = roleIds;
 	}
+	
 	
 }

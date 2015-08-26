@@ -23,15 +23,19 @@
         </div>
          <div style="margin-right:80px;">
 	     <ul class="nav navbar-nav navbar-left">
-	     	<shiro:hasPermission name="merchandise:*">
+	     <shiro:hasPermission name="menu:manager:shop">
+				<li <c:if test="${tab eq 'shop' }">class="active"</c:if>><a href="<c:url value='/admin/shop'/>">商家管理</a></li>
+			</shiro:hasPermission>
+	     	<shiro:hasPermission name="menu:manager:merchandise">
 	   		<li <c:if test="${tab eq 'merchandise' }">class="active"</c:if>><a href="<c:url value='/admin/merchandise'/>">商品管理</a></li>
 	   		</shiro:hasPermission>
-	   		<shiro:hasPermission name="integralOrder:*">
+	   		<shiro:hasPermission name="menu:manager:integralOrder">
     		<li <c:if test="${tab eq 'integralOrder' }">class="active"</c:if>><a href="<c:url value='/admin/integralOrder'/>">积分订单管理</a></li>
     		</shiro:hasPermission>
-	   		<shiro:hasPermission name="user:*">
+	   		<shiro:hasPermission name="menu:manager:user">
 				<li <c:if test="${tab eq 'user' }">class="active"</c:if>><a href="<c:url value='/admin/user'/>">用户管理</a></li>
 			</shiro:hasPermission>
+			
 		</ul>
 	    <p class="navbar-text navbar-right"><a href="<c:url value='/logout'/>">退出</a></p>
 	    <p class="navbar-text navbar-right"><shiro:principal/>,欢迎您</p>

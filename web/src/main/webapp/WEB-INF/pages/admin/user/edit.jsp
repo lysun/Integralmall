@@ -12,7 +12,7 @@
            <div class="form-group">
                <label for="username" class="col-sm-2 control-label">用户名:</label>
                <div class="col-sm-10">
-                   <input value="${t.username }" type="tel" class="form-control" name="username" placeholder="please input username">
+                   <input value="${t.username }" class="form-control" name="username" placeholder="please input username">
                </div>
            </div>
            <div class="form-group">
@@ -22,13 +22,17 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="password" class="col-sm-2 control-label">角色:</label>
+               <label for="type" class="col-sm-2 control-label">拥有角色:</label>
                <div class="col-sm-10">
-                   <select name="roleId" class="form-control">
-                   <c:forEach items="${roles}" var="role">
-                   <option value="${role.id }" <c:if test="${role.id eq t.userRole.id}">selected</c:if>>${role.name }</option>
-                   </c:forEach>
-                   </select>
+                  <c:forEach items="${roles }" var="role">
+	               	 <div class="col-sm-10">
+		               <input type="checkbox" name="roleIds" value="${role.id }" 
+		               	<c:forEach items="${t.roleDtos}" var="roleDto">
+		               		<c:if test="${roleDto.id eq role.id }">checked</c:if>
+		               	</c:forEach>/>
+		               	${role.name }(${role.code})
+					 </div>
+	               </c:forEach>
                </div>
            </div>
            <div class="form-group">

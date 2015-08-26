@@ -3,32 +3,17 @@ package com.doublev2v.integralmall.auth.user;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import com.doublev2v.foundation.core.entity.Identified;
+import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 import com.doublev2v.integralmall.auth.role.Role;
 @Entity
-public class User implements Identified<String>{
+public class User extends UUIDBaseModel{
 
-	private String id;
 	private String username;
 	private String password;
 	private Set<Role> roles;
-	
-	@Id
-	@GenericGenerator(name="idGenerator",strategy="uuid")
-	@GeneratedValue(generator="idGenerator")
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	
 	public String getUsername() {
 		return username;
@@ -42,7 +27,6 @@ public class User implements Identified<String>{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 	
 	@ManyToMany
 	@JoinTable(name="user_role")

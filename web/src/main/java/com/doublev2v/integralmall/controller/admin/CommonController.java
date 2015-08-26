@@ -4,12 +4,13 @@ package com.doublev2v.integralmall.controller.admin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.doublev2v.foundation.core.entity.Identified;
-import com.doublev2v.foundation.core.rest.RequestResult;
 import com.doublev2v.foundation.core.service.PagingService;
+import com.doublev2v.integralmall.util.RequestResult;
 
 
 public abstract class CommonController<T extends Identified<String>> {
@@ -35,6 +36,12 @@ public abstract class CommonController<T extends Identified<String>> {
 		String viewPath=getBasePath()+"index";
 		ModelAndView view=new ModelAndView(viewPath);
 		return view;
+	}
+	
+	@RequestMapping(value="/getlist",method=RequestMethod.GET)
+	@ResponseBody
+	public String getUsers(@RequestParam(defaultValue="1") Integer page, @RequestParam(defaultValue="12") Integer size) {
+		return RequestResult.success(getService().findPage(page, size)).toJson();
 	}
 	
 	/**

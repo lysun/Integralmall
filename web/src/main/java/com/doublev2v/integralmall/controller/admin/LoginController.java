@@ -2,6 +2,7 @@ package com.doublev2v.integralmall.controller.admin;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,8 @@ public class LoginController{
                         .getPassword());  
                 Subject subject = SecurityUtils.getSubject();  
                 subject.login(token);
-                subject.getSession().setTimeout(1000*60*30);//设置session有效时间为30分钟
+                Session session=subject.getSession();
+                session.setAttribute("user", user);//将用户信息放入session
                 return new ModelAndView("redirect:/admin");  
             }  
         } catch (Exception e) {  

@@ -35,9 +35,10 @@
             <value>  
                 /login=anon
                 /logout=logout
-                /admin/user/**=authc,perms["user:*"]
-                /admin/merchandise/**=authc,perms["merchandise:*"]
-                /admin/integralOrder/**=authc,perms["integralOrder:*"]
+                /admin/user/**=authc,roles["ROLE_SYSTEM"]<!-- 只有超级管理员才能管理用户信息 -->
+                /admin/merchandise/**=authc,perms["menu:manager:merchandise"]
+                /admin/integralOrder/**=authc,perms["menu:manager:integralOrder"]
+                /admin/shop/**=authc,perms["menu:manager:shop"]
                 /admin/**=authc
             </value>
         </property>  

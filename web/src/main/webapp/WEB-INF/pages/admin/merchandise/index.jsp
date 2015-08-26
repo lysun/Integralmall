@@ -110,7 +110,6 @@
 		</script>
 	</jsp:attribute>
 	<jsp:body>
-		<shiro:hasPermission name="merchandise:create">
 		<div class="btn-group">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 			      添加<span class="caret"></span></button>
@@ -119,7 +118,6 @@
 		      <li><a href="<c:url value="/admin/merchandise/gift/add"/>">实物商品</a></li>
 		   </ul>
 	    </div>
-	    </shiro:hasPermission> 
 		<button id="orderByUpdateTime" class="btn btn-default">按照更新时间</button>
 		<button id="orderByStock" class="btn btn-default">按照商品库存倒序</button>
 		<button id="orderByIntegral" class="btn btn-default">按照所需积分</button>

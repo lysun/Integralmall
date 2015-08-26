@@ -3,39 +3,34 @@ package com.doublev2v.integralmall.auth.role;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import org.hibernate.annotations.GenericGenerator;
-
+import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 import com.doublev2v.integralmall.auth.permission.Permission;
 import com.doublev2v.integralmall.auth.user.User;
 
 
 @Entity
-public class Role{
+public class Role extends UUIDBaseModel{
 
-	private String id;
 	private String name;
+	private String code;
 	private String description;
 	private Set<Permission> perms;
 	private Set<User> users;
-	@Id
-	@GenericGenerator(name="idGenerator",strategy="uuid")
-	@GeneratedValue(generator="idGenerator")
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 	public String getDescription() {
 		return description;

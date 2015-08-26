@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.doublev2v.foundation.core.entity.Identified;
 import com.doublev2v.foundation.dics.dto.CategoryItemDto;
 import com.doublev2v.foundation.media.MediaContentDto;
+import com.doublev2v.integralmall.shop.dto.ShopDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 public class MerchandiseDto implements Identified<String>{
 	private String id;
@@ -30,6 +31,7 @@ public class MerchandiseDto implements Identified<String>{
 	private Set<MediaContentDto> mediaDtos;
 	@JsonIgnore
 	private MultipartFile[] mediaFiles;
+	private ShopDto shopDto;
 	public String getId() {
 		return id;
 	}
@@ -132,6 +134,12 @@ public class MerchandiseDto implements Identified<String>{
 	}
 	public void setMainpicFile(MultipartFile mainpicFile) {
 		this.mainpicFile = mainpicFile;
+	}
+	public ShopDto getShopDto() {
+		return shopDto;
+	}
+	public void setShopDto(ShopDto shopDto) {
+		this.shopDto = shopDto;
 	}
 	
 	
