@@ -19,6 +19,8 @@ import com.doublev2v.foundation.media.MediaContentDto;
 import com.doublev2v.foundation.media.MediaService;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
+import com.doublev2v.integralmall.shop.ShopRepository;
+import com.doublev2v.integralmall.shop.dto.ShopDtoConverter;
 import com.doublev2v.integralmall.util.Constant;
 
 @Component
@@ -28,8 +30,11 @@ public class CouponDtoConverter extends SimplePolymorphismConverter<Coupon, Coup
 	@Autowired
 	private CategoryItemRepository categoryItemRepository;
 	@Autowired
-	private CategoryItemDtoConverter categoryItemDTOAdapter;
-
+	private CategoryItemDtoConverter categoryItemDtoConverter;
+	@Autowired
+	private ShopRepository shopRepository;
+	@Autowired
+	private ShopDtoConverter shopDtoConverter;
 	@Override
 	public MerchandiseDto postConvert(Merchandise d, MerchandiseDto t) {
 		CouponDto ct=(CouponDto)t;
@@ -55,12 +60,16 @@ public class CouponDtoConverter extends SimplePolymorphismConverter<Coupon, Coup
 			t.setMediaDtos(set);
 		}
 		if(d.getBrand()!=null){
-			t.setBrandDto(categoryItemDTOAdapter.convert(d.getBrand()));
+			t.setBrandDto(categoryItemDtoConverter.convert(d.getBrand()));
 			t.setBrandId(d.getBrand().getId());
 		}
 		if(d.getClassify()!=null){
-			t.setClassifyDto(categoryItemDTOAdapter.convert(d.getClassify()));
+			t.setClassifyDto(categoryItemDtoConverter.convert(d.getClassify()));
 			t.setClassifyId(d.getClassify().getId());
+		}
+		if(d.getShop()!=null){
+			t.setShopDto(shopDtoConverter.convert(d.getShop()));
+			t.setShopId(d.getShop().getId());
 		}
 		return t;
 		
@@ -73,6 +82,7 @@ public class CouponDtoConverter extends SimplePolymorphismConverter<Coupon, Coup
 	
 	@Override
 	public Merchandise postUpdate(MerchandiseDto t, Merchandise d) {
+		d.setIsShelve(Constant.SHELVE);//设置商品为上架
 		CouponDto ct=(CouponDto)t;
 		Coupon cd=(Coupon)d;
 		try {
@@ -105,6 +115,9 @@ public class CouponDtoConverter extends SimplePolymorphismConverter<Coupon, Coup
 			if(StringUtils.isNotBlank(t.getClassifyId())){
 				CategoryItem classify=categoryItemRepository.findOne(t.getClassifyId());
 				d.setClassify(classify);
+			}
+			if(StringUtils.isNotBlank(t.getClassifyId())){
+				d.setShop(shopRepository.findOne(t.getShopId()));
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

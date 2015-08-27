@@ -14,11 +14,11 @@ import com.doublev2v.integralmall.util.Constant;
 import com.doublev2v.integralmall.util.DateUtil;
 
 @Component
-public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, IntegralOrderVO> {
+public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, IntegralOrderVo> {
 
 	@Override
-	public IntegralOrderVO convert(IntegralOrder d) {
-		IntegralOrderVO t=new IntegralOrderVO();
+	public IntegralOrderVo convert(IntegralOrder d) {
+		IntegralOrderVo t=new IntegralOrderVo();
 		t.setId(d.getId());
 		t.setOrderDate(d.getOrderDate());
 		t.setOrderNo(d.getOrderNo());
@@ -68,8 +68,8 @@ public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, 
 		return t;
 	}
 	@Override
-	public IntegralOrderVO convertSimple(IntegralOrder d) {
-		IntegralOrderVO t=new IntegralOrderVO();
+	public IntegralOrderVo convertSimple(IntegralOrder d) {
+		IntegralOrderVo t=new IntegralOrderVo();
 		t.setId(d.getId());
 		t.setStatus(d.getStatus());
 		OrderMerchandise om=d.getOrderMerchandise();

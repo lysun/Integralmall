@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component;
 import com.doublev2v.foundation.core.dto.polymorphism.SimplePolymorphismConverter;
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.integralmall.merchandise.Merchandise;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseVO;
+import com.doublev2v.integralmall.merchandise.dto.MerchandiseVo;
 @Component
-public class GiftVoConverter extends SimplePolymorphismConverter<Gift, GiftVO,Merchandise,MerchandiseVO> {
+public class GiftVoConverter extends SimplePolymorphismConverter<Gift, GiftVo,Merchandise,MerchandiseVo> {
 
 	/**
 	 * 重写实体转换
 	 */
 	@Override
-	public MerchandiseVO convert(Merchandise d) {
+	public MerchandiseVo convert(Merchandise d) {
 		Gift g=(Gift)d;
-		GiftVO t=new GiftVO();
+		GiftVo t=new GiftVo();
 		t.setId(g.getId());
 		t.setName(g.getName());
 		t.setIntegralCount(String.valueOf(g.getIntegralCount()));
@@ -35,9 +35,9 @@ public class GiftVoConverter extends SimplePolymorphismConverter<Gift, GiftVO,Me
 	}
 	
 	@Override
-	public MerchandiseVO convertSimple(Merchandise d) {
+	public MerchandiseVo convertSimple(Merchandise d) {
 		Gift g=(Gift)d;
-		GiftVO t=new GiftVO();
+		GiftVo t=new GiftVo();
 		t.setId(g.getId());
 		t.setName(g.getName());
 		t.setIntegralCount(String.valueOf(g.getIntegralCount()));

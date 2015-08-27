@@ -1,4 +1,4 @@
-package com.doublev2v.integralmall.order.om.dto;
+package com.doublev2v.integralmall.order.om;
 
 import java.time.LocalDateTime;
 import java.util.Date;

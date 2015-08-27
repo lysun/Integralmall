@@ -8,7 +8,7 @@
 		<my:shop-nav tab="tag"></my:shop-nav>
 	</jsp:attribute>
 	<jsp:body>
-		<form action="../shop/${t.id }" role="form" class="form-horizontal" method="post" enctype="multipart/form-data" enctype="multipart/form-data">
+		<form action="./" role="form" class="form-horizontal" method="post" enctype="multipart/form-data" enctype="multipart/form-data">
           <div class="form-group">
                <label for="name" class="col-sm-2 control-label">标签名称:</label>
                <div class="col-sm-10">

@@ -58,6 +58,12 @@
                </div>
            </div>
            <div class="form-group">
+               <label for="classify" class="col-sm-2 control-label">商家:</label>
+               <div class="col-sm-10">
+                    <p class="form-control">${t.shopDto.shopName }</p>
+               </div>
+           </div>
+           <div class="form-group">
                <label for="name" class="col-sm-2 control-label">商品名称:</label>
                <div class="col-sm-10">
                     <p class="form-control">${t.name }</p>
@@ -91,7 +97,15 @@
                    <p class="form-control">${t.original }</p>
                </div>
            </div>
-           
+           <div class="form-group">
+               <label for="isActual" class="col-sm-2 control-label">是否实物商品:</label>
+               <div class="col-sm-10">
+               		<p class="form-control">
+               		<c:if test="${t.isActual eq '1'}">是</c:if>
+               	   	<c:if test="${t.isActual eq '0'}">否</c:if>
+               	   </p>
+               </div>
+           </div>
            <div class="form-group">
                <label for="isShelve" class="col-sm-2 control-label">是否下架:</label>
                <div class="col-sm-10">

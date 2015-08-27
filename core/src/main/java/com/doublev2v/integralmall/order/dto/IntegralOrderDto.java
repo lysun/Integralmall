@@ -3,7 +3,7 @@ package com.doublev2v.integralmall.order.dto;
 import java.util.Date;
 
 import com.doublev2v.foundation.core.entity.Identified;
-import com.doublev2v.integralmall.order.om.dto.OrderMerchandiseDto;
+import com.doublev2v.integralmall.order.om.OrderMerchandiseDto;
 import com.doublev2v.integralmall.userinfo.UserInfo;
 
 public class IntegralOrderDto implements Identified<String>{

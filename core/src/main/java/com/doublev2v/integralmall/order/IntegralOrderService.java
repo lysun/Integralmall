@@ -16,7 +16,6 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,15 +27,12 @@ import org.springframework.stereotype.Service;
 
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
-import com.doublev2v.integralmall.auth.realm.ShiroContext;
-import com.doublev2v.integralmall.auth.user.User;
 import com.doublev2v.integralmall.integral.IntegralService;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
 import com.doublev2v.integralmall.merchandise.coupon.Coupon;
 import com.doublev2v.integralmall.order.om.OrderMerchandise;
 import com.doublev2v.integralmall.order.om.OrderMerchandiseRepository;
-import com.doublev2v.integralmall.shop.Shop;
 import com.doublev2v.integralmall.shop.ShopService;
 import com.doublev2v.integralmall.userinfo.UserInfo;
 import com.doublev2v.integralmall.userinfo.UserInfoService;
@@ -183,13 +179,6 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
                 //前端UserInfo用户过滤
                 if(user!=null){
                 	predicate.add(cb.equal(root.get("user").as(UserInfo.class), user));
-                }
-                //后台User用户过滤，店铺用户只能查看当前店铺的订单
-                User user=ShiroContext.getCurrentUser();
-                if(user!=null){
-                	if(SecurityUtils.getSubject().hasRole(Constant.ROLE_SHOP_USER)){
-                    	predicate.add(cb.equal(root.get("shop").as(Shop.class), shopService.getShopByUser(user)));
-                    }
                 }
                 try {
 	                if(StringUtils.isNotBlank(startDate)){

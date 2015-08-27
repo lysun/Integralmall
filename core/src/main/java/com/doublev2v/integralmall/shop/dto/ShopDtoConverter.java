@@ -18,8 +18,6 @@ import com.doublev2v.foundation.media.MediaService;
 import com.doublev2v.integralmall.shop.Shop;
 import com.doublev2v.integralmall.tag.Tag;
 import com.doublev2v.integralmall.tag.TagRepository;
-import com.doublev2v.integralmall.tag.dto.TagDto;
-import com.doublev2v.integralmall.tag.dto.TagDtoConverter;
 @Component
 public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 	
@@ -29,8 +27,6 @@ public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 	private CategoryItemRepository categoryItemRepository;
 	@Autowired
 	private CategoryItemDtoConverter categoryItemDtoConverter;
-	@Autowired
-	private TagDtoConverter tagDtoConverter;
 	@Autowired
 	private TagRepository tagRepository;
 	public ShopDto postConvert(Shop d,ShopDto t){
@@ -43,10 +39,6 @@ public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 		if(d.getClassify()!=null){
 			t.setClassifyDto(categoryItemDtoConverter.convert(d.getClassify()));
 			t.setClassifyId(d.getClassify().getId());
-		}
-		if(d.getTags()!=null){
-			Set<TagDto> set=new HashSet<TagDto>(tagDtoConverter.convertTs(d.getTags()));
-			t.setTagDtos(set);
 		}
 		return t;
 	}
@@ -66,6 +58,7 @@ public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 			if(t.getTagIds()!=null){
 				Set<Tag> set=new HashSet<Tag>();
 				for(String tagId:t.getTagIds()){
+					System.out.println(tagId);
 					set.add(tagRepository.findOne(tagId));
 				}
 				d.setTags(set);

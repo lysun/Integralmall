@@ -33,7 +33,7 @@
                	   <c:forEach items="${perms }" var="perm">
 	               	 <div class="col-sm-10">
 		               <input type="checkbox" name="permIds" value="${perm.id }" 
-		               	<c:forEach items="${t.permDtos}" var="permDto">
+		               	<c:forEach items="${t.perms}" var="permDto">
 		               		<c:if test="${permDto.id eq perm.id }">checked</c:if>
 		               	</c:forEach>/>
 		               	${perm.name }(${perm.code})

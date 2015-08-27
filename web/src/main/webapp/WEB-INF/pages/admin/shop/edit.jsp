@@ -59,7 +59,7 @@
                <div class="col-sm-10">
 	               <c:forEach items="${tags }" var="tag">
 	               <input type="checkbox" name="tagIds" value="${tag.id }" 
-	               	<c:forEach items="${t.tagDtos}" var="tagDto">
+	               	<c:forEach items="${t.tags}" var="tagDto">
 	               		<c:if test="${tagDto.id eq tag.id }">checked</c:if>
 	               	</c:forEach>/>
 	               	${tag.name }

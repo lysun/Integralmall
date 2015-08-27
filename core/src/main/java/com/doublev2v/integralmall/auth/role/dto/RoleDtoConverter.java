@@ -15,22 +15,8 @@ import com.doublev2v.integralmall.auth.role.Role;
 public class RoleDtoConverter extends SimpleDtoConverter<Role, RoleDto> {
 	@Autowired
 	private PermissionRepository permissionRepository;
-	public RoleDto postConvert(Role d,RoleDto t){
-		Set<Permission> perms=d.getPerms();
-		if(perms!=null){
-			Set<Permission> permDtos=new HashSet<Permission>();
-			for(Permission perm:perms){
-				Permission permDto=new Permission();
-				permDto.setId(perm.getId());
-				permDto.setName(perm.getName());
-				permDto.setCode(perm.getCode());
-				permDtos.add(permDto);
-			}
-			t.setPermDtos(permDtos);
-		}
-		
-		return t;
-	}
+	
+	
 	public Role postConvertD(RoleDto t,Role d){
 		return postUpdate(t,d);
 	}

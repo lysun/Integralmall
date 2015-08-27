@@ -116,6 +116,17 @@
                </div>
            </div>
            <div class="form-group">
+               <label for="brandId" class="col-sm-2 control-label">商家:</label>
+               <div class="col-sm-10">
+                   <select id="shopId" name="shopId" class="form-control">
+                   		<option value="0">请选择...</option>
+               			<c:forEach items="${shops }" var="shop">
+               			<option value="${shop.id }">${shop.shopName }</option>
+               			</c:forEach>
+               		</select>
+               </div>
+           </div>
+           <div class="form-group">
                <label for="name" class="col-sm-2 control-label">商品名称:</label>
                <div class="col-sm-10">
                    <input id="name" class="form-control" name="name" placeholder="please input name">*

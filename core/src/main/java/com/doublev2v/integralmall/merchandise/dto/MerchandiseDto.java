@@ -32,6 +32,7 @@ public class MerchandiseDto implements Identified<String>{
 	@JsonIgnore
 	private MultipartFile[] mediaFiles;
 	private ShopDto shopDto;
+	private String shopId;
 	public String getId() {
 		return id;
 	}
@@ -140,6 +141,12 @@ public class MerchandiseDto implements Identified<String>{
 	}
 	public void setShopDto(ShopDto shopDto) {
 		this.shopDto = shopDto;
+	}
+	public String getShopId() {
+		return shopId;
+	}
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
 	}
 	
 	

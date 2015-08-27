@@ -55,7 +55,7 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="classifyId" class="col-sm-2 control-label">商家标签:</label>
+               <label for="tagIds" class="col-sm-2 control-label">商家标签:</label>
                <div class="col-sm-10">
                    <c:forEach items="${tags }" var="tag">
 	               	<input type="checkbox" name="tagIds" value="${tag.id }"/>

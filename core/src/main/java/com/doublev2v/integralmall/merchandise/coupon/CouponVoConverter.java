@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 import com.doublev2v.foundation.core.dto.polymorphism.SimplePolymorphismConverter;
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.integralmall.merchandise.Merchandise;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseVO;
+import com.doublev2v.integralmall.merchandise.dto.MerchandiseVo;
 @Component
-public class CouponVoConverter extends SimplePolymorphismConverter<Coupon, CouponVO,Merchandise,MerchandiseVO> {
+public class CouponVoConverter extends SimplePolymorphismConverter<Coupon, CouponVo,Merchandise,MerchandiseVo> {
 
 	@Override
-	public MerchandiseVO convert(Merchandise d) {
-		CouponVO t=new CouponVO();
+	public MerchandiseVo convert(Merchandise d) {
+		CouponVo t=new CouponVo();
 		Coupon c=(Coupon)d;
 		t.setId(c.getId());
 		t.setName(c.getName());
@@ -47,9 +47,9 @@ public class CouponVoConverter extends SimplePolymorphismConverter<Coupon, Coupo
 		return t;
 	}
 	@Override
-	public MerchandiseVO convertSimple(Merchandise d) {
+	public MerchandiseVo convertSimple(Merchandise d) {
 		Coupon c=(Coupon)d;
-		CouponVO t=new CouponVO();
+		CouponVo t=new CouponVo();
 		t.setId(c.getId());
 		t.setName(c.getName());
 		t.setIntegralCount(String.valueOf(c.getIntegralCount()));

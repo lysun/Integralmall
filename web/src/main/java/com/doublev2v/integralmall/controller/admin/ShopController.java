@@ -9,8 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.doublev2v.foundation.core.service.PagingService;
 import com.doublev2v.foundation.dics.CategoryItemDtoService;
-import com.doublev2v.integralmall.shop.ShopDtoService;
 import com.doublev2v.integralmall.shop.dto.ShopDto;
+import com.doublev2v.integralmall.shop.dto.ShopDtoService;
 import com.doublev2v.integralmall.tag.TagService;
 import com.doublev2v.integralmall.util.Dics;
 

@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.doublev2v.foundation.core.entity.Identified;
 import com.doublev2v.foundation.dics.dto.CategoryItemDto;
 import com.doublev2v.foundation.media.MediaContentDto;
-import com.doublev2v.integralmall.tag.dto.TagDto;
+import com.doublev2v.integralmall.tag.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ShopDto implements Identified<String>{
@@ -20,8 +20,9 @@ public class ShopDto implements Identified<String>{
 	private MediaContentDto mainPicDto;
 	@JsonIgnore
 	private MultipartFile mainpicFile;
+	@JsonIgnore
 	private Set<String> tagIds;
-	private Set<TagDto> tagDtos;
+	private Set<Tag> tags;//简单的对象交给dozer转换
 	public String getId() {
 		return id;
 	}
@@ -64,11 +65,11 @@ public class ShopDto implements Identified<String>{
 	public void setMainpicFile(MultipartFile mainpicFile) {
 		this.mainpicFile = mainpicFile;
 	}
-	public Set<TagDto> getTagDtos() {
-		return tagDtos;
+	public Set<Tag> getTags() {
+		return tags;
 	}
-	public void setTagDtos(Set<TagDto> tagDtos) {
-		this.tagDtos = tagDtos;
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
 	}
 	public Set<String> getTagIds() {
 		return tagIds;

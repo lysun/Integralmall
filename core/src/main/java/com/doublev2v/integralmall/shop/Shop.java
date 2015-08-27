@@ -12,7 +12,6 @@ import javax.persistence.OneToOne;
 import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.media.MediaContent;
-import com.doublev2v.integralmall.auth.user.User;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.tag.Tag;
 @Entity
@@ -23,7 +22,6 @@ public class Shop extends UUIDBaseModel{
 	private String description;
 	private MediaContent mainPic;
 	private Set<Merchandise> merchs;
-	private User user;
 	private Set<Tag> tags;
 	public String getShopName() {
 		return shopName;
@@ -57,13 +55,6 @@ public class Shop extends UUIDBaseModel{
 	}
 	public void setMerchs(Set<Merchandise> merchs) {
 		this.merchs = merchs;
-	}
-	@OneToOne
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	
 	@ManyToMany

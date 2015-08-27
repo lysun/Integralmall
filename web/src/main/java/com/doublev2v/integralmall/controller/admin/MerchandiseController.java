@@ -18,9 +18,9 @@ import com.doublev2v.foundation.dics.CategoryItemDtoService;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
 import com.doublev2v.integralmall.merchandise.coupon.CouponDto;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoConverter;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoService;
 import com.doublev2v.integralmall.merchandise.gift.GiftDto;
+import com.doublev2v.integralmall.shop.dto.ShopDtoService;
 import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
 @Controller
@@ -34,8 +34,8 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 	@Autowired
 	private CategoryItemDtoService categoryItemService;
 	@Autowired
-	private MerchandiseDtoConverter dtoConverter;
-	
+	private ShopDtoService shopDtoService;
+
 	@Override
 	protected PagingService<MerchandiseDto, String> getService() {
 		return dtoService;
@@ -70,6 +70,7 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 		ModelAndView view=new ModelAndView(viewPath);
 		view.addObject("brands", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_BRAND_TYPE));
 		view.addObject("classifies", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_CLASSIFY_TYPE));
+		view.addObject("shops", shopDtoService.findAll());
 		return view;
 	}
 	
@@ -81,6 +82,7 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 		view.addObject("t", t);
 		view.addObject("brands", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_BRAND_TYPE));
 		view.addObject("classifies", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_CLASSIFY_TYPE));
+		view.addObject("shops", shopDtoService.findAll());
 		return view;
 	}
 	@RequestMapping(value="/{type}/{id}",method=RequestMethod.GET)

@@ -2,13 +2,13 @@ package com.doublev2v.integralmall.merchandise.coupon;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseVO;
+import com.doublev2v.integralmall.merchandise.dto.MerchandiseVo;
 import com.doublev2v.integralmall.util.MapPointDistance;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-public class CouponVO extends MerchandiseVO	{
+public class CouponVo extends MerchandiseVo	{
 	@JsonInclude(Include.NON_NULL)
 	private String classifyName;
 	@JsonInclude(Include.NON_NULL)

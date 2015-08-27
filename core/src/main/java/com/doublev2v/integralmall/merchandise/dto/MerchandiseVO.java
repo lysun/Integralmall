@@ -6,7 +6,7 @@ import com.doublev2v.foundation.core.entity.Identified;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-public class MerchandiseVO implements Identified<String>{
+public class MerchandiseVo implements Identified<String>{
 
 	private String id;
 	private String name;

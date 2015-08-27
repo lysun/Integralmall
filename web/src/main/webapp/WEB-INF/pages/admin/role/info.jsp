@@ -30,7 +30,7 @@
            <div class="form-group">
                <label for="type" class="col-sm-2 control-label">拥有权限:</label>
                <div class="col-sm-10">
-               	   <c:forEach items="${t.permDtos}" var="permDto">
+               	   <c:forEach items="${t.perms}" var="permDto">
 	               		<div class="col-sm-10">${permDto.name}(${permDto.code})</div>
 	               	</c:forEach>
                </div>

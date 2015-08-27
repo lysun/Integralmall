@@ -36,8 +36,8 @@
            <div class="form-group">
                <label for="classifyId" class="col-sm-2 control-label">商家标签:</label>
                <div class="col-sm-10">
-                   <c:forEach items="${t.tagDtos}" var="tagDto">
-	               		${tagDto.name}
+                   <c:forEach items="${t.tags}" var="tag">
+	               		${tag.name}
 	               	</c:forEach>
                </div>
            </div>

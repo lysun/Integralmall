@@ -17,6 +17,9 @@ import com.doublev2v.foundation.media.MediaContentDto;
 import com.doublev2v.foundation.media.MediaService;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
+import com.doublev2v.integralmall.shop.ShopRepository;
+import com.doublev2v.integralmall.shop.dto.ShopDtoConverter;
+import com.doublev2v.integralmall.util.Constant;
 
 @Component
 public class GiftDtoConverter extends SimplePolymorphismConverter<Gift,GiftDto,Merchandise, MerchandiseDto> {
@@ -26,6 +29,11 @@ public class GiftDtoConverter extends SimplePolymorphismConverter<Gift,GiftDto,M
 	private CategoryItemRepository categoryItemRepository;
 	@Autowired
 	private CategoryItemDtoConverter categoryItemDTOAdapter;
+	@Autowired
+	private ShopRepository shopRepository;
+	@Autowired
+	private ShopDtoConverter shopDtoConverter;
+	
 	@Override
 	public MerchandiseDto postConvert(Merchandise d, MerchandiseDto t) {
 		GiftDto gt=(GiftDto)t;
@@ -56,6 +64,10 @@ public class GiftDtoConverter extends SimplePolymorphismConverter<Gift,GiftDto,M
 			t.setClassifyDto(categoryItemDTOAdapter.convert(d.getClassify()));
 			t.setClassifyId(d.getClassify().getId());
 		}
+		if(d.getShop()!=null){
+			t.setShopDto(shopDtoConverter.convert(d.getShop()));
+			t.setShopId(d.getShop().getId());
+		}
 		return t;
 	}
 	@Override
@@ -64,6 +76,7 @@ public class GiftDtoConverter extends SimplePolymorphismConverter<Gift,GiftDto,M
 	}
 	@Override
 	public Merchandise postUpdate(MerchandiseDto t, Merchandise d) {
+		d.setIsShelve(Constant.SHELVE);//设置商品为上架
 		GiftDto gt=(GiftDto)t;
 		Gift gd=(Gift)d;
 		try {
@@ -93,6 +106,9 @@ public class GiftDtoConverter extends SimplePolymorphismConverter<Gift,GiftDto,M
 			if(StringUtils.isNotBlank(t.getClassifyId())){
 				CategoryItem classify=categoryItemRepository.findOne(t.getClassifyId());
 				d.setClassify(classify);
+			}
+			if(StringUtils.isNotBlank(t.getClassifyId())){
+				d.setShop(shopRepository.findOne(t.getShopId()));
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);

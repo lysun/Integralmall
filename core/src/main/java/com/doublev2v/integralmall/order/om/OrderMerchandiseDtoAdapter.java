@@ -1,11 +1,10 @@
-package com.doublev2v.integralmall.order.om.dto;
+package com.doublev2v.integralmall.order.om;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.doublev2v.foundation.core.dto.common.SimpleDtoConverter;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoConverter;
-import com.doublev2v.integralmall.order.om.OrderMerchandise;
 @Component
 public class OrderMerchandiseDtoAdapter extends SimpleDtoConverter<OrderMerchandise, OrderMerchandiseDto>{
 

@@ -10,12 +10,12 @@ import com.doublev2v.foundation.core.dto.polymorphism.PolymorphismConverter;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 
 @Component
-public class MerchandiseVoConverter extends SimpleDtoConverter<Merchandise, MerchandiseVO> {
+public class MerchandiseVoConverter extends SimpleDtoConverter<Merchandise, MerchandiseVo> {
 	@Autowired
-	private List<PolymorphismConverter<Merchandise, MerchandiseVO>> converters;
+	private List<PolymorphismConverter<Merchandise, MerchandiseVo>> converters;
 	
-	public MerchandiseVO convert(Merchandise d) {
-		for (PolymorphismConverter<Merchandise, MerchandiseVO> converter : converters) {
+	public MerchandiseVo convert(Merchandise d) {
+		for (PolymorphismConverter<Merchandise, MerchandiseVo> converter : converters) {
 			if(converter.supportD(d)) {
 				return converter.convert(d);
 			}
@@ -24,10 +24,10 @@ public class MerchandiseVoConverter extends SimpleDtoConverter<Merchandise, Merc
 	}
 	
 	@Override
-	public MerchandiseVO convertSimple(Merchandise d) {
-		for (PolymorphismConverter<Merchandise, MerchandiseVO> converter : converters) {
+	public MerchandiseVo convertSimple(Merchandise d) {
+		for (PolymorphismConverter<Merchandise, MerchandiseVo> converter : converters) {
 			if(converter.supportD(d)) {
-				MerchandiseVO dto=converter.convertSimple(d);
+				MerchandiseVo dto=converter.convertSimple(d);
 				return dto;
 			}
 		}

@@ -11,7 +11,7 @@ public class RoleDto implements Identified<String>{
 	private String name;
 	private String code;
 	private String description;
-	private Set<Permission> permDtos;
+	private Set<Permission> perms;//简单的对象交给Dozer转换
 	private Set<String> permIds;
 	public String getId() {
 		return id;
@@ -38,11 +38,11 @@ public class RoleDto implements Identified<String>{
 		this.description = description;
 	}
 	
-	public Set<Permission> getPermDtos() {
-		return permDtos;
+	public Set<Permission> getPerms() {
+		return perms;
 	}
-	public void setPermDtos(Set<Permission> permDtos) {
-		this.permDtos = permDtos;
+	public void setPerms(Set<Permission> perms) {
+		this.perms = perms;
 	}
 	public Set<String> getPermIds() {
 		return permIds;
