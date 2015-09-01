@@ -10,17 +10,16 @@ import com.doublev2v.integralmall.tag.TagService;
 
 @Controller
 @RequestMapping("/admin/tag")
-public class TagController extends CommonController<Tag> {
+public class TagController extends SimpleController<Tag> {
 	@Autowired
 	private TagService service;
 	@Override
 	protected PagingService<Tag, String> getService() {
 		return service;
 	}
-
 	@Override
-	protected String getBasePath() {
-		return "admin/tag/";
+	protected String getMenuTab() {
+		return "tag";
 	}
 
 }

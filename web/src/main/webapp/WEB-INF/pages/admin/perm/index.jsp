@@ -13,7 +13,6 @@
 			<tr id="{{value.id }}">
                  <td>{{value.name }}</td>
                  <td>{{value.code }}</td>
-                 <td>{{value.type }}</td>
                  <td><a href="<c:url value='/admin/perm/{{value.id }}/edit'/>">修改</a>|
                      <a href="<c:url value='/admin/perm/{{value.id }}'/>">查看</a>|
                      <a onclick="del('<c:url value="/admin/perm"/>','{{value.id }}')">删除</a>
@@ -43,7 +42,6 @@
                 <tr>
                     <th>权限名</th>
                     <th>权限代码</th>
-                    <th>权限类型</th>
                     <th>操作</th>
                 </tr>
             </thead>                        

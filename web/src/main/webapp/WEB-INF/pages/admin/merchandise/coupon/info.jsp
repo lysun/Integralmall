@@ -9,30 +9,9 @@
 	</jsp:attribute>
 	<jsp:attribute name="script">
 		<script>
-		var map;
-		function initialize() {
-			map = new BMap.Map('map');
-			var point=new BMap.Point('${t.longitude}','${t.latitude}');
-			map.centerAndZoom(point, 14);
-			var marker = new BMap.Marker(point); //创建标注
-			map.clearOverlays();//清除所有覆盖物(标注)
-			map.addOverlay(marker);
-			map.enableScrollWheelZoom();//启动鼠标滚轮操作
-			//添加控件
-			var opts={type:BMAP_NAVIGATION_CONTROL_ZOOM};//设置左侧调节栏的样式
-			map.addControl(new BMap.NavigationControl(opts));//左侧调节栏
-			map.addControl(new BMap.ScaleControl());//测量尺
-			
-		}
-		//添加script标签
-		function loadScript() {
-			var script = document.createElement("script");
-			script.src = "http://api.map.baidu.com/api?v=1.4&callback=initialize";
-			document.body.appendChild(script);
-		}
-
 		$(function(){
 			loadScript();
+			addMapListener=null;
 		});
 		</script>
 	
@@ -155,7 +134,9 @@
            <div class="form-group">
                <label for="point" class="col-sm-2 control-label">位置:</label>
                <div class="col-sm-10">
-                   <p id="point" class="form-control">${t.longitude},${t.latitude}</p>
+                    <input id="longitude" type="hidden" class="form-control" name="longitude" value="${t.longitude}">
+                   <input id="latitude" type="hidden" class="form-control" name="latitude" value="${t.latitude}">
+                   <p id="point" class="form-control">${t.longitude},${t.latitude}</p><span>点击地图选择具体位置</span>
                    <div id="map" style="width:100%;height:600px"></div>
                </div>
            </div>

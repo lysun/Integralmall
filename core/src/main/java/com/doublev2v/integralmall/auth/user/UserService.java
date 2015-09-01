@@ -3,9 +3,7 @@ package com.doublev2v.integralmall.auth.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.AuthorizationException;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +29,6 @@ public class UserService extends AbstractPagingAndSortingService<User, String>{
 		if (user.getRoles() != null) {
         	for(Role r:user.getRoles()){
         		roles.add(r.getCode());
-        		
         	}
         }else
         	throw new AuthorizationException("没有角色");
@@ -54,9 +51,7 @@ public class UserService extends AbstractPagingAndSortingService<User, String>{
         return permissions;
 	}
 	
-	public Subject subject(){
-		return SecurityUtils.getSubject();
-	}
+	
 	
 	
 }

@@ -36,9 +36,9 @@
                 /login=anon
                 /logout=logout
                 /admin/user/**=authc,roles["ROLE_SYSTEM"]<!-- 只有超级管理员才能管理用户信息 -->
-                /admin/merchandise/**=authc,perms["menu:manager:merchandise"]
-                /admin/integralOrder/**=authc,perms["menu:manager:integralOrder"]
-                /admin/shop/**=authc,perms["menu:manager:shop"]
+                /admin/merchandise/**=authc,roles["ROLE_MERCHANDISE"]
+                /admin/integralOrder/**=authc,roles["ROLE_INTEGRALORDER"]
+                /admin/shop/**=authc,roles["ROLE_SHOP"]
                 /admin/**=authc
             </value>
         </property>  

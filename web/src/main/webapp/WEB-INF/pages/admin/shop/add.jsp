@@ -24,14 +24,20 @@
 	</jsp:attribute>
 	<jsp:body>
 		<form action="./" role="form" class="form-horizontal" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+               <label for="num" class="col-sm-2 control-label">商户编号:</label>
+               <div class="col-sm-10">
+                   <input class="form-control" name="num" placeholder="please input shopName">
+               </div>
+           </div>
            <div class="form-group">
-               <label for="shopName" class="col-sm-2 control-label">商家名称:</label>
+               <label for="shopName" class="col-sm-2 control-label">商户名称:</label>
                <div class="col-sm-10">
                    <input class="form-control" name="shopName" placeholder="please input shopName">
                </div>
            </div>
            <div class="form-group">
-               <label for="classifyId" class="col-sm-2 control-label">商家分类:</label>
+               <label for="classifyId" class="col-sm-2 control-label">商户类别:</label>
                <div class="col-sm-10">
                    <select id="classifyId" name="classifyId" class="form-control">
                			<option value="0">请选择...</option>
@@ -55,17 +61,21 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="tagIds" class="col-sm-2 control-label">商家标签:</label>
+               <label for="integral" class="col-sm-2 control-label">可分配积分:</label>
                <div class="col-sm-10">
-                   <c:forEach items="${tags }" var="tag">
-	               	<input type="checkbox" name="tagIds" value="${tag.id }"/>
-	               	${tag.name }
-	               </c:forEach>
+                   <input class="form-control" name="integral" placeholder="please input integral">
                </div>
            </div>
            <div class="form-group">
+               <label for="tagIds" class="col-sm-2 control-label">商家标签:</label>
+               <div class="col-sm-10">
+                  <input class="form-control" name="tagName" placeholder="标签之间用空格隔开">
+               </div>
+           </div>
+            
+           <div class="form-group">
 			   <div class="col-sm-offset-2 col-sm-10">
-			      <button type="submit" class="btn btn-default">保存</button>
+			      <button id="submit" class="btn btn-default">保存</button>
 			   </div>
 			</div>
        </form>

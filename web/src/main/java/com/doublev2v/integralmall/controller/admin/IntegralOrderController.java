@@ -18,7 +18,7 @@ import com.doublev2v.integralmall.util.RequestResult;
 
 @Controller
 @RequestMapping("/admin/integralOrder")
-public class IntegralOrderController extends CommonController<IntegralOrderDto>{
+public class IntegralOrderController extends SimpleController<IntegralOrderDto>{
 
 	@Autowired
 	private IntegralOrderDtoService service;
@@ -29,8 +29,8 @@ public class IntegralOrderController extends CommonController<IntegralOrderDto>{
 	}
 
 	@Override
-	protected String getBasePath() {
-		return "admin/integralOrder/";
+	protected String getMenuTab() {
+		return "integralOrder";
 	}
 	/**
 	 * 获取积分订单列表
@@ -54,4 +54,6 @@ public class IntegralOrderController extends CommonController<IntegralOrderDto>{
 		PagedList<IntegralOrderDto> list=service.getList(page, size, search,startDate,endDate, orderBy, seq);
 		return RequestResult.success(list).toJson();
 	}
+
+	
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.doublev2v.integralmall.auth.menu.MenuService;
 import com.doublev2v.integralmall.auth.user.User;
 import com.doublev2v.integralmall.auth.user.UserService;
 
@@ -18,14 +19,18 @@ public class LoginController{
 	
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private MenuService menuService;
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public ModelAndView loginView(){
 		return new ModelAndView("login");
 	}
 	@RequestMapping(value="/admin",method=RequestMethod.GET)
 	public ModelAndView admin(){
-		return new ModelAndView("admin/index");
+		ModelAndView view=new ModelAndView("admin/index");
+		view.addObject("top", menuService.getTopMenus());
+		view.addObject("subMenu", menuService.getSecondMenus("user"));
+		return view;
 	}
 	@RequestMapping(value = "/login", method = RequestMethod.POST)  
 	public ModelAndView submit(String username, String password) {

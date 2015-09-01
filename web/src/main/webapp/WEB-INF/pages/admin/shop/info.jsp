@@ -9,6 +9,12 @@
 	</jsp:attribute>
 	<jsp:body>
 		<form role="form" class="form-horizontal" method="post">
+            <div class="form-group">
+               <label for="num" class="col-sm-2 control-label">商户编号:</label>
+               <div class="col-sm-10">
+                  <p class="form-control">${t.num }</p>
+               </div>
+           </div>
            <div class="form-group">
                <label for="shopName" class="col-sm-2 control-label">商家名称:</label>
                <div class="col-sm-10">
@@ -34,14 +40,43 @@
                </div>
            </div>
            <div class="form-group">
+               <label for="integral" class="col-sm-2 control-label">可分配积分:</label>
+               <div class="col-sm-10">
+               <p class="form-control">${t.integral }</p>
+               </div>
+           </div>
+           <div class="form-group">
                <label for="classifyId" class="col-sm-2 control-label">商家标签:</label>
                <div class="col-sm-10">
                    <c:forEach items="${t.tags}" var="tag">
-	               		${tag.name}
+	               		${tag.name} 
 	               	</c:forEach>
                </div>
            </div>
-          
+          <div class="form-group">
+               <label for="classifyId" class="col-sm-2 control-label">分店信息:</label>
+               <div class="col-sm-10">
+                <c:forEach items="${t.branchs }" var="branch">
+		           <div class="panel panel-default">
+					   <div class="panel-body">
+					   <table class="table table-condensed">
+					   <caption>${branch.name }</caption>
+					     <tr>
+					         <td>分店编号：${branch.num }</td>
+					         <td>分店位置：${branch.longitude },${branch.latitude }</td>
+					     </tr>
+					     <tr>
+					         <td>联系人：${branch.contact }</td>
+					         <td>联系电话：${branch.tel }</td>
+					     </tr>
+					    
+					   </table>
+						
+					   </div>
+					</div>
+		           </c:forEach>
+               </div>
+           </div>
        </form>
 	</jsp:body>
 </my:admin>

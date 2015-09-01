@@ -15,11 +15,9 @@ public class PermissionService extends AbstractPagingAndSortingService<Permissio
 	public Permission update(Permission t) {
 		if(t==null)return null;
 		Permission perm=repository.findOne(t.getId());
-		System.out.println(perm.getUpdateTime());
 		perm.setCode(t.getCode());
 		perm.setDescription(t.getDescription());
 		perm.setName(t.getName());
-		perm.setType(t.getType());
 		return getRepository().save(perm);
 	}
 	

@@ -9,7 +9,6 @@ public class Permission extends UUIDBaseModel{
 	private String name;
 	private String code;
 	private String description;
-	private PermType type;
 
 	public String getName() {
 		return name;
@@ -32,13 +31,5 @@ public class Permission extends UUIDBaseModel{
 		this.description = description;
 	}
 
-	public PermType getType() {
-		return type;
-	}
-
-	public void setType(PermType type) {
-		this.type = type;
-	}
-	
 	
 }

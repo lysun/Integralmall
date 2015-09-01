@@ -11,9 +11,13 @@
 	<script id="template" type="text/html">
 		{{each result as value i}}
 			<tr id="{{value.id }}">
+                 <td>{{value.num }}</td>
                  <td>{{value.shopName }}</td>
-                 <td>{{value.classifyDto.name }}</td>
-                 <td><a href="<c:url value='/admin/shop/{{value.id }}/edit'/>">修改</a>|
+                 <td>0</td>
+                 <td>0</td>
+                 <td>{{value.integral }}</td>
+                 <td><a href="<c:url value='/admin/shop/{{value.id }}/branch/add'/>">添加分店</a>|
+                     <a href="<c:url value='/admin/shop/{{value.id }}/edit'/>">修改</a>|
                      <a href="<c:url value='/admin/shop/{{value.id }}'/>">查看</a>|
                      <a onclick="del('<c:url value="/admin/shop"/>','{{value.id }}')">删除</a>
                  </td>
@@ -40,8 +44,11 @@
 		<table class="table table-bordered text-center mgt-2">
             <thead>
                 <tr>
-                    <th>商家名称</th>
-                    <th>商家分类</th>
+                    <th>渠道编号</th>
+                    <th>渠道名称</th>
+                    <th>注册会员数</th>
+                    <th>消费总额</th>
+                    <th>可分配积分</th>
                     <th>操作</th>
                 </tr>
             </thead>                        

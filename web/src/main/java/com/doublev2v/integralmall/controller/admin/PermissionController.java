@@ -10,7 +10,7 @@ import com.doublev2v.integralmall.auth.permission.PermissionService;
 
 @Controller
 @RequestMapping("/admin/perm")
-public class PermissionController extends CommonController<Permission> {
+public class PermissionController extends SimpleController<Permission> {
 	
 	@Autowired
 	private PermissionService service;
@@ -21,8 +21,8 @@ public class PermissionController extends CommonController<Permission> {
 	}
 
 	@Override
-	protected String getBasePath() {
-		return "admin/perm/";
+	protected String getMenuTab() {
+		return "perm";
 	}
 	
 	

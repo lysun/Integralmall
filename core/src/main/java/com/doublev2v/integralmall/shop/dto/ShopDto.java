@@ -7,11 +7,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.doublev2v.foundation.core.entity.Identified;
 import com.doublev2v.foundation.dics.dto.CategoryItemDto;
 import com.doublev2v.foundation.media.MediaContentDto;
+import com.doublev2v.integralmall.shop.branch.BranchShopDto;
 import com.doublev2v.integralmall.tag.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ShopDto implements Identified<String>{
 	private String id;
+	private String num;//商户编号
 	private String shopName;
 	private CategoryItemDto classifyDto;//商品分类
 	@JsonIgnore
@@ -20,9 +22,12 @@ public class ShopDto implements Identified<String>{
 	private MediaContentDto mainPicDto;
 	@JsonIgnore
 	private MultipartFile mainpicFile;
+	private long integral;
 	@JsonIgnore
-	private Set<String> tagIds;
+	private String tagName;
 	private Set<Tag> tags;//简单的对象交给dozer转换
+	private Set<BranchShopDto> branchs;
+	
 	public String getId() {
 		return id;
 	}
@@ -71,13 +76,30 @@ public class ShopDto implements Identified<String>{
 	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
 	}
-	public Set<String> getTagIds() {
-		return tagIds;
+	public String getNum() {
+		return num;
 	}
-	public void setTagIds(Set<String> tagIds) {
-		this.tagIds = tagIds;
+	public void setNum(String num) {
+		this.num = num;
 	}
-	
+	public long getIntegral() {
+		return integral;
+	}
+	public void setIntegral(long integral) {
+		this.integral = integral;
+	}
+	public String getTagName() {
+		return tagName;
+	}
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+	public Set<BranchShopDto> getBranchs() {
+		return branchs;
+	}
+	public void setBranchs(Set<BranchShopDto> branchs) {
+		this.branchs = branchs;
+	}
 	
 
 }

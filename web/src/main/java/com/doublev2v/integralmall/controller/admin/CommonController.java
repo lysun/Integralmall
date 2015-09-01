@@ -24,7 +24,6 @@ public abstract class CommonController<T extends Identified<String>> {
 	 * @return
 	 */
 	protected abstract String getBasePath();
-	
 	/**
 	 * 获取资源列表
 	 * @param page

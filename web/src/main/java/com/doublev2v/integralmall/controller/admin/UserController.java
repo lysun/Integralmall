@@ -8,14 +8,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.doublev2v.foundation.core.service.PagingService;
+import com.doublev2v.integralmall.auth.menu.MenuService;
 import com.doublev2v.integralmall.auth.role.RoleService;
 import com.doublev2v.integralmall.auth.user.UserDtoService;
 import com.doublev2v.integralmall.auth.user.dto.UserDto;
 
 @Controller
 @RequestMapping("/admin/user")
-public class UserController extends CommonController<UserDto> {
-	
+public class UserController extends SimpleController<UserDto> {
+	@Autowired
+	private MenuService menuService;
 	@Autowired
 	private UserDtoService service;
 	@Autowired
@@ -26,8 +28,8 @@ public class UserController extends CommonController<UserDto> {
 	}
 
 	@Override
-	protected String getBasePath() {
-		return "admin/user/";
+	protected String getMenuTab() {
+		return "user";
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.GET)
@@ -35,6 +37,8 @@ public class UserController extends CommonController<UserDto> {
 		String viewPath=getBasePath()+"add";
 		ModelAndView view=new ModelAndView(viewPath);
 		view.addObject("roles", roleService.findAll());
+		view.addObject("top", getMenuService().getTopMenus());
+		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
 		return view;
 	}
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
@@ -43,6 +47,8 @@ public class UserController extends CommonController<UserDto> {
 		ModelAndView view=new ModelAndView(viewPath);
 		view.addObject("t", service.findOne(id));
 		view.addObject("roles", roleService.findAll());
+		view.addObject("top", getMenuService().getTopMenus());
+		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
 		return view;
 	}
 

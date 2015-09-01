@@ -8,7 +8,7 @@
 		<my:user-nav tab="perm"></my:user-nav>
 	</jsp:attribute>
 	<jsp:body>
-		<form action="./" role="form" class="form-horizontal" method="post" enctype="multipart/form-data">
+		<form action="./" role="form" class="form-horizontal" method="post">
            <div class="form-group">
                <label for="name" class="col-sm-2 control-label">权限名:</label>
                <div class="col-sm-10">
@@ -27,19 +27,7 @@
                    <input class="form-control" name="description" value="${t.description }" placeholder="please input description">
                </div>
            </div>
-           <div class="form-group">
-               <label for="type" class="col-sm-2 control-label">权限类型:</label>
-               <div class="col-sm-10">
-                <c:if test="${t.type eq 'MENU' }">
-                   <input name="type" type="radio" value="MENU" checked/>MENU
-                   <input name="type" type="radio" value="OBJECT" />OBJECT
-                </c:if>
-               <c:if test="${t.type eq 'OBJECT' }">
-                  <input name="type" type="radio" value="MENU" />MENU
-                   <input name="type" type="radio" value="OBJECT" checked/>OBJECT
-               </c:if>  
-               </div>
-           </div>
+          
            <div class="form-group">
 			   <div class="col-sm-offset-2 col-sm-10">
 			      <button type="submit" class="btn btn-default">保存</button>

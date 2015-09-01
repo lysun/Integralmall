@@ -27,12 +27,6 @@
                <p class="form-control">${t.description }</p>
                </div>
            </div>
-           <div class="form-group">
-               <label for="type" class="col-sm-2 control-label">权限类型:</label>
-               <div class="col-sm-10">
-               	<p class="form-control">${t.type}</p>
-               </div>
-           </div>
        </form>
 	</jsp:body>
 </my:admin>

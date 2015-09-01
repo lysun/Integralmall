@@ -19,11 +19,27 @@
 	            };  
 	            fr.readAsDataURL(file);  
 	        }  
-	    } 
+	    }
+	    function deleteBranch(branchId){
+		    ajax("<c:url value='/admin/shop/${t.id}/branch/"+branchId+"'/>",null,"delete",function(data){
+		    	if(data.errcode=="0"){
+	        		$("#"+branchId).remove();
+	        	}else{
+	        		alert("删除失败");
+	        	}
+			    });
+
+		    }
 		</script>
 	</jsp:attribute>
 	<jsp:body>
 		<form action="./" role="form" class="form-horizontal" method="post" enctype="multipart/form-data" enctype="multipart/form-data">
+          <div class="form-group">
+               <label for="num" class="col-sm-2 control-label">商户编号:</label>
+               <div class="col-sm-10">
+                   <input class="form-control" name="num" value="${t.num }" placeholder="please input shopName">
+               </div>
+           </div>
            <div class="form-group">
                <label for="shopName" class="col-sm-2 control-label">商家名称:</label>
                <div class="col-sm-10">
@@ -55,15 +71,43 @@
                </div>
            </div>
            <div class="form-group">
+               <label for="integral" class="col-sm-2 control-label">可分配积分:</label>
+               <div class="col-sm-10">
+                   <input class="form-control" name="integral" value="${t.integral }"  placeholder="please input integral">
+               </div>
+           </div>
+           <div class="form-group">
                <label for="classifyId" class="col-sm-2 control-label">商家标签:</label>
                <div class="col-sm-10">
-	               <c:forEach items="${tags }" var="tag">
-	               <input type="checkbox" name="tagIds" value="${tag.id }" 
-	               	<c:forEach items="${t.tags}" var="tagDto">
-	               		<c:if test="${tagDto.id eq tag.id }">checked</c:if>
-	               	</c:forEach>/>
-	               	${tag.name }
-	               </c:forEach>
+               <input class="form-control" name="tagName" placeholder="标签之间用空格隔开"
+               value='<c:forEach items="${t.tags}" var="tag">${tag.name } </c:forEach>' />
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="classifyId" class="col-sm-2 control-label">分店信息:</label>
+               <div class="col-sm-10">
+                <c:forEach items="${t.branchs }" var="branch">
+		           <div id="${branch.id }" class="panel panel-default">
+					   <div class="panel-body">
+					   <table class="table table-condensed">
+					   <caption>${branch.name }</caption>
+					     <tr>
+					         <td>分店编号：${branch.num }</td>
+					         <td>分店位置：${branch.longitude },${branch.latitude }</td>
+					     </tr>
+					     <tr>
+					         <td>联系人：${branch.contact }</td>
+					         <td>联系电话：${branch.tel }</td>
+					     </tr>
+					    
+					   </table>
+						 <button type="button" class="btn btn-default btn-xs"
+						      onclick="window.location.href='<c:url value="/admin/shop/${t.id }/branch/${branch.id}/edit"/>'">编辑</button>
+						 <button type="button" class="btn btn-default btn-xs"
+						      onclick="deleteBranch('${branch.id}')" >删除</button>
+					   </div>
+					</div>
+		           </c:forEach>
                </div>
            </div>
            <div class="form-group">

@@ -13,8 +13,12 @@
 			<tr id="{{value.id }}">
                  <td>{{value.name }}</td>
                  <td>{{value.code }}</td>
-                 <td><a href="<c:url value='/admin/role/{{value.id }}/edit'/>">修改</a>|
-                     <a href="<c:url value='/admin/role/{{value.id }}'/>">查看</a>|
+                 <td>{{value.type }}</td>
+                 <td>
+                     {{if value.type=='MENU'}}<a href="<c:url value='/admin/role/menu/{{value.id }}/edit'/>">修改</a>{{/if}}
+                     {{if value.type=='PERM'}}<a href="<c:url value='/admin/role/perm/{{value.id }}/edit'/>">修改</a>{{/if}}|
+                     {{if value.type=='MENU'}}<a href="<c:url value='/admin/role/menu/{{value.id }}'/>">查看</a>{{/if}}
+                     {{if value.type=='PERM'}}<a href="<c:url value='/admin/role/perm/{{value.id }}'/>">查看</a>{{/if}}|
                      <a onclick="del('<c:url value="/admin/role"/>','{{value.id }}')">删除</a>
                  </td>
             </tr>
@@ -36,12 +40,21 @@
 		</script>
 	</jsp:attribute>
 	<jsp:body>
-	<button class="btn btn-default" onclick="window.location.href='<c:url value="/admin/role/add"/>'">添加</button>
+	<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			      添加<span class="caret"></span></button>
+		   <ul class="dropdown-menu" role="menu">
+		      <li><a href="<c:url value="/admin/role/menu/add"/>">菜单角色</a></li>
+		      <li><a href="<c:url value="/admin/role/perm/add"/>">权限角色</a></li>
+		   </ul>
+	    </div>
+
 		<table class="table table-bordered text-center mgt-2">
             <thead>
                 <tr>
                     <th>角色名</th>
                     <th>角色代码</th>
+                    <th>角色类别</th>
                     <th>操作</th>
                 </tr>
             </thead>                        

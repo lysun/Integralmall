@@ -16,6 +16,8 @@ import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.foundation.media.MediaContentDto;
 import com.doublev2v.foundation.media.MediaService;
 import com.doublev2v.integralmall.shop.Shop;
+import com.doublev2v.integralmall.shop.branch.BranchShopDto;
+import com.doublev2v.integralmall.shop.branch.BranchShopDtoConverter;
 import com.doublev2v.integralmall.tag.Tag;
 import com.doublev2v.integralmall.tag.TagRepository;
 @Component
@@ -29,6 +31,9 @@ public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 	private CategoryItemDtoConverter categoryItemDtoConverter;
 	@Autowired
 	private TagRepository tagRepository;
+	@Autowired
+	private BranchShopDtoConverter branchShopDtoConverter;
+	
 	public ShopDto postConvert(Shop d,ShopDto t){
 		if(d.getMainPic()!=null){
 			MediaContentDto md=new MediaContentDto();
@@ -39,6 +44,11 @@ public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 		if(d.getClassify()!=null){
 			t.setClassifyDto(categoryItemDtoConverter.convert(d.getClassify()));
 			t.setClassifyId(d.getClassify().getId());
+		}
+		if(d.getBranchShops()!=null){
+			Set<BranchShopDto> set=new HashSet<BranchShopDto>(
+					branchShopDtoConverter.convertTs(d.getBranchShops()));
+			t.setBranchs(set);
 		}
 		return t;
 	}
@@ -55,11 +65,18 @@ public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 				CategoryItem classify=categoryItemRepository.findOne(t.getClassifyId());
 				d.setClassify(classify);
 			}
-			if(t.getTagIds()!=null){
+			if(StringUtils.isNotBlank(t.getTagName())){
 				Set<Tag> set=new HashSet<Tag>();
-				for(String tagId:t.getTagIds()){
-					System.out.println(tagId);
-					set.add(tagRepository.findOne(tagId));
+				for(String name:t.getTagName().split("[ ]+")){
+					if(StringUtils.isNotBlank(name)){
+						Tag tag=tagRepository.findByName(name);
+						if(tag==null){
+							tag=new Tag(name);
+							tagRepository.save(tag);
+						}
+						set.add(tag);
+					}
+					
 				}
 				d.setTags(set);
 			}

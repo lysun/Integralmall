@@ -25,7 +25,7 @@ import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
 @Controller
 @RequestMapping("/admin/merchandise")
-public class MerchandiseController extends CommonController<MerchandiseDto> {
+public class MerchandiseController extends SimpleController<MerchandiseDto> {
 
 	@Autowired
 	private MerchandiseDtoService dtoService;
@@ -42,8 +42,8 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 	}
 
 	@Override
-	protected String getBasePath() {
-		return "admin/merchandise/";
+	protected String getMenuTab() {
+		return "merchandise";
 	}
 	/**
 	 * 获取商品列表
@@ -68,6 +68,8 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 	public ModelAndView add(@PathVariable String type) {
 		String viewPath=getBasePath()+type+"/add";
 		ModelAndView view=new ModelAndView(viewPath);
+		view.addObject("top", getMenuService().getTopMenus());
+		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
 		view.addObject("brands", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_BRAND_TYPE));
 		view.addObject("classifies", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_CLASSIFY_TYPE));
 		view.addObject("shops", shopDtoService.findAll());
@@ -78,8 +80,9 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 	public ModelAndView edit(@PathVariable String type,@PathVariable String id) {
 		String viewPath=getBasePath()+type+"/edit";
 		ModelAndView view=new ModelAndView(viewPath);
-		MerchandiseDto t=getService().findOne(id);
-		view.addObject("t", t);
+		view.addObject("top", getMenuService().getTopMenus());
+		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
+		view.addObject("t",getService().findOne(id));
 		view.addObject("brands", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_BRAND_TYPE));
 		view.addObject("classifies", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_CLASSIFY_TYPE));
 		view.addObject("shops", shopDtoService.findAll());
@@ -89,6 +92,8 @@ public class MerchandiseController extends CommonController<MerchandiseDto> {
 	public ModelAndView info(@PathVariable String type,@PathVariable String id) {
 		String viewPath=getBasePath()+type+"/info";
 		ModelAndView view=new ModelAndView(viewPath);
+		view.addObject("top", getMenuService().getTopMenus());
+		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
 		view.addObject("t", getService().findOne(id));
 		return view;
 	}
