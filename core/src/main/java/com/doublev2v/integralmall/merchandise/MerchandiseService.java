@@ -47,12 +47,12 @@ public class MerchandiseService extends AbstractPagingAndSortingService<Merchand
 	 * @param seq
 	 * @return
 	 */
-	public Page<Merchandise> findPage(Pageable page,String isActual,
+	public Page<Merchandise> findPage(Pageable page,String type,
 			String search,String orderBy,Direction seq){
 		if(StringUtils.isNotBlank(orderBy)){
 			page=new PageRequest(page.getPageNumber(), page.getPageSize(),new Sort(seq,orderBy));
 		}
-		return repository.findAll(getQueryClause(isActual,search), page);
+		return repository.findAll(getQueryClause(type,search), page);
 	}
 
 	/**
@@ -103,14 +103,14 @@ public class MerchandiseService extends AbstractPagingAndSortingService<Merchand
 	 * @param endDate
 	 * @return
 	 */
-	private Specification<Merchandise> getQueryClause(String isActual,String search){
+	private Specification<Merchandise> getQueryClause(String type,String search){
         return new Specification<Merchandise>() {
             @Override
             public Predicate toPredicate(Root<Merchandise> root, CriteriaQuery<?> query,
             		CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
-                if(StringUtils.isNotBlank(isActual)){
-                	predicate.add(cb.equal(root.get("isActual").as(String.class), isActual));
+                if(StringUtils.isNotBlank(type)){
+                	predicate.add(cb.equal(root.get("type").as(String.class), type));
                 }
                 predicate.add(cb.equal(root.get("isShelve").as(String.class), Constant.SHELVE));
                 if(StringUtils.isNotBlank(search)){

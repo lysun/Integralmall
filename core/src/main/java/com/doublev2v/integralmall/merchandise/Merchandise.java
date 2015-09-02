@@ -16,10 +16,10 @@ import javax.persistence.OneToOne;
 import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.media.MediaContent;
-import com.doublev2v.integralmall.shop.Shop;
+import com.doublev2v.integralmall.shop.branch.BranchShop;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="is_actual",discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING)
 public class Merchandise extends UUIDBaseModel{
 	private String seq;//编号
 	private CategoryItem classify;//商品分类
@@ -32,8 +32,8 @@ public class Merchandise extends UUIDBaseModel{
 	private String isShelve;//是否下架:true.上架，false.下架
 	private MediaContent mainPicMedia;
 	private Set<MediaContent> medias;
-	private String isActual;
-	private Shop shop;
+	private String type;
+	private BranchShop shop;
 	public String getSeq() {
 		return seq;
 	}
@@ -105,19 +105,21 @@ public class Merchandise extends UUIDBaseModel{
 	public void setMainPicMedia(MediaContent mainPicMedia) {
 		this.mainPicMedia = mainPicMedia;
 	}
-	@Column(name="is_actual",insertable=false,updatable=false)
-	public String getIsActual() {
-		return isActual;
+	@Column(name="type",insertable=false,updatable=false)
+	public String getType() {
+		return type;
 	}
-	public void setIsActual(String isActual) {
-		this.isActual = isActual;
+	public void setType(String type) {
+		this.type = type;
 	}
 	@ManyToOne
-	public Shop getShop() {
+	public BranchShop getShop() {
 		return shop;
 	}
-	public void setShop(Shop shop) {
+	public void setShop(BranchShop shop) {
 		this.shop = shop;
 	}
+	
+	
 		
 }

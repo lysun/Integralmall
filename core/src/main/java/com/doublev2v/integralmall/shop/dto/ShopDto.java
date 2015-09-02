@@ -27,7 +27,7 @@ public class ShopDto implements Identified<String>{
 	private String tagName;
 	private Set<Tag> tags;//简单的对象交给dozer转换
 	private Set<BranchShopDto> branchs;
-	
+
 	public String getId() {
 		return id;
 	}

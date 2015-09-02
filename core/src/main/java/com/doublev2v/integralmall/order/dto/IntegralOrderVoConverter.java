@@ -39,9 +39,9 @@ public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, 
 				}
 				t.setUsageDate("");
 				t.setCouponCode("");
-				switch(m.getIsActual()){
+				switch(m.getType()){
 				case Constant.VIRTUAL:
-					t.setIsActual(Constant.VIRTUAL);
+					t.setType(Constant.VIRTUAL);
 					Coupon c=(Coupon)m;
 					if(om.getExpiryDate()!=null){
 						t.setExpiryTime(om.getExpiryDate().format(DateTimeFormatter.ISO_DATE));
@@ -58,7 +58,7 @@ public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, 
 					}
 					break;
 				case Constant.ACTUAL:
-					t.setIsActual(Constant.ACTUAL);
+					t.setType(Constant.ACTUAL);
 					break;
 				}
 			}			
@@ -87,9 +87,9 @@ public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, 
 				if(m.getMainPicMedia()!=null){
 					t.setMainPic(m.getMainPicMedia().getUrl());
 				}
-				switch(m.getIsActual()){
+				switch(m.getType()){
 				case Constant.VIRTUAL:
-					t.setIsActual(Constant.VIRTUAL);
+					t.setType(Constant.VIRTUAL);
 					Coupon c=(Coupon)m;
 					if(om.getExpiryDate()!=null){
 						t.setExpiryTime(om.getExpiryDate().format(DateTimeFormatter.ISO_DATE));
@@ -100,7 +100,7 @@ public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, 
 					t.setLatitude(c.getLatitude());
 					break;
 				case Constant.ACTUAL:
-					t.setIsActual(Constant.ACTUAL);
+					t.setType(Constant.ACTUAL);
 					break;
 				}
 			}

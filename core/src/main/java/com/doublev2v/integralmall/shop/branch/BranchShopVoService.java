@@ -1,4 +1,4 @@
-package com.doublev2v.integralmall.shop.dto;
+package com.doublev2v.integralmall.shop.branch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,22 +15,20 @@ import com.doublev2v.foundation.core.dto.AbstractDtoPagingService;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.dics.CategoryItemService;
-import com.doublev2v.integralmall.shop.Shop;
-import com.doublev2v.integralmall.shop.ShopService;
 import com.doublev2v.integralmall.tag.Tag;
 import com.doublev2v.integralmall.tag.TagService;
 @Service
-public class ShopVoService extends AbstractDtoPagingService<Shop,ShopVo,String>{
+public class BranchShopVoService extends AbstractDtoPagingService<BranchShop,BranchShopVo,String>{
 	@Autowired
-	private ShopVoConverter voConverter;
+	private BranchShopVoConverter voConverter;
 	@Autowired
-	private ShopService service;
+	private BranchShopService service;
 	@Autowired
 	private CategoryItemService categoryItemService;
 	@Autowired
 	private TagService tagService;
 	
-	public PagedList<ShopVo> findPage(Integer pageNo,Integer pageSize,String classifyId,String tagId){
+	public PagedList<BranchShopVo> findPage(Integer pageNo,Integer pageSize,String classifyId,String tagId){
 		Pageable page=new PageRequest(pageNo-1, pageSize);
 		CategoryItem classify=null;
 		Tag tag=null;
@@ -40,10 +38,10 @@ public class ShopVoService extends AbstractDtoPagingService<Shop,ShopVo,String>{
 		if(StringUtils.isNotBlank(tagId)){
 			tag=tagService.findOne(tagId);
 		}
-		Page<Shop> list=service.findPage(page, null,classify,tag);
-		List<ShopVo> listDetail=
-				new ArrayList<ShopVo>(voConverter.convertSimples(list.getContent()));
-		Page<ShopVo> result=new PageImpl<ShopVo>(listDetail,page,list.getTotalElements());
-		return new PagedList<ShopVo>(result);
+		Page<BranchShop> list=service.findPage(page, null,classify,tag);
+		List<BranchShopVo> listDetail=
+				new ArrayList<BranchShopVo>(voConverter.convertSimples(list.getContent()));
+		Page<BranchShopVo> result=new PageImpl<BranchShopVo>(listDetail,page,list.getTotalElements());
+		return new PagedList<BranchShopVo>(result);
 	}
 }

@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 
 import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 import com.doublev2v.integralmall.order.om.OrderMerchandise;
-import com.doublev2v.integralmall.shop.Shop;
+import com.doublev2v.integralmall.shop.branch.BranchShop;
 import com.doublev2v.integralmall.userinfo.UserInfo;
 @Entity
 public class IntegralOrder extends UUIDBaseModel{
@@ -18,7 +18,7 @@ public class IntegralOrder extends UUIDBaseModel{
 	private OrderMerchandise orderMerchandise;
 	private String addressId;//收货地址id
 	private String status;//未使用:00,已使用:01,待发货:10,已发货:11,已取消:20
-	private Shop shop;//店铺信息
+	private BranchShop shop;//店铺信息
 	public String getStatus() {
 		return status;
 	}
@@ -58,10 +58,10 @@ public class IntegralOrder extends UUIDBaseModel{
 		this.addressId = addressId;
 	}
 	@ManyToOne
-	public Shop getShop() {
+	public BranchShop getShop() {
 		return shop;
 	}
-	public void setShop(Shop shop) {
+	public void setShop(BranchShop shop) {
 		this.shop = shop;
 	}
 	

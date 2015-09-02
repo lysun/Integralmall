@@ -22,24 +22,30 @@
   
 	<bean id="userRealm" class="com.doublev2v.integralmall.auth.realm.UserRealm">
     	<property name="userService" ref="userService"/>
+    </bean>
+    
+    <bean id="urlAccessFilter" class="com.doublev2v.integralmall.filter.UrlAccessFilter">
+    	<property name="urlAccessDefinitionManager" ref="urlAccessDefinitionManager"/>
     </bean>  
-   
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">  
         <property name="securityManager" ref="securityManager" />  
         <property name="successUrl" value="/admin" />  
         <property name="loginUrl" value="/login" />  
         <property name="unauthorizedUrl" value="/login" />
+        <!-- filters属性用于定义自己的过滤器 -->
+        <property name="filters">  
+            <map>  
+                <entry key="auth1" value-ref="urlAccessFilter"></entry>  
+            </map>  
+        </property>
         <!-- filterChainDefinitions用于声明url和filter的关系 -->
         <property name="filterChainDefinitions">  
             <value>  
                 /login=anon
                 /logout=logout
-                /admin/user/**=authc,roles["ROLE_SYSTEM"]<!-- 只有超级管理员才能管理用户信息 -->
-                /admin/merchandise/**=authc,roles["ROLE_MERCHANDISE"]
-                /admin/integralOrder/**=authc,roles["ROLE_INTEGRALORDER"]
-                /admin/shop/**=authc,roles["ROLE_SHOP"]
-                /admin/**=authc
+                /admin=authc
+                /admin/**=auth1
             </value>
         </property>  
     </bean> 

@@ -12,7 +12,7 @@ public class IntegralOrderVo implements Identified<String>{
 	private String orderNo;
 	@JsonInclude(Include.NON_NULL)
 	private Date orderDate;
-	private String isActual;
+	private String type;
 	private String name;
 	private String classifyName="";
 	private String brandName="";
@@ -45,11 +45,12 @@ public class IntegralOrderVo implements Identified<String>{
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
-	public String getIsActual() {
-		return isActual;
+	
+	public String getType() {
+		return type;
 	}
-	public void setIsActual(String isActual) {
-		this.isActual = isActual;
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getName() {
 		return name;

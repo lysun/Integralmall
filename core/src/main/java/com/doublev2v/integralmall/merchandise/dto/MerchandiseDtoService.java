@@ -18,10 +18,10 @@ public class MerchandiseDtoService extends AbstractDtoPagingService<Merchandise,
 	@Autowired
 	private MerchandiseService service;
 
-	public PagedList<MerchandiseDto> getList(Integer pageNo,Integer pageSize,String isActual,
+	public PagedList<MerchandiseDto> getList(Integer pageNo,Integer pageSize,String type,
 			String search,String orderBy,Direction seq){
 		Pageable page=new PageRequest(pageNo-1, pageSize);
-		Page<Merchandise> list = service.findPage(page, isActual, search, orderBy, seq);
+		Page<Merchandise> list = service.findPage(page, type, search, orderBy, seq);
 		Page<MerchandiseDto> result=list.map(dtoConverter);
 		return new PagedList<MerchandiseDto>(result);
 	}

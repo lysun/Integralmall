@@ -7,19 +7,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.doublev2v.foundation.core.model.PagedList;
-import com.doublev2v.integralmall.shop.dto.ShopVo;
-import com.doublev2v.integralmall.shop.dto.ShopVoService;
+import com.doublev2v.integralmall.shop.branch.BranchShopVo;
+import com.doublev2v.integralmall.shop.branch.BranchShopVoService;
 import com.doublev2v.integralmall.util.RequestResult;
 @RestController("shopRestController")
-public class ShopController{
+public class BranchShopController{
 	@Autowired
-	private ShopVoService service;
-	
+	private BranchShopVoService service;
+	/**
+	 * 根据标签或分类获取商户信息
+	 * @param page
+	 * @param size
+	 * @param classifyId
+	 * @param tagId
+	 * @return
+	 */
 	@RequestMapping(value="/getShops",method=RequestMethod.GET)
 	public String getShops(@RequestParam(defaultValue="1")Integer page,
 			@RequestParam(defaultValue="5")Integer size
 			,String classifyId,String tagId){
-		PagedList<ShopVo> list=service.findPage(page, size,classifyId,tagId); 
+		PagedList<BranchShopVo> list=service.findPage(page, size,classifyId,tagId); 
 		return RequestResult.success(list).toJson();
 	}
 	

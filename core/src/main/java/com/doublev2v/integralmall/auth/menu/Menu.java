@@ -21,8 +21,6 @@ public class Menu extends UUIDBaseModel{
 	private Menu parent;
 	@JsonIgnore
 	private Set<Menu> childs;
-	@JsonIgnore
-	private Set<Role> roles;
 	public String getName() {
 		return name;
 	}
@@ -49,13 +47,6 @@ public class Menu extends UUIDBaseModel{
 	}
 	public void setChilds(Set<Menu> childs) {
 		this.childs = childs;
-	}
-	@ManyToMany(mappedBy="menus")
-	public Set<Role> getRoles() {
-		return roles;
-	}
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
 	}
 	public String getTab() {
 		return tab;

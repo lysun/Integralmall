@@ -121,7 +121,7 @@
                    <select id="shopId" name="shopId" class="form-control">
                    		<option value="0">请选择...</option>
                			<c:forEach items="${shops }" var="shop">
-               			<option value="${shop.id }">${shop.shopName }</option>
+               			<option value="${shop.id }">${shop.name }</option>
                			</c:forEach>
                		</select>
                </div>

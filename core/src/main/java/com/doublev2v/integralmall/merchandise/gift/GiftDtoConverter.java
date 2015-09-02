@@ -17,8 +17,8 @@ import com.doublev2v.foundation.media.MediaContentDto;
 import com.doublev2v.foundation.media.MediaService;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
-import com.doublev2v.integralmall.shop.ShopRepository;
-import com.doublev2v.integralmall.shop.dto.ShopDtoConverter;
+import com.doublev2v.integralmall.shop.branch.BranchShopDtoConverter;
+import com.doublev2v.integralmall.shop.branch.BranchShopRepository;
 import com.doublev2v.integralmall.util.Constant;
 
 @Component
@@ -30,9 +30,9 @@ public class GiftDtoConverter extends SimplePolymorphismConverter<Gift,GiftDto,M
 	@Autowired
 	private CategoryItemDtoConverter categoryItemDTOAdapter;
 	@Autowired
-	private ShopRepository shopRepository;
+	private BranchShopRepository shopRepository;
 	@Autowired
-	private ShopDtoConverter shopDtoConverter;
+	private BranchShopDtoConverter shopDtoConverter;
 	
 	@Override
 	public MerchandiseDto postConvert(Merchandise d, MerchandiseDto t) {

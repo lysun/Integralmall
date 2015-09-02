@@ -20,7 +20,7 @@ import com.doublev2v.integralmall.merchandise.coupon.CouponDto;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoService;
 import com.doublev2v.integralmall.merchandise.gift.GiftDto;
-import com.doublev2v.integralmall.shop.dto.ShopDtoService;
+import com.doublev2v.integralmall.shop.branch.BranchShopDtoService;
 import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
 @Controller
@@ -34,7 +34,7 @@ public class MerchandiseController extends SimpleController<MerchandiseDto> {
 	@Autowired
 	private CategoryItemDtoService categoryItemService;
 	@Autowired
-	private ShopDtoService shopDtoService;
+	private BranchShopDtoService shopDtoService;
 
 	@Override
 	protected PagingService<MerchandiseDto, String> getService() {
@@ -58,9 +58,9 @@ public class MerchandiseController extends SimpleController<MerchandiseDto> {
 	@RequestMapping(value="/getlistdata",method=RequestMethod.GET)
 	@ResponseBody
 	public String merchandises(@RequestParam(defaultValue="1") Integer page, @RequestParam(defaultValue="12") Integer size,
-			 @RequestParam(defaultValue="") String search,@RequestParam(required=false) String isActual,
+			 @RequestParam(defaultValue="") String search,@RequestParam(required=false) String type,
 			 @RequestParam(required=false)String orderBy, @RequestParam(required=false)Direction seq) {
-		PagedList<MerchandiseDto> pageList=dtoService.getList(page, size, isActual,search, orderBy, seq);
+		PagedList<MerchandiseDto> pageList=dtoService.getList(page, size, type,search, orderBy, seq);
 		return RequestResult.success(pageList).toJson();
 	}
 	

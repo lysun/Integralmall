@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.doublev2v.foundation.core.entity.Identified;
 import com.doublev2v.foundation.dics.dto.CategoryItemDto;
 import com.doublev2v.foundation.media.MediaContentDto;
-import com.doublev2v.integralmall.shop.dto.ShopDto;
+import com.doublev2v.integralmall.shop.branch.BranchShopDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 public class MerchandiseDto implements Identified<String>{
 	private String id;
@@ -19,7 +19,7 @@ public class MerchandiseDto implements Identified<String>{
 	@JsonIgnore
 	private String brandId;//商品品牌id
 	private String name;//商品名称
-	private String isActual;
+	private String type;//商品类型
 	private long integralCount;//所需积分
 	private long stock;//库存
 	private String original;//渠道专享
@@ -31,7 +31,7 @@ public class MerchandiseDto implements Identified<String>{
 	private Set<MediaContentDto> mediaDtos;
 	@JsonIgnore
 	private MultipartFile[] mediaFiles;
-	private ShopDto shopDto;
+	private BranchShopDto shopDto;
 	private String shopId;
 	public String getId() {
 		return id;
@@ -82,11 +82,11 @@ public class MerchandiseDto implements Identified<String>{
 	public void setOriginal(String original) {
 		this.original = original;
 	}
-	public String getIsActual() {
-		return isActual;
+	public String getType() {
+		return type;
 	}
-	public void setIsActual(String isActual) {
-		this.isActual = isActual;
+	public void setType(String type) {
+		this.type = type;
 	}
 	public long getIntegralCount() {
 		return integralCount;
@@ -136,10 +136,10 @@ public class MerchandiseDto implements Identified<String>{
 	public void setMainpicFile(MultipartFile mainpicFile) {
 		this.mainpicFile = mainpicFile;
 	}
-	public ShopDto getShopDto() {
+	public BranchShopDto getShopDto() {
 		return shopDto;
 	}
-	public void setShopDto(ShopDto shopDto) {
+	public void setShopDto(BranchShopDto shopDto) {
 		this.shopDto = shopDto;
 	}
 	public String getShopId() {

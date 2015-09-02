@@ -26,9 +26,9 @@ public class MerchandiseVoService extends AbstractDtoPagingService<Merchandise,M
 	@Autowired
 	private MerchandiseService service;
 	
-	public PagedList<MerchandiseVo> getActual(Integer pageNo,Integer pageSize,String isActual){
+	public PagedList<MerchandiseVo> getActual(Integer pageNo,Integer pageSize,String type){
 		Pageable page=new PageRequest(pageNo-1, pageSize);
-		Page<Merchandise> list=service.findPage(page, isActual, null, null, null);
+		Page<Merchandise> list=service.findPage(page, type, null, null, null);
 		List<MerchandiseVo> listDetail=
 				new ArrayList<MerchandiseVo>(voConverter.convertSimples(list.getContent()));
 		Page<MerchandiseVo> result=new PageImpl<MerchandiseVo>(listDetail,page,list.getTotalElements());

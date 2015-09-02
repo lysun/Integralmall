@@ -167,12 +167,12 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="brandId" class="col-sm-2 control-label">商家:</label>
+               <label for="shopId" class="col-sm-2 control-label">商家:</label>
                <div class="col-sm-10">
                    <select id="shopId" name="shopId" class="form-control">
                			<option value="0">请选择...</option>
                			<c:forEach items="${shops }" var="shop">
-               			<option value="${shop.id }" <c:if test="${shop.id eq t.shopDto.id}">selected</c:if>>${shop.shopName }</option>
+               			<option value="${shop.id }" <c:if test="${shop.id eq t.shopDto.id}">selected</c:if>>${shop.name }</option>
                			</c:forEach>
                		</select>
                </div>

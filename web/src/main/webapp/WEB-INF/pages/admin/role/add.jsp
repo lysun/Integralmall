@@ -12,34 +12,31 @@
            <div class="form-group">
                <label for="name" class="col-sm-2 control-label">角色名:</label>
                <div class="col-sm-10">
-                   <input class="form-control" name="name" value="${t.name }" placeholder="please input name">
+                   <input class="form-control" name="name" placeholder="please input name">
                </div>
            </div>
            <div class="form-group">
                <label for="code" class="col-sm-2 control-label">角色代码:</label>
                <div class="col-sm-10">
-                   <input class="form-control" name="code" value="${t.code }" placeholder="please input code">
+                   <input class="form-control" name="code" placeholder="please input code">
                </div>
            </div>
            <div class="form-group">
                <label for="description" class="col-sm-2 control-label">描述:</label>
                <div class="col-sm-10">
-                   <input class="form-control" name="description" value="${t.description }" placeholder="please input description">
+                   <input class="form-control" name="description" placeholder="please input description">
                </div>
            </div>
-           
+          
            <div class="form-group">
                <label for="type" class="col-sm-2 control-label">拥有权限:</label>
                <div class="col-sm-10">
-               	   <c:forEach items="${menus }" var="menu">
-	               	 <div class="col-sm-10">
-		               <input type="checkbox" name="menuIds" value="${menu.id }" 
-		               	<c:forEach items="${t.menus}" var="menuDto">
-		               		<c:if test="${menuDto.id eq menu.id }">checked</c:if>
-		               	</c:forEach>/>
-		               	${menu.name }(${menu.url})
-					 </div>
-	               </c:forEach>
+                   <c:forEach items="${perms }" var="perm">
+                   <div class="col-sm-10">
+	                  <input name="permIds" type="checkbox" value="${perm.id }"/>
+	                   	${perm.name }(${perm.code})
+                   </div>
+                   </c:forEach>
                </div>
            </div>
            <div class="form-group">

@@ -74,7 +74,7 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 		integralService.minusIntegralCount(user,m.getIntegralCount(),Constant.CONVERT_MERCHANDISE);
 		IntegralOrder order = new IntegralOrder();
 		OrderMerchandise om=new OrderMerchandise();
-		switch(m.getIsActual()){
+		switch(m.getType()){
 			case Constant.VIRTUAL:
 				Coupon c=(Coupon)m;
 				if(c.getExpiryDate()==null?false:c.getExpiryDate().isBefore(LocalDateTime.now()))

@@ -16,10 +16,10 @@
                  <td>{{value.name }}</td>
                  <td>{{value.integralCount }}</td>
                  <td>{{value.stock }}</td>
-                 <td>{{if value.classifyDto}}{{value.brandDto.name }}{{/if}}</td>
-                 <td>{{value.shopName }}</td>
-                 <td>{{if value.isActual=='0'}}<a href="<c:url value='/admin/merchandise/coupon/{{value.id }}'/>">查看</a>{{/if}}{{if value.isActual=='1'}}<a href="<c:url value='/admin/merchandise/gift/{{value.id }}'/>">查看</a>{{/if}}|
-                     {{if value.isActual=='0'}}<a href="<c:url value='/admin/merchandise/coupon/{{value.id }}/edit'/>">修改</a>{{/if}}{{if value.isActual=='1'}}<a href="<c:url value='/admin/merchandise/gift/{{value.id }}/edit'/>">修改</a>{{/if}}|
+                 <td>{{if value.classifyDto}}{{value.classifyDto.name }}{{/if}}</td>
+                 <td>{{if value.brandDto}}{{value.brandDto.name }}{{/if}}</td>
+                 <td>{{if value.type=='0'}}<a href="<c:url value='/admin/merchandise/coupon/{{value.id }}'/>">查看</a>{{/if}}{{if value.type=='1'}}<a href="<c:url value='/admin/merchandise/gift/{{value.id }}'/>">查看</a>{{/if}}|
+                     {{if value.type=='0'}}<a href="<c:url value='/admin/merchandise/coupon/{{value.id }}/edit'/>">修改</a>{{/if}}{{if value.type=='1'}}<a href="<c:url value='/admin/merchandise/gift/{{value.id }}/edit'/>">修改</a>{{/if}}|
                  <a onclick="unshelve('{{value.id }}')">下架</a></td>
             </tr>
 		{{/each}}
@@ -129,8 +129,8 @@
                     <th>商品名称</th>
                     <th>所需积分</th>
                     <th>库存</th>
+                    <th>商品分类</th>
                     <th>商品品牌</th>
-                    <th>商户名称</th>
                     <th>操作</th>
                 </tr>
             </thead>                        

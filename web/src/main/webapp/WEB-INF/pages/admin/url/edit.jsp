@@ -5,37 +5,33 @@
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <my:admin tab="user">
 <jsp:attribute name="nav">
-		<my:user-nav tab="role"></my:user-nav>
+		<my:user-nav tab="url"></my:user-nav>
 	</jsp:attribute>
 	<jsp:body>
-		<form role="form" class="form-horizontal" method="post">
-          <div class="form-group">
-               <label for="name" class="col-sm-2 control-label">角色名:</label>
+		<form action="./" role="form" class="form-horizontal" method="post" >
+            <div class="form-group">
+               <label for="name" class="col-sm-2 control-label">url:</label>
                <div class="col-sm-10">
-               <p class="form-control">${t.name }</p>
+                   <input class="form-control" name="url" value="${t.url }" placeholder="please input name">
                </div>
            </div>
            <div class="form-group">
                <label for="code" class="col-sm-2 control-label">角色代码:</label>
                <div class="col-sm-10">
-               <p class="form-control">${t.code }</p>
+                   <input class="form-control" name="role" value="${t.role }" placeholder="please input code">
                </div>
            </div>
            <div class="form-group">
-               <label for="description" class="col-sm-2 control-label">描述:</label>
+               <label for="code" class="col-sm-2 control-label">权限代码:</label>
                <div class="col-sm-10">
-               <p class="form-control">${t.description }</p>
+                   <input class="form-control" name="perm" value="${t.perm }" placeholder="please input code">
                </div>
            </div>
-           
            <div class="form-group">
-               <label for="type" class="col-sm-2 control-label">拥有菜单:</label>
-               <div class="col-sm-10">
-               	   <c:forEach items="${t.menus}" var="menuDto">
-	               		<div class="col-sm-10">${menuDto.name}(${menuDto.url})</div>
-	               	</c:forEach>
-               </div>
-           </div>
+			   <div class="col-sm-offset-2 col-sm-10">
+			      <button type="submit" class="btn btn-default">保存</button>
+			   </div>
+			</div>
        </form>
 	</jsp:body>
 </my:admin>
