@@ -25,8 +25,16 @@
 		{{/each}}
 		</script>
 		<script>
+			var params;
 			$(function(){
-				ajax('<c:url value="/admin/shop/getlist"/>',null,"get",showList);
+				ajax('<c:url value="/admin/shop/getlistdata"/>',null,"get",showList);
+				$("#search").keypress(function(event){
+					if(event.keyCode==13){
+						params="search="+$("#search").val();
+						ajax('<c:url value="/admin/shop/getlistdata"/>',params,"get",showList);
+					}
+				});
+				
 			});
 
 			function showList(data){
@@ -34,12 +42,13 @@
 				$("tbody").html("");
 				$("tbody").append(html);
 				//初始化分页
-				pagination(data.data.totalPages,data.data.size,'<c:url value="/admin/shop/getlist"/>',
-						null,showList);
+				pagination(data.data.totalPages,data.data.size,'<c:url value="/admin/shop/getlistdata"/>',
+						params,showList);
 			}
 		</script>
 	</jsp:attribute>
 	<jsp:body>
+	编号：<input id="search" value=""/>
 	<button class="btn btn-default" onclick="window.location.href='<c:url value="/admin/shop/add"/>'">添加</button>
 		<table class="table table-bordered text-center mgt-2">
             <thead>

@@ -40,7 +40,7 @@ public class ShopVoService extends AbstractDtoPagingService<Shop,ShopVo,String>{
 		if(StringUtils.isNotBlank(tagId)){
 			tag=tagService.findOne(tagId);
 		}
-		Page<Shop> list=service.findPage(page, classify,tag);
+		Page<Shop> list=service.findPage(page, null,classify,tag);
 		List<ShopVo> listDetail=
 				new ArrayList<ShopVo>(voConverter.convertSimples(list.getContent()));
 		Page<ShopVo> result=new PageImpl<ShopVo>(listDetail,page,list.getTotalElements());

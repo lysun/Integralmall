@@ -9,6 +9,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +25,16 @@ public class ShopService extends AbstractPagingAndSortingService<Shop,String>{
 	@Autowired
 	private ShopRepository repository;
 	
-	public Page<Shop> findPage(Pageable page,CategoryItem classify,Tag tag){
-		return repository.findAll(getQueryClause(classify,tag), page);
+	/**
+	 * 根据不同的条件查询商户信息
+	 * @param page
+	 * @param num
+	 * @param classify
+	 * @param tag
+	 * @return
+	 */
+	public Page<Shop> findPage(Pageable page,String num,CategoryItem classify,Tag tag){
+		return repository.findAll(getQueryClause(num,classify,tag), page);
 	}
 	/**
 	 * 返回查询条件Specification
@@ -35,12 +44,15 @@ public class ShopService extends AbstractPagingAndSortingService<Shop,String>{
 	 * @param endDate
 	 * @return
 	 */
-	private Specification<Shop> getQueryClause(CategoryItem classify,Tag tag){
+	private Specification<Shop> getQueryClause(String num,CategoryItem classify,Tag tag){
         return new Specification<Shop>() {
             @Override
             public Predicate toPredicate(Root<Shop> root, CriteriaQuery<?> query,
             		CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
+                if(StringUtils.isNotBlank(num)){
+                	predicate.add(cb.equal(root.get("num"), num));
+                }
                 if (classify!=null){
                 	predicate.add(cb.equal(root.get("classify"), classify));
                 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,7 +41,12 @@ public class ShopController extends SimpleController<ShopDto> {
 	protected String getMenuTab() {
 		return "shop";
 	}
-	
+	@RequestMapping(value="/getlistdata",method=RequestMethod.GET)
+	@ResponseBody
+	public String getlist(@RequestParam(defaultValue="1") Integer page, @RequestParam(defaultValue="12") Integer size,
+			String search) {
+		return RequestResult.success(service.findPage(page, size, search)).toJson();
+	}
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public ModelAndView add() {
 		String viewPath=getBasePath()+"add";

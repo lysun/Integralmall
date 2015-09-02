@@ -39,7 +39,7 @@ public abstract class CommonController<T extends Identified<String>> {
 	
 	@RequestMapping(value="/getlist",method=RequestMethod.GET)
 	@ResponseBody
-	public String getUsers(@RequestParam(defaultValue="1") Integer page, @RequestParam(defaultValue="12") Integer size) {
+	public String getlist(@RequestParam(defaultValue="1") Integer page, @RequestParam(defaultValue="12") Integer size) {
 		return RequestResult.success(getService().findPage(page, size)).toJson();
 	}
 	
