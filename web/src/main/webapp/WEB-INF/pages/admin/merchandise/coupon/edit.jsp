@@ -226,20 +226,20 @@
                <label for="expiryTime" class="col-sm-2 control-label">有效期:</label>
                <div class="col-sm-10">
                    <input id="expiryTime" class="form-control" name="expiryTime" 
-                   value="<c:if test="${t.isActual eq '0' }">${t.expiryTime}</c:if>" placeholder="例如:格式为2001-01-01">
+                   value="<c:if test="${t.type eq '0' }">${t.expiryTime}</c:if>" placeholder="例如:格式为2001-01-01">
                </div>
            </div>
            <div class="form-group">
                <label for="name" class="col-sm-2 control-label">商户名称:</label>
                <div class="col-sm-10">
-                   <input id="shopName" class="form-control" name="shopName" value="<c:if test="${t.isActual eq '0' }">${t.shopName }</c:if>">
+                   <input id="shopName" class="form-control" name="shopName" value="<c:if test="${t.type eq '0' }">${t.shopName }</c:if>">
                </div>
            </div>
            <div class="form-group">
                <label for="address" class="col-sm-2 control-label">地址:</label>
                <div class="col-sm-10">
                    <input id="address" class="form-control" name="address" placeholder="请输入商品的地址" 
-                   value="<c:if test="${t.isActual eq '0' }">${t.address }</c:if>">
+                   value="<c:if test="${t.type eq '0' }">${t.address }</c:if>">
                </div>
            </div>
            <div class="form-group">

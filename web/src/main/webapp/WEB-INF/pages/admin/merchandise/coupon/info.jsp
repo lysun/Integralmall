@@ -50,11 +50,11 @@
            </div>
            
            <div class="form-group">
-               <label for="isActual" class="col-sm-2 control-label">是否实物商品:</label>
+               <label for="type" class="col-sm-2 control-label">是否实物商品:</label>
                <div class="col-sm-10">
                <p class="form-control">
-               		<c:if test="${t.isActual eq '0'}">否</c:if>
-               	   	<c:if test="${t.isActual eq '1'}">是</c:if>
+               		<c:if test="${t.type eq '0'}">否</c:if>
+               	   	<c:if test="${t.type eq '1'}">是</c:if>
                	   </p>
                </div>
            </div>
@@ -77,11 +77,11 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="isActual" class="col-sm-2 control-label">是否实物商品:</label>
+               <label for="type" class="col-sm-2 control-label">是否实物商品:</label>
                <div class="col-sm-10">
                		<p class="form-control">
-               		<c:if test="${t.isActual eq '1'}">是</c:if>
-               	   	<c:if test="${t.isActual eq '0'}">否</c:if>
+               		<c:if test="${t.type eq '1'}">是</c:if>
+               	   	<c:if test="${t.type eq '0'}">否</c:if>
                	   </p>
                </div>
            </div>

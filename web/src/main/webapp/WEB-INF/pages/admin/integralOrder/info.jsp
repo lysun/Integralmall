@@ -57,15 +57,15 @@
 	               <tr>
 		               <td>商品名称</td>
 		               <td>
-		               <c:if test="${t.orderMerchandiseDto.merchandise.isActual eq '0' }"><a href="<c:url value='/admin/merchandise/coupon/${t.orderMerchandiseDto.merchandise.id}'/>">${t.orderMerchandiseDto.merchandise.name }</a></c:if>
-		               <c:if test="${t.orderMerchandiseDto.merchandise.isActual eq '1' }"><a href="<c:url value='/admin/merchandise/gift/${t.orderMerchandiseDto.merchandise.id}'/>">${t.orderMerchandiseDto.merchandise.name }</a></c:if>
+		               <c:if test="${t.orderMerchandiseDto.merchandise.type eq '0' }"><a href="<c:url value='/admin/merchandise/coupon/${t.orderMerchandiseDto.merchandise.id}'/>">${t.orderMerchandiseDto.merchandise.name }</a></c:if>
+		               <c:if test="${t.orderMerchandiseDto.merchandise.type eq '1' }"><a href="<c:url value='/admin/merchandise/gift/${t.orderMerchandiseDto.merchandise.id}'/>">${t.orderMerchandiseDto.merchandise.name }</a></c:if>
 		               </td>
 	               </tr>
 	               <tr>
 		               <td>消耗积分</td>
 		               <td>${t.orderMerchandiseDto.integralCount }</td>
 	               </tr>
-	               <c:if test="${t.orderMerchandiseDto.merchandise.isActual eq '0' }">
+	               <c:if test="${t.orderMerchandiseDto.merchandise.type eq '0' }">
 	               <tr>
 		               <td>有效期</td>
 		               <td>${fn:substring(t.orderMerchandiseDto.expiryDateTime,0,10)}</td>

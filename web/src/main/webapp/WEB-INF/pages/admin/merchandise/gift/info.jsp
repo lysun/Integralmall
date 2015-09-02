@@ -45,7 +45,7 @@
                    <p class="form-control">${t.integralCount }</p>
                </div>
            </div>
-            <c:if test="${t.isActual eq '1' }">
+            <c:if test="${t.type eq '1' }">
            <div class="form-group">
                <label for="price" class="col-sm-2 control-label">价格:</label>
                <div class="col-sm-10">
@@ -66,11 +66,11 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="isActual" class="col-sm-2 control-label">是否实物商品:</label>
+               <label for="type" class="col-sm-2 control-label">是否实物商品:</label>
                <div class="col-sm-10">
                		<p class="form-control">
-               		<c:if test="${t.isActual eq '1'}">是</c:if>
-               	   	<c:if test="${t.isActual eq '0'}">否</c:if>
+               		<c:if test="${t.type eq '1'}">是</c:if>
+               	   	<c:if test="${t.type eq '0'}">否</c:if>
                	   </p>
                </div>
            </div>

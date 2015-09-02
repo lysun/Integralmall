@@ -95,7 +95,7 @@
 
     <!-- 上传文件自定义组件初始化 -->
     <bean class="com.doublev2v.foundation.media.LocalMediaService">
-  		<property name="serverName" value="${imageServer.name}"/>
+        <property name="serverName" value="${imageServer.name}"/>
   		<property name="serverAddress" value="${imageServer.address}"/>
   		<property name="basePath" value="${imageServer.basePath}"/>
   		<property name="relativePath" value="${imageServer.relativePath}"/>
