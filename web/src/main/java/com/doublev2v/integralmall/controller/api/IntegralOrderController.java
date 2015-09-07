@@ -56,7 +56,7 @@ public class IntegralOrderController{
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value="/myCouponDetail",method=RequestMethod.GET)
+	@RequestMapping(value="/myCouponOrGoodDetail",method=RequestMethod.GET)
 	public String integralOrder(String id) {
 		return RequestResult.success(voService.findOne(id)).toJson();
 	}

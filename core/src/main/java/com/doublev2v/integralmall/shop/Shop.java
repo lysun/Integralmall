@@ -13,7 +13,6 @@ import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.integralmall.shop.branch.BranchShop;
-import com.doublev2v.integralmall.tag.Tag;
 @Entity
 public class Shop extends UUIDBaseModel{
 
@@ -22,7 +21,7 @@ public class Shop extends UUIDBaseModel{
 	private CategoryItem classify;//商户类别
 	private String description;//商家介绍
 	private MediaContent mainPic;
-	private Set<Tag> tags;
+	private Set<CategoryItem> tags;
 	private Set<BranchShop> branchShops;
 	private long integral;
 	
@@ -55,10 +54,10 @@ public class Shop extends UUIDBaseModel{
 	
 	@ManyToMany
 	@JoinTable(name="shop_tag")
-	public Set<Tag> getTags() {
+	public Set<CategoryItem> getTags() {
 		return tags;
 	}
-	public void setTags(Set<Tag> tags) {
+	public void setTags(Set<CategoryItem> tags) {
 		this.tags = tags;
 	}
 	public String getNum() {

@@ -8,30 +8,30 @@ import org.springframework.stereotype.Component;
 
 import com.doublev2v.foundation.core.dto.common.SimpleDtoConverter;
 import com.doublev2v.integralmall.merchandise.Merchandise;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseVo;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseVoConverter;
+import com.doublev2v.integralmall.merchandise.dto.ActivityMerchandise;
+import com.doublev2v.integralmall.merchandise.dto.ActivityMerchandiseConverter;
 
 @Component
-public class BranchShopVoConverter extends SimpleDtoConverter<BranchShop, BranchShopVo> {
+public class BranchShopVoConverter extends SimpleDtoConverter<BranchShop, ActivityBranchShop> {
 
 	@Autowired
-	private MerchandiseVoConverter merchandiseVoConverter;
+	private ActivityMerchandiseConverter merchandiseConverter;
 	
 	@Override
-	public BranchShopVo convert(BranchShop d) {
-		BranchShopVo t=new BranchShopVo();
+	public ActivityBranchShop convert(BranchShop d) {
+		ActivityBranchShop t=new ActivityBranchShop();
 		t.setId(d.getId());
 		t.setName(d.getName());
 		t.setPicUrl(d.getShop().getMainPic().getUrl());
 		t.setAddress(d.getAddress());
 		t.setDescription(d.getDescription());
-		Set<MerchandiseVo> set=new HashSet<MerchandiseVo>(merchandiseVoConverter.convertTs(d.getMerchs()));
-		t.setMerchs(set);
+		Set<ActivityMerchandise> set=new HashSet<ActivityMerchandise>(merchandiseConverter.convertTs(d.getMerchs()));
+		t.setList(set);
 		return t;
 	}
 	@Override
-	public BranchShopVo convertSimple(BranchShop d) {
-		BranchShopVo t=new BranchShopVo();
+	public ActivityBranchShop convertSimple(BranchShop d) {
+		ActivityBranchShop t=new ActivityBranchShop();
 		t.setId(d.getId());
 		t.setName(d.getName());
 		t.setPicUrl(d.getShop().getMainPic().getUrl());

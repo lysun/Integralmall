@@ -30,7 +30,6 @@ public class ApiExceptionHandlerAdvice{
 			return RequestResult.error(null,eex.getErrorCode(),eex.getMessage()).toJson();
 		}
 		return RequestResult.error(null,SystemErrorCodes.SERVER_EXCEPTION, ex.getMessage()).toJson();
-
 	}
 	
 	

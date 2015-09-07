@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 import com.doublev2v.foundation.dics.CategoryItem;
-import com.doublev2v.integralmall.tag.Tag;
 @Service
 @Transactional
 public class ShopService extends AbstractPagingAndSortingService<Shop,String>{
@@ -33,8 +32,8 @@ public class ShopService extends AbstractPagingAndSortingService<Shop,String>{
 	 * @param tag
 	 * @return
 	 */
-	public Page<Shop> findPage(Pageable page,String num,CategoryItem classify,Tag tag){
-		return repository.findAll(getQueryClause(num,classify,tag), page);
+	public Page<Shop> findPage(Pageable page,String num,CategoryItem tag){
+		return repository.findAll(getQueryClause(num,tag), page);
 	}
 	/**
 	 * 返回查询条件Specification
@@ -44,7 +43,7 @@ public class ShopService extends AbstractPagingAndSortingService<Shop,String>{
 	 * @param endDate
 	 * @return
 	 */
-	private Specification<Shop> getQueryClause(String num,CategoryItem classify,Tag tag){
+	private Specification<Shop> getQueryClause(String num,CategoryItem tag){
         return new Specification<Shop>() {
             @Override
             public Predicate toPredicate(Root<Shop> root, CriteriaQuery<?> query,
@@ -52,9 +51,6 @@ public class ShopService extends AbstractPagingAndSortingService<Shop,String>{
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
                 if(StringUtils.isNotBlank(num)){
                 	predicate.add(cb.equal(root.get("num"), num));
-                }
-                if (classify!=null){
-                	predicate.add(cb.equal(root.get("classify"), classify));
                 }
                 if (tag!=null){
                     predicate.add(cb.isMember(tag, root.get("tags")));

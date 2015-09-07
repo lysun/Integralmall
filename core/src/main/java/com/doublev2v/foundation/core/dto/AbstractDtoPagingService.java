@@ -20,7 +20,7 @@ public class AbstractDtoPagingService <D extends Identified<ID>, T extends Ident
 	@Override
 	public PagedList<T> findPage(int page, int size) {
 		PagedList<D> list=service.findPage(page, size);
-		Page<T>  result=new PageImpl<T>(new ArrayList<T>(converter.convertTs(list.getResult())),new PageRequest(page-1, size),list.getTotalCount());
+		Page<T>  result=new PageImpl<T>(new ArrayList<T>(converter.convertTs(list.getList())),new PageRequest(page-1, size),list.getTotalCount());
 		return new PagedList<T>(result);
 	}
 	

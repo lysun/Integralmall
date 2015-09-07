@@ -1,7 +1,5 @@
 package com.doublev2v.integralmall.merchandise.coupon;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +20,7 @@ import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
 import com.doublev2v.integralmall.shop.branch.BranchShopDtoConverter;
 import com.doublev2v.integralmall.shop.branch.BranchShopRepository;
 import com.doublev2v.integralmall.util.Constant;
+import com.doublev2v.integralmall.util.DateUtil;
 
 @Component
 public class CouponDtoConverter extends SimplePolymorphismConverter<Coupon, CouponDto,Merchandise,MerchandiseDto> {
@@ -39,8 +38,11 @@ public class CouponDtoConverter extends SimplePolymorphismConverter<Coupon, Coup
 	public MerchandiseDto postConvert(Merchandise d, MerchandiseDto t) {
 		CouponDto ct=(CouponDto)t;
 		Coupon cd=(Coupon)d;
-		if(cd.getExpiryDate()!=null){
-			ct.setExpiryTime(cd.getExpiryDate().format(DateTimeFormatter.ISO_DATE));
+		if(cd.getStartDate()!=null){
+			ct.setStart(DateUtil.format(cd.getStartDate()).substring(0, 10));
+		}
+		if(cd.getEndDate()!=null){
+			ct.setEnd(DateUtil.format(cd.getEndDate()).substring(0, 10));
 		}
 		if(d.getMainPicMedia()!=null){
 			MediaContentDto md=new MediaContentDto();
@@ -86,9 +88,11 @@ public class CouponDtoConverter extends SimplePolymorphismConverter<Coupon, Coup
 		CouponDto ct=(CouponDto)t;
 		Coupon cd=(Coupon)d;
 		try {
-			if(StringUtils.isNotBlank(ct.getExpiryTime())){
-				LocalDateTime expiryDate=LocalDateTime.parse(ct.getExpiryTime()+"T23:59:59", DateTimeFormatter.ISO_DATE_TIME);
-				cd.setExpiryDate(expiryDate);
+			if(StringUtils.isNotBlank(ct.getStart())){
+				cd.setStartDate(DateUtil.parse(ct.getStart()));
+			}
+			if(StringUtils.isNotBlank(ct.getEnd())){
+				cd.setEndDate(DateUtil.parse(ct.getEnd()));
 			}
 			if(StringUtils.isNotBlank(t.getMainpicFile().getOriginalFilename())){
 				MediaContent media=mediaService.save(t.getMainpicFile());

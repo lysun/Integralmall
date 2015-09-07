@@ -1,7 +1,6 @@
 package com.doublev2v.integralmall.order;
 
 import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,11 +76,12 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 		switch(m.getType()){
 			case Constant.VIRTUAL:
 				Coupon c=(Coupon)m;
-				if(c.getExpiryDate()==null?false:c.getExpiryDate().isBefore(LocalDateTime.now()))
+				if(c.getEndDate()==null?false:c.getEndDate().before(new Date()))
 					throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_EXPIRE,"商品已过期");
+				if(c.getStartDate()==null?false:c.getStartDate().after(new Date()))
+					throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_UNSTART,"商品活动未开始");
 				order.setStatus(Constant.UNUSED);
 				om.setCouponCode(UUID.randomUUID().toString());
-				om.setExpiryDate(c.getExpiryDate());
 				break;
 			case Constant.ACTUAL:
 				if(StringUtils.isBlank(addressId))//实物必须有收货地址

@@ -1,7 +1,5 @@
 package com.doublev2v.integralmall.order.dto;
 
-import java.time.format.DateTimeFormatter;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -43,11 +41,11 @@ public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, 
 				case Constant.VIRTUAL:
 					t.setType(Constant.VIRTUAL);
 					Coupon c=(Coupon)m;
-					if(om.getExpiryDate()!=null){
-						t.setExpiryTime(om.getExpiryDate().format(DateTimeFormatter.ISO_DATE));
+					if(m.getEndDate()!=null){
+						t.setExpiryTime(DateUtil.format(m.getEndDate()));
 					}
 					t.setAddress(c.getAddress());
-					t.setShopName(c.getShopName());
+					t.setShopName(c.getShop().getName());
 					t.setLongitude(c.getLongitude());
 					t.setLatitude(c.getLatitude());
 					if(om.getUsageDate()!=null){
@@ -91,11 +89,11 @@ public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, 
 				case Constant.VIRTUAL:
 					t.setType(Constant.VIRTUAL);
 					Coupon c=(Coupon)m;
-					if(om.getExpiryDate()!=null){
-						t.setExpiryTime(om.getExpiryDate().format(DateTimeFormatter.ISO_DATE));
+					if(m.getEndDate()!=null){
+						t.setExpiryTime(DateUtil.format(m.getEndDate()));
 					}
 					t.setAddress(c.getAddress());
-					t.setShopName(c.getShopName());
+					t.setShopName(c.getShop().getName());
 					t.setLongitude(c.getLongitude());
 					t.setLatitude(c.getLatitude());
 					break;

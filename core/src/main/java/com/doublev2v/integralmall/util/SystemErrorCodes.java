@@ -12,6 +12,7 @@ public class SystemErrorCodes {
 	public static final ErrorCode IIIEGAL_ARGUMENT;
 	public static final ErrorCode NOTENOUGH_INTEGRAL;
 	public static final ErrorCode NOTENOUGH_STOCK;
+	public static final ErrorCode MERCHANDISE_UNSTART;
 	public static final ErrorCode MERCHANDISE_EXPIRE;
 	public static final ErrorCode MERCHANDISE_UNSHELVE;
 	public static final ErrorCode ORDER_CANNOT_CANCEL;
@@ -30,8 +31,9 @@ public class SystemErrorCodes {
 		 */
 		NOTENOUGH_INTEGRAL=new ErrorCode(200, "对不起，您的积分不足");
 		NOTENOUGH_STOCK=new ErrorCode(201, "抱歉，库存不足");
-		MERCHANDISE_EXPIRE=new ErrorCode(202, "抱歉，商品已过期");
-		MERCHANDISE_UNSHELVE=new ErrorCode(203, "抱歉，商品已下架");
+		MERCHANDISE_UNSTART=new ErrorCode(202, "抱歉，商品活动未开始");
+		MERCHANDISE_EXPIRE=new ErrorCode(203, "抱歉，商品已过期");
+		MERCHANDISE_UNSHELVE=new ErrorCode(204, "抱歉，商品已下架");
 		/**
 		 * 积分订单相关的异常，3**
 		 */

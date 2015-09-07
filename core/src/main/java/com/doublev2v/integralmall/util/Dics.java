@@ -14,7 +14,7 @@ public class Dics {
 	 */
 	public final static String MERCHANDISE_CLASSIFY_TYPE="MERCHANDISE_CLASSIFY";
 	/**
-	 * 商家分类
+	 * 商家标签分类
 	 */
-	public final static String SHOP_CLASSIFY_TYPE="SHOP_CLASSIFY_TYPE";
+	public final static String SHOP_CLASSIFY_TYPE="SHOP_TAG";
 }

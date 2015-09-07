@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class CategoryItemDto implements Identified<String> {
 	private String id;
 	private String name;
+	@JsonIgnore
 	private String attr;
+	@JsonIgnore
 	private String attr2;
 	@JsonIgnore
 	private String remark;
@@ -14,6 +16,7 @@ public class CategoryItemDto implements Identified<String> {
 	private String categoryid;
 	@JsonIgnore
 	private Integer priority;
+	@JsonIgnore
 	private String type;
 	/**
 	 * @return the id

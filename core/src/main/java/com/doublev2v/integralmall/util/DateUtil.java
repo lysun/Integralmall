@@ -10,7 +10,7 @@ public class DateUtil {
 	public static Date parse(String str) throws ParseException{
 		SimpleDateFormat sdf=null;
 		try {
-			sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			return sdf.parse(str);
 		} catch (ParseException e) {
 			sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -19,7 +19,7 @@ public class DateUtil {
 	}
 	
 	public static String format(Date date){
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(date);
 	}
 }

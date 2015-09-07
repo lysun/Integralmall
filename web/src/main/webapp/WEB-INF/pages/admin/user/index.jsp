@@ -9,7 +9,7 @@
 	</jsp:attribute>
 	<jsp:attribute name="script">
 	<script id="template" type="text/html">
-		{{each result as value i}}
+		{{each list as value i}}
 			<tr id="{{value.id }}">
                  <td>{{value.username }}</td>
                  <td><a href="<c:url value='/admin/user/{{value.id }}/edit'/>">修改</a>|

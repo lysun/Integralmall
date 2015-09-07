@@ -135,7 +135,7 @@ public class ApiControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.post("/exchangeCoupon")
-	    				.param("merchandiseId", "4040409e4f63fd6f014f63fee8350006")
+	    				.param("merchandiseId", "4040409e4fa12601014fa126fbf90004")
 	    				.param("addressId", "ddddddd")
 	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
@@ -168,7 +168,7 @@ public class ApiControllerTest {
 	public void test9() throws Exception { 
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
-	    				.get("/myCouponDetail")
+	    				.get("/myCouponOrGoodDetail")
 	    				.param("id", "4040409e4ee2c05b014ee2c0611e0000"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())

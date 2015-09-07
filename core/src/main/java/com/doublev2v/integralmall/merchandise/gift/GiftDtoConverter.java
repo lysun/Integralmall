@@ -20,6 +20,7 @@ import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
 import com.doublev2v.integralmall.shop.branch.BranchShopDtoConverter;
 import com.doublev2v.integralmall.shop.branch.BranchShopRepository;
 import com.doublev2v.integralmall.util.Constant;
+import com.doublev2v.integralmall.util.DateUtil;
 
 @Component
 public class GiftDtoConverter extends SimplePolymorphismConverter<Gift,GiftDto,Merchandise, MerchandiseDto> {
@@ -39,6 +40,12 @@ public class GiftDtoConverter extends SimplePolymorphismConverter<Gift,GiftDto,M
 		GiftDto gt=(GiftDto)t;
 		Gift gd=(Gift)d;
 		gt.setPrice(gd.getPrice());
+		if(gd.getStartDate()!=null){
+			gt.setStart(DateUtil.format(gd.getStartDate()).substring(0, 10));
+		}
+		if(gd.getEndDate()!=null){
+			gt.setEnd(DateUtil.format(gd.getEndDate()).substring(0, 10));
+		}
 		if(d.getMainPicMedia()!=null){
 			MediaContentDto md=new MediaContentDto();
 			md.setId(d.getMainPicMedia().getId());
@@ -81,6 +88,12 @@ public class GiftDtoConverter extends SimplePolymorphismConverter<Gift,GiftDto,M
 		Gift gd=(Gift)d;
 		try {
 			gd.setPrice(gt.getPrice());
+			if(StringUtils.isNotBlank(gt.getStart())){
+				gd.setStartDate(DateUtil.parse(gt.getStart()));
+			}
+			if(StringUtils.isNotBlank(gt.getEnd())){
+				gd.setEndDate(DateUtil.parse(gt.getEnd()));
+			}
 			if(StringUtils.isNotBlank(t.getMainpicFile().getOriginalFilename())){
 				MediaContent media=mediaService.save(t.getMainpicFile());
 				d.setMainPicMedia(media);

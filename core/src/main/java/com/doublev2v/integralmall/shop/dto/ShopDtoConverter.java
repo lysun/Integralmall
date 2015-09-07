@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import com.doublev2v.foundation.core.dto.common.SimpleDtoConverter;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.dics.CategoryItemRepository;
+import com.doublev2v.foundation.dics.CategoryItemService;
+import com.doublev2v.foundation.dics.dto.CategoryItemDto;
 import com.doublev2v.foundation.dics.dto.CategoryItemDtoConverter;
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.foundation.media.MediaContentDto;
@@ -18,8 +20,7 @@ import com.doublev2v.foundation.media.MediaService;
 import com.doublev2v.integralmall.shop.Shop;
 import com.doublev2v.integralmall.shop.branch.BranchShopDto;
 import com.doublev2v.integralmall.shop.branch.BranchShopDtoConverter;
-import com.doublev2v.integralmall.tag.Tag;
-import com.doublev2v.integralmall.tag.TagRepository;
+import com.doublev2v.integralmall.util.Dics;
 @Component
 public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 	
@@ -30,7 +31,7 @@ public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 	@Autowired
 	private CategoryItemDtoConverter categoryItemDtoConverter;
 	@Autowired
-	private TagRepository tagRepository;
+	private CategoryItemService categoryItemService;
 	@Autowired
 	private BranchShopDtoConverter branchShopDtoConverter;
 	
@@ -50,6 +51,11 @@ public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 					branchShopDtoConverter.convertTs(d.getBranchShops()));
 			t.setBranchs(set);
 		}
+		if(d.getTags()!=null){
+			Set<CategoryItemDto> set=new HashSet<CategoryItemDto>(
+					categoryItemDtoConverter.convertTs(d.getTags()));
+			t.setTags(set);
+		}
 		return t;
 	}
 	public Shop postConvertD(ShopDto t,Shop d){
@@ -66,13 +72,12 @@ public class ShopDtoConverter extends SimpleDtoConverter<Shop, ShopDto>{
 				d.setClassify(classify);
 			}
 			if(StringUtils.isNotBlank(t.getTagName())){
-				Set<Tag> set=new HashSet<Tag>();
+				Set<CategoryItem> set=new HashSet<CategoryItem>();
 				for(String name:t.getTagName().split("[ ]+")){
 					if(StringUtils.isNotBlank(name)){
-						Tag tag=tagRepository.findByName(name);
+						CategoryItem tag=categoryItemRepository.findByCategoryTypeAndName(Dics.SHOP_CLASSIFY_TYPE,name);
 						if(tag==null){
-							tag=new Tag(name);
-							tagRepository.save(tag);
+							tag=categoryItemService.create(Dics.SHOP_CLASSIFY_TYPE, name);
 						}
 						set.add(tag);
 					}

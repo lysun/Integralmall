@@ -33,6 +33,9 @@ public class MerchandiseDto implements Identified<String>{
 	private MultipartFile[] mediaFiles;
 	private BranchShopDto shopDto;
 	private String shopId;
+	private String brief;
+	private String start;
+	private String end;
 	public String getId() {
 		return id;
 	}
@@ -147,6 +150,24 @@ public class MerchandiseDto implements Identified<String>{
 	}
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
+	}
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
+	}
+	public String getBrief() {
+		return brief;
+	}
+	public void setBrief(String brief) {
+		this.brief = brief;
 	}
 	
 	

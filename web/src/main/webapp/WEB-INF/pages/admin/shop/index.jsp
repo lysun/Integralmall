@@ -9,7 +9,7 @@
 	</jsp:attribute>
 	<jsp:attribute name="script">
 	<script id="template" type="text/html">
-		{{each result as value i}}
+		{{each list as value i}}
 			<tr id="{{value.id }}">
                  <td>{{value.num }}</td>
                  <td>{{value.shopName }}</td>
@@ -48,8 +48,8 @@
 		</script>
 	</jsp:attribute>
 	<jsp:body>
-	编号：<input id="search" value=""/>
 	<button class="btn btn-default" onclick="window.location.href='<c:url value="/admin/shop/add"/>'">添加</button>
+		编号：<input id="search" value=""/>
 		<table class="table table-bordered text-center mgt-2">
             <thead>
                 <tr>

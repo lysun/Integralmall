@@ -15,7 +15,7 @@ public class PagedList<T> {
 	private int totalPages;
 	private int page;
 	private int size;
-	private List<T> result;
+	private List<T> list;
 	
 	/**
 	 * 初始化时判断总页数totalPages，实际当前页pageNo
@@ -28,7 +28,7 @@ public class PagedList<T> {
 		this.totalPages=page.getTotalPages();
 		this.page=page.getNumber()+1;//Page中获取的页数是从0开始的
 		this.size=page.getSize();
-		this.result=page.getContent();
+		this.list=page.getContent();
 	}
 	
 	/**
@@ -73,16 +73,13 @@ public class PagedList<T> {
 		this.size = size;
 	}
 
-	/**
-	 * @return the result
-	 */
-	public List<T> getResult() {
-		return result;
+	public List<T> getList() {
+		return list;
 	}
-	/**
-	 * @param result the result to set
-	 */
-	public void setResult(List<T> result) {
-		this.result = result;
-	}	
+
+	public void setList(List<T> list) {
+		this.list = list;
+	}
+
+	
 }

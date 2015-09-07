@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseVoConverter;
+import com.doublev2v.integralmall.merchandise.dto.ActivityMerchandiseService;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseVoService;
 import com.doublev2v.integralmall.util.Constant;
 import com.doublev2v.integralmall.util.RequestResult;
@@ -16,8 +16,11 @@ public class MerchandiseController{
 
 	@Autowired
 	private MerchandiseVoService service;
+	
 	@Autowired
-	private MerchandiseVoConverter voConverter;
+	private ActivityMerchandiseService activityMerchandiseService;
+	
+	
 	/**
 	 * 获取实物商品列表
 	 * @param page

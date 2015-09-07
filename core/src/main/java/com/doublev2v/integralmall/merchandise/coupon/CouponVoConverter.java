@@ -1,6 +1,5 @@
 package com.doublev2v.integralmall.merchandise.coupon;
 
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +9,7 @@ import com.doublev2v.foundation.core.dto.polymorphism.SimplePolymorphismConverte
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.dto.MerchandiseVo;
+import com.doublev2v.integralmall.util.DateUtil;
 @Component
 public class CouponVoConverter extends SimplePolymorphismConverter<Coupon, CouponVo,Merchandise,MerchandiseVo> {
 
@@ -35,13 +35,15 @@ public class CouponVoConverter extends SimplePolymorphismConverter<Coupon, Coupo
 		if(c.getClassify()!=null){
 			t.setClassifyName(c.getClassify().getName());
 		}
-		if(c.getExpiryDate()!=null){
-			t.setExpiryTime(c.getExpiryDate().format(DateTimeFormatter.ISO_DATE));
+		if(c.getEndDate()!=null){
+			t.setExpiryTime(DateUtil.format(d.getEndDate()).substring(0, 10));
 		}else{
 			t.setExpiryTime("");
 		}
+		if(c.getShop()!=null){
+			t.setShopName(c.getShop().getName());
+		}
 		t.setAddress(c.getAddress());
-		t.setShopName(c.getShopName());
 		t.setLongitude(c.getLongitude());
 		t.setLatitude(c.getLatitude());
 		return t;
@@ -63,13 +65,15 @@ public class CouponVoConverter extends SimplePolymorphismConverter<Coupon, Coupo
 		if(c.getMainPicMedia()!=null){
 			t.setMainPic(c.getMainPicMedia().getUrl());
 		}
-		if(c.getExpiryDate()!=null){
-			t.setExpiryTime(c.getExpiryDate().format(DateTimeFormatter.ISO_DATE));
+		if(c.getEndDate()!=null){
+			t.setExpiryTime(DateUtil.format(d.getEndDate()).substring(0,10));
 		}else{
 			t.setExpiryTime("");
 		}
+		if(c.getShop()!=null){
+			t.setShopName(c.getShop().getName());
+		}
 		t.setAddress(c.getAddress());
-		t.setShopName(c.getShopName());
 		t.setLongitude(c.getLongitude());
 		t.setLatitude(c.getLatitude());
 		return t;

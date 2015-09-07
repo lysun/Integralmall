@@ -45,14 +45,30 @@
                    <p class="form-control">${t.integralCount }</p>
                </div>
            </div>
-            <c:if test="${t.type eq '1' }">
            <div class="form-group">
                <label for="price" class="col-sm-2 control-label">价格:</label>
                <div class="col-sm-10">
                		<p id="price" class="form-control">${t.price }</p>
                </div>
            </div>
-           </c:if>
+           <div class="form-group">
+               <label for="brief" class="col-sm-2 control-label">活动内容:</label>
+               <div class="col-sm-10">
+                   <p id="brief" class="form-control">${t.brief }</p>
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="start" class="col-sm-2 control-label">开始日期:</label>
+               <div class="col-sm-10">
+                  <p id="start" class="form-control">${t.start }</p>
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="end" class="col-sm-2 control-label">结束日期:</label>
+               <div class="col-sm-10">
+                  <p id="end" class="form-control">${t.end }</p>
+               </div>
+           </div>
            <div class="form-group">
                <label for="stock" class="col-sm-2 control-label">库存:</label>
                <div class="col-sm-10">

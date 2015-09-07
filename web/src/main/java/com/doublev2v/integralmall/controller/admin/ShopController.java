@@ -15,7 +15,6 @@ import com.doublev2v.integralmall.shop.branch.BranchShopDto;
 import com.doublev2v.integralmall.shop.branch.BranchShopDtoService;
 import com.doublev2v.integralmall.shop.dto.ShopDto;
 import com.doublev2v.integralmall.shop.dto.ShopDtoService;
-import com.doublev2v.integralmall.tag.TagService;
 import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
 
@@ -25,8 +24,6 @@ public class ShopController extends SimpleController<ShopDto> {
 	
 	@Autowired
 	private ShopDtoService service;
-	@Autowired
-	private TagService tagService;
 	@Autowired
 	private CategoryItemDtoService categoryItemDtoService;
 	@Autowired
@@ -51,8 +48,7 @@ public class ShopController extends SimpleController<ShopDto> {
 	public ModelAndView add() {
 		String viewPath=getBasePath()+"add";
 		ModelAndView view=new ModelAndView(viewPath);
-		view.addObject("classifies", categoryItemDtoService.getCategoryItemsByType(Dics.SHOP_CLASSIFY_TYPE));
-		view.addObject("tags", tagService.findAll());
+		view.addObject("tags", categoryItemDtoService.getCategoryItemsByType(Dics.SHOP_CLASSIFY_TYPE));
 		view.addObject("top", getMenuService().getTopMenus());
 		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
 		return view;
@@ -62,8 +58,7 @@ public class ShopController extends SimpleController<ShopDto> {
 		String viewPath=getBasePath()+"edit";
 		ModelAndView view=new ModelAndView(viewPath);
 		view.addObject("t", getService().findOne(id));
-		view.addObject("classifies", categoryItemDtoService.getCategoryItemsByType(Dics.SHOP_CLASSIFY_TYPE));
-		view.addObject("tags", tagService.findAll());
+		view.addObject("tags", categoryItemDtoService.getCategoryItemsByType(Dics.SHOP_CLASSIFY_TYPE));
 		view.addObject("top", getMenuService().getTopMenus());
 		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
 		return view;

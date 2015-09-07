@@ -114,15 +114,21 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="expiryTime" class="col-sm-2 control-label">有效期:</label>
+               <label for="brief" class="col-sm-2 control-label">活动内容:</label>
                <div class="col-sm-10">
-                  <p id="expiryTime" class="form-control">${t.expiryTime }</p>
+                   <p id="brief" class="form-control">${t.brief }</p>
                </div>
            </div>
            <div class="form-group">
-               <label for="name" class="col-sm-2 control-label">商户名称:</label>
+               <label for="start" class="col-sm-2 control-label">开始日期:</label>
                <div class="col-sm-10">
-                   <p id="shopName" class="form-control">${t.shopName }</p>
+                  <p id="start" class="form-control">${t.start }</p>
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="end" class="col-sm-2 control-label">结束日期:</label>
+               <div class="col-sm-10">
+                  <p id="end" class="form-control">${t.end }</p>
                </div>
            </div>
            <div class="form-group">

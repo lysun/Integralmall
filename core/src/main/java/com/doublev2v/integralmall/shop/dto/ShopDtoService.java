@@ -20,7 +20,7 @@ public class ShopDtoService extends AbstractDtoPagingService<Shop,ShopDto,String
 	
 	public PagedList<ShopDto> findPage(int pageNo, int pageSize,String search) {
 		Pageable page=new PageRequest(pageNo-1, pageSize);
-		Page<Shop> list=service.findPage(page, search, null, null);
+		Page<Shop> list=service.findPage(page, search,null);
 		Page<ShopDto> result=list.map(dtoConverter);
 		return new PagedList<ShopDto>(result);
 	}

@@ -8,7 +8,6 @@ import com.doublev2v.foundation.core.entity.Identified;
 import com.doublev2v.foundation.dics.dto.CategoryItemDto;
 import com.doublev2v.foundation.media.MediaContentDto;
 import com.doublev2v.integralmall.shop.branch.BranchShopDto;
-import com.doublev2v.integralmall.tag.Tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ShopDto implements Identified<String>{
@@ -25,7 +24,7 @@ public class ShopDto implements Identified<String>{
 	private long integral;
 	@JsonIgnore
 	private String tagName;
-	private Set<Tag> tags;//简单的对象交给dozer转换
+	private Set<CategoryItemDto> tags;//简单的对象交给dozer转换
 	private Set<BranchShopDto> branchs;
 
 	public String getId() {
@@ -70,10 +69,10 @@ public class ShopDto implements Identified<String>{
 	public void setMainpicFile(MultipartFile mainpicFile) {
 		this.mainpicFile = mainpicFile;
 	}
-	public Set<Tag> getTags() {
+	public Set<CategoryItemDto> getTags() {
 		return tags;
 	}
-	public void setTags(Set<Tag> tags) {
+	public void setTags(Set<CategoryItemDto> tags) {
 		this.tags = tags;
 	}
 	public String getNum() {

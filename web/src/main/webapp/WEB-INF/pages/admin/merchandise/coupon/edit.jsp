@@ -123,14 +123,20 @@
 				alert('请选择位置');
 		        return false;
 			}
-			var expiryTime=$("#expiryTime").val();
-			if(expiryTime.length!=0){    
-		        var reg = /^\d{4}-\d{2}-\d{2}$/;     
-		        var r = expiryTime.match(reg);     
-		        if(r==null){
-		        	alert('对不起，您输入的有效期格式不正确!例如:格式为2001-01-01');
+			var start=$("#start").val();
+			var end=$("#end").val();
+			if(start.length!=0&&end.length!=0){    
+		        var reg = /^\d{4}-\d{2}-\d{2}$/; //全局匹配       
+		        var r1 = start.match(reg);
+		        var r2 = end.match(reg);    
+		        if(r1==null){
+		        	alert('对不起，您输入的开始日期格式不正确!例如:格式为2001-01-01');
 	            	return false;
-			    }    
+			    } 
+			    if(r2==null){
+			    	alert('对不起，您输入的结束日期格式不正确!例如:格式为2001-01-01');
+	            	return false;
+				}
 		    }
 	        return true;
 		}
@@ -223,16 +229,21 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="expiryTime" class="col-sm-2 control-label">有效期:</label>
+               <label for="brief" class="col-sm-2 control-label">活动内容:</label>
                <div class="col-sm-10">
-                   <input id="expiryTime" class="form-control" name="expiryTime" 
-                   value="<c:if test="${t.type eq '0' }">${t.expiryTime}</c:if>" placeholder="例如:格式为2001-01-01">
+                   <input id="brief" class="form-control" name="brief" value="${t.brief}" placeholder="please input brief">
                </div>
            </div>
            <div class="form-group">
-               <label for="name" class="col-sm-2 control-label">商户名称:</label>
+               <label for="start" class="col-sm-2 control-label">开始日期:</label>
                <div class="col-sm-10">
-                   <input id="shopName" class="form-control" name="shopName" value="<c:if test="${t.type eq '0' }">${t.shopName }</c:if>">
+                   <input id="start" class="form-control" name="start" value="${t.start}" placeholder="例如:格式为2001-01-01">
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="end" class="col-sm-2 control-label">结束日期:</label>
+               <div class="col-sm-10">
+                   <input id="end" class="form-control" name="end" value="${t.end}"  placeholder="例如:格式为2001-01-01">
                </div>
            </div>
            <div class="form-group">

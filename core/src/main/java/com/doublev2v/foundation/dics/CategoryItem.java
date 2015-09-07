@@ -15,7 +15,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Cacheable
 public class CategoryItem extends UUIDBaseModel {
 	private String name;
-	private String attr;            // 属性，对于颜色，此处显示颜色代码，例如#FFFFFF
+	@JsonIgnore
+	private String attr;            // 预留
 	@JsonIgnore
 	private String attr2;           // 其他属性信息
 	@JsonIgnore

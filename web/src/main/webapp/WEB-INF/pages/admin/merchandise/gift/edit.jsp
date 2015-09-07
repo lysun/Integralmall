@@ -97,6 +97,21 @@
 				alert('价格不能为空!');
 	        	return false;
 			}
+	        var start=$("#start").val();
+			var end=$("#end").val();
+			if(start.length!=0&&end.length!=0){    
+		        var reg = /^\d{4}-\d{2}-\d{2}$/; //全局匹配       
+		        var r1 = start.match(reg);
+		        var r2 = end.match(reg);    
+		        if(r1==null){
+		        	alert('对不起，您输入的开始日期格式不正确!例如:格式为2001-01-01');
+	            	return false;
+			    } 
+			    if(r2==null){
+			    	alert('对不起，您输入的结束日期格式不正确!例如:格式为2001-01-01');
+	            	return false;
+				}
+		    }
 	        return true;
 		}
 		</script>
@@ -160,6 +175,25 @@
                    <input id="price" type="tel" class="form-control" name="price" value="${t.price }">
                </div>
            </div>
+           <div class="form-group">
+               <label for="brief" class="col-sm-2 control-label">活动内容:</label>
+               <div class="col-sm-10">
+                   <input id="brief" class="form-control" name="brief" value="${t.brief}" placeholder="please input brief">
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="start" class="col-sm-2 control-label">开始日期:</label>
+               <div class="col-sm-10">
+                   <input id="start" class="form-control" name="start" value="${t.start}" placeholder="例如:格式为2001-01-01">
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="end" class="col-sm-2 control-label">结束日期:</label>
+               <div class="col-sm-10">
+                   <input id="end" class="form-control" name="end" value="${t.end}"  placeholder="例如:格式为2001-01-01">
+               </div>
+           </div>
+           
            <div class="form-group">
                <label for="stock" class="col-sm-2 control-label">库存:</label>
                <div class="col-sm-10">

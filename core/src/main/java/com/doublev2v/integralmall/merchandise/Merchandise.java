@@ -1,5 +1,6 @@
 package com.doublev2v.integralmall.merchandise;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -34,6 +35,9 @@ public class Merchandise extends UUIDBaseModel{
 	private Set<MediaContent> medias;
 	private String type;
 	private BranchShop shop;
+	private Date startDate;
+	private Date endDate;
+	private String brief;//概要
 	public String getSeq() {
 		return seq;
 	}
@@ -118,6 +122,25 @@ public class Merchandise extends UUIDBaseModel{
 	}
 	public void setShop(BranchShop shop) {
 		this.shop = shop;
+	}
+	
+	public String getBrief() {
+		return brief;
+	}
+	public void setBrief(String brief) {
+		this.brief = brief;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 	
 	

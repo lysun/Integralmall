@@ -1,6 +1,5 @@
 package com.doublev2v.integralmall.order.om;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -17,7 +16,6 @@ public class OrderMerchandise extends UUIDBaseModel{
 	private int count;//兑换数量
 	private long integralCount;//消耗的积分数量
 	private String couponCode;//兑换码(针对优惠券:消费凭证)
-	private LocalDateTime expiryDate;//有效期(针对优惠券)
 	private Date usageDate;//使用时间(针对优惠券)
 	private IntegralOrder order;
 	
@@ -46,12 +44,7 @@ public class OrderMerchandise extends UUIDBaseModel{
 	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
 	}
-	public LocalDateTime getExpiryDate() {
-		return expiryDate;
-	}
-	public void setExpiryDate(LocalDateTime expiryDate) {
-		this.expiryDate = expiryDate;
-	}
+	
 	public Date getUsageDate() {
 		return usageDate;
 	}

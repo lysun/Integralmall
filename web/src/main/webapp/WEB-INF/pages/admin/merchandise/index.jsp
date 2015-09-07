@@ -10,7 +10,7 @@
 	</jsp:attribute>
 	<jsp:attribute name="script">
 		<script id="template" type="text/html">
-		{{each result as value i}}
+		{{each list as value i}}
 			<tr id="{{value.id }}">
                  <td>{{value.seq }}</td>
                  <td>{{value.name }}</td>

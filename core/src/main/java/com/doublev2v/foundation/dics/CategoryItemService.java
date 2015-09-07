@@ -13,6 +13,8 @@ import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 public class CategoryItemService extends AbstractPagingAndSortingService<CategoryItem, String> {
 
 	@Autowired
+	private CategoryRepository categoryRepository;
+	@Autowired
 	public void setCategoryItemRepository(CategoryItemRepository repository) {
 		super.setRepository(repository);
 	}
@@ -24,5 +26,15 @@ public class CategoryItemService extends AbstractPagingAndSortingService<Categor
 	
 	public List<CategoryItem> getCategoryItemsByType(String type) {
 		return getRepository().findByCategoryType(type);
+	}
+	public CategoryItem getCategoryItemsByTypeAndName(String type,String name) {
+		return getRepository().findByCategoryTypeAndName(type, name);
+	}
+	public CategoryItem create(String type,String name){
+		Category category=categoryRepository.getByType(type);
+		CategoryItem item=new CategoryItem();
+		item.setName(name);
+		item.setCategory(category);
+		return getRepository().save(item);
 	}
 }
