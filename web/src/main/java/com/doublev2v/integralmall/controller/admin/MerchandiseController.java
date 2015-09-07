@@ -15,12 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.service.PagingService;
 import com.doublev2v.foundation.dics.CategoryItemDtoService;
+import com.doublev2v.integralmall.entity.CouponDto;
+import com.doublev2v.integralmall.entity.GiftDto;
+import com.doublev2v.integralmall.entity.MerchandiseDto;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
-import com.doublev2v.integralmall.merchandise.coupon.CouponDto;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseDto;
-import com.doublev2v.integralmall.merchandise.dto.MerchandiseDtoService;
-import com.doublev2v.integralmall.merchandise.gift.GiftDto;
-import com.doublev2v.integralmall.shop.branch.BranchShopDtoService;
+import com.doublev2v.integralmall.service.BranchShopDtoService;
+import com.doublev2v.integralmall.service.MerchandiseDtoService;
 import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
 @Controller

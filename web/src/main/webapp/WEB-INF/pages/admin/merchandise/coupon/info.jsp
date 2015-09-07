@@ -11,7 +11,7 @@
 		<script>
 		$(function(){
 			loadScript();
-			addMapListener=null;
+			addMapListener=function(){};
 		});
 		</script>
 	

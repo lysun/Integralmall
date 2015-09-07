@@ -66,9 +66,18 @@
 		<dependencies>
 			<dependency>
 				<groupId>com.doublev2v</groupId>
+				<artifactId>doublev2v-integralmall-domain</artifactId>
+				<version>${doublev2v-integralmall.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.doublev2v</groupId>
+				<artifactId>doublev2v-integralmall-admin</artifactId>
+				<version>${doublev2v-integralmall.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.doublev2v</groupId>
 				<artifactId>doublev2v-integralmall-core</artifactId>
 				<version>${doublev2v-integralmall.version}</version>
-				<scope>compile</scope>
 			</dependency>
 			<!-- spring-->
 			<!-- 纯粹为了exclude commons-loging -->
@@ -684,7 +693,9 @@
 		</pluginManagement>
 	</build>
 	<modules>
+		<module>domain</module>
+		<module>admin</module>
 		<module>core</module>
-		<module>web</module>
+	    <module>web</module>
 	</modules>
 </project>

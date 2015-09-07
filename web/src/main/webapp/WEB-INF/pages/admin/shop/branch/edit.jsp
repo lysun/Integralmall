@@ -27,16 +27,6 @@
                    <input class="form-control" name="name" value="${branch.name }" placeholder="please input name">
                </div>
            </div>
-           
-           <div class="form-group">
-               <label for="description" class="col-sm-2 control-label">位置:</label>
-               <div class="col-sm-10">
-                   <input id="longitude" type="hidden" class="form-control" name="longitude" value="${branch.longitude}">
-                   <input id="latitude" type="hidden" class="form-control" name="latitude" value="${branch.latitude}">
-                   <p id="point" class="form-control">${branch.longitude},${branch.latitude}</p><span>点击地图选择具体位置</span>
-                   <div id="map" style="width:100%;height:600px"></div>
-               </div>
-           </div>
            <div class="form-group">
                <label for="contact" class="col-sm-2 control-label">联系人:</label>
                <div class="col-sm-10">
@@ -49,7 +39,15 @@
                   <input class="form-control" name="tel" value="${branch.tel }" placeholder="please input tel">
                </div>
            </div>
-            
+           <div class="form-group">
+               <label for="description" class="col-sm-2 control-label">位置:</label>
+               <div class="col-sm-10">
+                   <input id="longitude" type="hidden" class="form-control" name="longitude" value="${branch.longitude}">
+                   <input id="latitude" type="hidden" class="form-control" name="latitude" value="${branch.latitude}">
+                   <p id="point" class="form-control">${branch.longitude},${branch.latitude}</p><span>点击地图选择具体位置</span>
+                   <div id="map" style="width:100%;height:600px"></div>
+               </div>
+           </div>          
            <div class="form-group">
 			   <div class="col-sm-offset-2 col-sm-10">
 			      <button id="submit" class="btn btn-default">保存</button>

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.doublev2v.foundation.core.model.PagedList;
+import com.doublev2v.integralmall.find.entity.IntegralOrderVo;
+import com.doublev2v.integralmall.find.service.IntegralOrderVoService;
 import com.doublev2v.integralmall.order.IntegralOrderService;
-import com.doublev2v.integralmall.order.dto.IntegralOrderVo;
-import com.doublev2v.integralmall.order.dto.IntegralOrderVoService;
 import com.doublev2v.integralmall.userinfo.UserInfo;
 import com.doublev2v.integralmall.userinfo.token.UserInfoTokenService;
 import com.doublev2v.integralmall.util.RequestResult;

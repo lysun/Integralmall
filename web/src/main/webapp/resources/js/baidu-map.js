@@ -10,7 +10,6 @@
 	
 	function initialize() {
 		map = new BMap.Map('map');
-		map.centerAndZoom("北京");
 		map.enableScrollWheelZoom();//启动鼠标滚轮操作
 		//添加控件
 		var opts={type:BMAP_NAVIGATION_CONTROL_ZOOM};//设置左侧调节栏的样式
@@ -24,8 +23,12 @@
 		if(lon!=""&&lat!=""){
 			var point=new BMap.Point(lon,lat);
 			marker = new BMap.Marker(point); //创建标注
+			map.centerAndZoom(point,14);
 			map.clearOverlays();//清除所有覆盖物(标注)
 			map.addOverlay(marker);
+			map.panTo(point);
+		}else{
+			map.centerAndZoom("北京");
 		}
 		addMapListener();
 		

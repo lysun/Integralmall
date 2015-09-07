@@ -10,6 +10,10 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.doublev2v</groupId>
+			<artifactId>doublev2v-integralmall-admin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.doublev2v</groupId>
 			<artifactId>doublev2v-integralmall-core</artifactId>
 		</dependency>
 		<!-- spring start -->
@@ -91,6 +95,7 @@
 		
 	</dependencies>
 	<build>
+	    <finalName>integralmall</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

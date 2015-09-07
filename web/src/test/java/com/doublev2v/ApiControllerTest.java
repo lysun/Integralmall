@@ -1,5 +1,6 @@
 package com.doublev2v;
 
+
 import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
@@ -32,8 +33,6 @@ public class ApiControllerTest {
 	@Autowired
 	IntegralController icontroller;
 	@Resource
-	com.doublev2v.integralmall.controller.admin.IntegralOrderController integralOrderController;
-	@Resource
 	IntegralOrderController integralOrderRestController;
 	@Autowired
 	MerchandiseController mcontroller;
@@ -43,7 +42,7 @@ public class ApiControllerTest {
 		System.out.println("----init----");
 		//设置securityManager
 		SecurityUtils.setSecurityManager(securityManager);
-		mockMvc = MockMvcBuilders.standaloneSetup(icontroller,integralOrderController,integralOrderRestController
+		mockMvc = MockMvcBuilders.standaloneSetup(icontroller,integralOrderRestController
 				,mcontroller).build();
 	}
 	/**

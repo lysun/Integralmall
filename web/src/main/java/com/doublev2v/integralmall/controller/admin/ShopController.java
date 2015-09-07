@@ -11,10 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.doublev2v.foundation.core.service.PagingService;
 import com.doublev2v.foundation.dics.CategoryItemDtoService;
-import com.doublev2v.integralmall.shop.branch.BranchShopDto;
-import com.doublev2v.integralmall.shop.branch.BranchShopDtoService;
-import com.doublev2v.integralmall.shop.dto.ShopDto;
-import com.doublev2v.integralmall.shop.dto.ShopDtoService;
+import com.doublev2v.integralmall.entity.BranchShopDto;
+import com.doublev2v.integralmall.entity.ShopDto;
+import com.doublev2v.integralmall.service.BranchShopDtoService;
+import com.doublev2v.integralmall.service.ShopDtoService;
 import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
 

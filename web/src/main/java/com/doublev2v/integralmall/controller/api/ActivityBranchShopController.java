@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.dics.CategoryItemDtoService;
-import com.doublev2v.integralmall.shop.branch.ActivityBranchShop;
-import com.doublev2v.integralmall.shop.branch.BranchShopVoService;
+import com.doublev2v.integralmall.activity.entity.ActivityBranchShop;
+import com.doublev2v.integralmall.find.service.BranchShopVoService;
 import com.doublev2v.integralmall.util.RequestResult;
 @RestController("shopRestController")
 public class ActivityBranchShopController{
