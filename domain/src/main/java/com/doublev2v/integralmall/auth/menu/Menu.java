@@ -4,13 +4,11 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
 import com.doublev2v.foundation.core.entity.UUIDBaseModel;
-import com.doublev2v.integralmall.auth.role.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Menu extends UUIDBaseModel{
