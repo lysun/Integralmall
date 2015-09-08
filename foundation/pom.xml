@@ -1,16 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.doublev2v</groupId>
-		<artifactId>doublev2v-integralmall</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-	<artifactId>doublev2v-integralmall-domain</artifactId>
-	<dependencies>
-	    <dependency>
-			<groupId>com.doublev2v</groupId>
-			<artifactId>doublev2v-integralmall-foundation</artifactId>
-		</dependency>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.doublev2v</groupId>
+    <artifactId>doublev2v-integralmall</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>doublev2v-integralmall-foundation</artifactId>
+  <dependencies>
 		<!-- logging begin -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

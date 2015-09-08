@@ -103,17 +103,15 @@
            <div class="form-group">
                <label for="mediaFile" class="col-sm-2 control-label">主图片:</label>
                <div class="col-sm-10">
-            	   	<div class="col-sm-3">
-               	   		<img src="${t.mainPicDto.url }" width="200" height="200"> 
-               	   	</div>
+            	   <img src="${t.mainPicDto.url }" height="200" > 
                </div>
            </div>
            <div class="form-group">
                <label for="mediaFile" class="col-sm-2 control-label">图片:</label>
                <div class="col-sm-10">
             	   	<c:forEach items="${t.mediaDtos}" var="media">
-            	   	<div class="col-sm-3">
-            	   		<img src="${media.url }" width="200" height="200">
+            	    <div class="col-sm-4">
+            	   		<img src="${media.url }" height="200" >
             	   	</div>
             	   	</c:forEach>	
                </div>

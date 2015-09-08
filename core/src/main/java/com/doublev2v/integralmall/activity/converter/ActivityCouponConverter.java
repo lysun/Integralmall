@@ -26,6 +26,7 @@ public class ActivityCouponConverter extends SimplePolymorphismConverter<Coupon,
 		t.setId(d.getId());
 		t.setName(d.getName());
 		t.setStock(String.valueOf(d.getStock()));
+		t.setType(d.getType());
 		return t;
 	}
 	@Override
@@ -43,6 +44,7 @@ public class ActivityCouponConverter extends SimplePolymorphismConverter<Coupon,
 		t.setId(d.getId());
 		t.setName(d.getName());
 		t.setStock(String.valueOf(d.getStock()));
+		t.setType(d.getType());
 		return t;
 	}
 	

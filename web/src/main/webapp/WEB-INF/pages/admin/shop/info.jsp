@@ -36,7 +36,7 @@
            <div class="form-group">
                <label for="mainPic" class="col-sm-2 control-label">首页图片:</label>
                <div class="col-sm-10">
-                   <img id="mainImage" width="200" height="200" src="${t.mainPicDto.url }">
+                   <img id="mainImage" height="200" src="${t.mainPicDto.url }">
                </div>
            </div>
            <div class="form-group">

@@ -9,24 +9,25 @@
 	</jsp:attribute>
 	<jsp:attribute name="script">
 		<script>
-		function addMainpic(source) {  
-	        var file = source.files[0];  
-	        if(window.FileReader) {  
-	            var fr = new FileReader();  
-	            fr.onloadend = function(e) {  
-	                document.getElementById("mainImage").src = e.target.result;  
-					
-	            };  
-	            fr.readAsDataURL(file);  
-	        }  
-	    } 
+		$(function(){
+			//给图片添加事件
+			$(document).on("change","input[name='mainpicFile']",function(){
+				if(validateImage(this)){
+	            	showImage(document.getElementById("mainImage"),this);
+	            }
+			});
+			$(document).on("change","input[name='mediaFiles']",function(){
+				if(validateImage(this)){
+					addImage(this);
+	            }
+			});
+		});
 		
 		function addImage(input){
-			 var file = input.files[0];
-			 $div=$("<div class='col-sm-3'></div>");
+			 $div=$("<div class='col-sm-4'></div>");
 			 $input=$(input);
 			 $input.css("display","none");
-			 $img=$("<img width='200' height='200'></img>");
+			 $img=$("<img height='200' name='mediaImage'></img>");
 			 $a=$("<a class='btn btn-link'>删除</a> ");
 			 $a.click(function(){
 				 $(this).parent().remove();
@@ -34,16 +35,9 @@
 			 $div.append($input);
 			 $div.append($img);
 			 $div.append($a);
-			 if(window.FileReader) {  
-	             var fr = new FileReader();
-	             fr.readAsDataURL(file); 
-	             fr.onloadend = function(e) {  
-	             	$img.attr("src", e.target.result);  
-	             }; 
-	               
-	         }  
+			 showImage($img.get(0),input);
 			 $("#showImage").append($div);
-			 $("#upload_media").append('<input name="mediaFiles" type="file" onchange="addImage(this)" >');
+			 $("#upload_media").append('<input name="mediaFiles" type="file">');
 		}
 
 		function deleteMedia(id,mediaid,obj){
@@ -73,6 +67,10 @@
 				alert('请选择商品品牌!');
 	        	return false;
 			}
+			if($("#shopId").val()=="0"){
+				alert('请选择商家!');
+	        	return false;
+			}
 			if($("#name").val()==""){
 				alert('商品名称不能为空!');
 	        	return false;
@@ -85,16 +83,40 @@
 				alert('商品库存不能为空!');
 	        	return false;
 			}
-			if($("#mainImage").attr("src")==""){
+			if(typeof($("#mainImage").attr("src"))=="undefined"){
 				alert('请上传主图!');
 	        	return false;
-	        }
+	        }else if(!validateImageOneToOne($("#mainImage").get(0))){//验证图片宽高比例
+				return false;
+		    }
 	        if($("#showImage").html().trim()==""){
 	        	alert('请至少上传一张图片!');
 	        	return false;
-		    }
+		    }else{//验证图片宽高比例
+			    var flag=true;
+				$("img[name='mediaImage']").each(function(){
+					if(!validateImageFiveToThree(this)){
+						flag=false;
+					}	
+				});
+	        	if(!flag){
+		        	return false;
+		        }
+	        }
 	        if($("#price").val()==""){
 				alert('价格不能为空!');
+	        	return false;
+			}
+	        if($("#brief").val()==""){
+				alert('活动内容不能为空!');
+	        	return false;
+			}
+			if($("#start").val()==""){
+				alert('活动开始日期不能为空!');
+	        	return false;
+			}
+			if($("#end").val()==""){
+				alert('活动结束日期不能为空!');
 	        	return false;
 			}
 	        var start=$("#start").val();
@@ -210,18 +232,18 @@
            <div class="form-group">
                <label for="mainPic" class="col-sm-2 control-label">主图片:</label>
                <div class="col-sm-10">
-                   <a id="upload_mainpic" href="javascript:;" class="file">上传<input name='mainpicFile' type="file" onchange="addMainpic(this)" ></a><br>
-                   <img id="mainImage" src="${t.mainPicDto.url }" width="200" height="200">
+                   <a id="upload_mainpic" href="javascript:;" class="file">上传<input name='mainpicFile' type="file"  ></a><br>
+                   <img id="mainImage" src="${t.mainPicDto.url }" height="200">
                </div>
            </div>
            <div class="form-group">
                <label for="mediaFile" class="col-sm-2 control-label">图片:</label>
                <div class="col-sm-10">
-               	   <a id="upload_media" href="javascript:;" class="file">上传<input name='mediaFiles' type="file" onchange="addImage(this)" ></a> 
+               	   <a id="upload_media" href="javascript:;" class="file">上传<input name='mediaFiles' type="file" ></a> 
                	   <div id="showImage">
                	   		<c:forEach items="${t.mediaDtos}" var="media">
-               	   		<div class="col-sm-3">
-               	   			<img src="${media.url }" width="200" height="200">
+               	   		<div class="col-sm-4">
+               	   			<img src="${media.url }" height="200" name='mediaImage'>
                	   			<a class="btn btn-link" onclick="deleteMedia('${t.id}','${media.id}',this)">删除</a> 
                	   		</div>
                	   		</c:forEach>	

@@ -15,6 +15,7 @@ public class ActivityMerchandise implements Identified<String>{
 	private String brief;//简介
 	private String start;//商品活动开始时间
 	private String end;//商品活动结束时间
+	private String type;
 	public String getId() {
 		return id;
 	}
@@ -62,6 +63,12 @@ public class ActivityMerchandise implements Identified<String>{
 	}
 	public void setEnd(String end) {
 		this.end = end;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

@@ -9,17 +9,14 @@
 	</jsp:attribute>
 	<jsp:attribute name="script">
 		<script>
-		function addMainpic(source) {  
-	        var file = source.files[0];  
-	        if(window.FileReader) {  
-	            var fr = new FileReader();  
-	            fr.onloadend = function(e) {  
-	                document.getElementById("mainImage").src = e.target.result;  
-					
-	            };  
-	            fr.readAsDataURL(file);  
-	        }  
-	    }
+		$(function(){
+			//给图片添加事件
+			$(document).on("change","input[name='mainpicFile']",function(){
+				if(validateImage(this)){
+	            	showImage(document.getElementById("mainImage"),this);
+	            }
+			});
+		}); 
 	    function deleteBranch(branchId){
 		    ajax("<c:url value='/admin/shop/${t.id}/branch/"+branchId+"'/>",null,"delete",function(data){
 		    	if(data.errcode=="0"){
@@ -27,13 +24,27 @@
 	        	}else{
 	        		alert("删除失败");
 	        	}
-			    });
+			});
 
+		}
+
+	    function validate(){
+			if($("#shopName").val()==""){
+				alert('商户名称不能为空!');
+	        	return false;
+			}
+			if(typeof($("#mainImage").attr("src"))=="undefined"){
+				alert('请上传主图!');
+	        	return false;
+	        }else if(!validateImageFiveToThree($("#mainImage").get(0))){//验证图片宽高比例
+				return false;
 		    }
+		    return true;
+		}
 		</script>
 	</jsp:attribute>
 	<jsp:body>
-		<form action="./" role="form" class="form-horizontal" method="post" enctype="multipart/form-data" enctype="multipart/form-data">
+		<form action="./" role="form" class="form-horizontal" method="post" enctype="multipart/form-data" enctype="multipart/form-data" onsubmit="return validate()">
           <div class="form-group">
                <label for="num" class="col-sm-2 control-label">商户编号:</label>
                <div class="col-sm-10">
@@ -66,8 +77,8 @@
            <div class="form-group">
                <label for="mainPic" class="col-sm-2 control-label">首页图片:</label>
                <div class="col-sm-10">
-                   <a id="upload_mainpic" href="javascript:;" class="file">上传<input name='mainpicFile' type="file" onchange="addMainpic(this)" ></a><br>
-                   <img id="mainImage" width="200" height="200" src="${t.mainPicDto.url}">
+                   <a id="upload_mainpic" href="javascript:;" class="file">上传<input name='mainpicFile' type="file" ></a><br>
+                   <img id="mainImage" height="200" src="${t.mainPicDto.url}">
                </div>
            </div>
            <div class="form-group">

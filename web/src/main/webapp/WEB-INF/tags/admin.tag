@@ -53,6 +53,7 @@
 	<script src="<c:url value='/resources/js/bootstrap-datepicker.min.js'/>"></script>
     <script src="<c:url value='/resources/js/jquery.twbsPagination.min.js'/>"></script>
     <script src="<c:url value='/resources/js/admin.js'/>"></script>
+    <script src="<c:url value='/resources/js/uploadImage.js'/>"></script>
     <script src="<c:url value='/resources/js/baidu-map.js'/>"></script>
     <jsp:invoke fragment="script"></jsp:invoke>
 </body>

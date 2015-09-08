@@ -64,6 +64,11 @@
 	<!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 与  artifactId 即可 -->
 	<dependencyManagement>
 		<dependencies>
+		    <dependency>
+				<groupId>com.doublev2v</groupId>
+				<artifactId>doublev2v-integralmall-foundation</artifactId>
+				<version>${doublev2v-integralmall.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.doublev2v</groupId>
 				<artifactId>doublev2v-integralmall-domain</artifactId>
@@ -697,5 +702,6 @@
 		<module>admin</module>
 		<module>core</module>
 	    <module>web</module>
+	    <module>foundation</module>
 	</modules>
 </project>

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.foundation.media.MediaService;
-import com.doublev2v.integralmall.util.ImageUtil;
+import com.doublev2v.integralmall.util.Constant;
 
 /**
  * 在本地用此方式请求静态图片，在正式服务器上用nginx映射图片
@@ -39,7 +39,7 @@ public class FileController {
 	@RequestMapping(value="/image/{fileName}.{ext}",method=RequestMethod.GET)
 	public void downLoad(@PathVariable String fileName,@PathVariable String ext, HttpServletResponse response) throws Exception {
 		MediaContent media=mediaService.getMediaByFileName(fileName+"."+ext);
-		String filePath=ImageUtil.getImageRealUrl(media);
+		String filePath=Constant.BASE_PATH+media.getPath();
 		File f = new File(filePath);
         if (!f.exists()) {
             response.sendError(404, "File not found!");
