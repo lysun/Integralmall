@@ -7,6 +7,7 @@ public class BranchShopDto implements Identified<String>{
 	private String id;
 	private String num;
 	private String name;
+	private String address;//具体地址
 	private String longitude;//经度
 	private String latitude;//纬度
 	private String contact;//联系人
@@ -59,6 +60,12 @@ public class BranchShopDto implements Identified<String>{
 	}
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 }

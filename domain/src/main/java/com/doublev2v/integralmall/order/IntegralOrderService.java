@@ -27,7 +27,6 @@ import org.springframework.stereotype.Service;
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 import com.doublev2v.integralmall.integral.IntegralService;
-import com.doublev2v.integralmall.merchandise.Coupon;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
 import com.doublev2v.integralmall.order.om.OrderMerchandise;
@@ -73,13 +72,12 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 		integralService.minusIntegralCount(user,m.getIntegralCount(),Constant.CONVERT_MERCHANDISE);
 		IntegralOrder order = new IntegralOrder();
 		OrderMerchandise om=new OrderMerchandise();
+		if(m.getEndDate()==null?false:m.getEndDate().before(new Date()))
+			throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_EXPIRE,"商品已过期");
+		if(m.getStartDate()==null?false:m.getStartDate().after(new Date()))
+			throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_UNSTART,"商品活动未开始");
 		switch(m.getType()){
 			case Constant.VIRTUAL:
-				Coupon c=(Coupon)m;
-				if(c.getEndDate()==null?false:c.getEndDate().before(new Date()))
-					throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_EXPIRE,"商品已过期");
-				if(c.getStartDate()==null?false:c.getStartDate().after(new Date()))
-					throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_UNSTART,"商品活动未开始");
 				order.setStatus(Constant.UNUSED);
 				om.setCouponCode(UUID.randomUUID().toString());
 				break;
@@ -90,7 +88,7 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 				order.setStatus(Constant.UNDELIVER);
 				break;
 		}
-		order.setShop(m.getShop());
+		order.setShop(m.getShops().iterator().next().getShop());
 		order.setUser(user);
 		order.setOrderDate(new Date());
 		order.setOrderNo(UUID.randomUUID().toString());

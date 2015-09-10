@@ -22,7 +22,7 @@
 		    	if(data.errcode=="0"){
 	        		$("#"+branchId).remove();
 	        	}else{
-	        		alert("删除失败");
+	        		alert(data.errmsg);
 	        	}
 			});
 
@@ -71,7 +71,7 @@
            <div class="form-group">
                <label for="description" class="col-sm-2 control-label">简介:</label>
                <div class="col-sm-10">
-                   <input class="form-control" name="description" value="${t.description }" placeholder="please input description">
+               <textarea rows="10" cols="170" name="description">${t.description }</textarea>
                </div>
            </div>
            <div class="form-group">
@@ -110,7 +110,9 @@
 					         <td>联系人：${branch.contact }</td>
 					         <td>联系电话：${branch.tel }</td>
 					     </tr>
-					    
+					    <tr>
+					         <td colspan="2">地址：${branch.address }</td>
+					     </tr>
 					   </table>
 						 <button type="button" class="btn btn-default btn-xs"
 						      onclick="window.location.href='<c:url value="/admin/shop/${t.id }/branch/${branch.id}/edit"/>'">编辑</button>

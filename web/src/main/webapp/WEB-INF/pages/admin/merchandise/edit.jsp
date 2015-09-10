@@ -10,18 +10,10 @@
 	<jsp:attribute name="script">
 		<script>
 		$(function(){
-			loadScript();
-			//input事件监听
-			if(/msie/i.test(navigator.userAgent)) {//ie浏览器
-				document.getElementById('address').onpropertychange=handle;
-			}else{//非ie浏览器，比如Firefox 
-				//firefox下检测状态改变只能用oninput,且需要用addEventListener来注册事件。 
-				document.getElementById('address').addEventListener("input",handle,false); 
-			}
 			//给图片添加事件
 			$(document).on("change","input[name='mainpicFile']",function(){
 				if(validateImage(this)){
-	            	showImage($("#mainImage").get(0),this);
+	            	showImage(document.getElementById("mainImage"),this);
 	            }
 			});
 			$(document).on("change","input[name='mediaFiles']",function(){
@@ -29,15 +21,24 @@
 					addImage(this);
 	            }
 			});
-		});
-		//地址输入框的内容发生改变时发生的事件
-		function handle(){
-			var input=document.getElementById('address').value;
-			//根据输入的内容进行搜索，搜索的结果有标注和批注信息
-			var local = new BMap.LocalSearch(map, {renderOptions:{map: map}});
-			local.search(input);
-		}
+			
+			//给总店选择改变事件
+			$("#shopId").change(function(){
+				var html="";
+				ajax("<c:url value='/admin/shop/getShop'/>",{shopId:this.value},"get",function(data){
+					var bs=data.data.branchs;
+					
+					for(var i=0;i<bs.length;i++){
+						html+='<input id="branchshopIds" name="branchshopIds" value="'+bs[i].id+'" type="checkbox">'+bs[i].name;
+					}
+					//先清空再追加
+					$("#branchshop").html("");
+					$("#branchshop").append(html);
+				});
 
+			});
+		});
+		
 		function addImage(input){
 			 $div=$("<div class='col-sm-4'></div>");
 			 $input=$(input);
@@ -82,8 +83,9 @@
 				alert('请选择商品品牌!');
 	        	return false;
 			}
-			if($("#shopId").val()=="0"){
-				alert('请选择商家!');
+			//必须要选择一家分店
+		    if($("#branchshopIds:checked").length==0){
+		    	alert('请至少选择一家分店');
 	        	return false;
 			}
 			if($("#name").val()==""){
@@ -118,13 +120,9 @@
 		        	return false;
 		        }
 	        }
-	        if($("#address").val()==""){
-				alert('地址不能为空!');
-		        return false;
-			}
-			if($("#point").html().trim()==""||$("#longitude").val()==""||$("#latitude").val()==""){
-				alert('请选择位置');
-		        return false;
+	        if($("#price").val()==""){
+				alert('价格不能为空!');
+	        	return false;
 			}
 	        if($("#brief").val()==""){
 				alert('活动内容不能为空!');
@@ -138,8 +136,7 @@
 				alert('活动结束日期不能为空!');
 	        	return false;
 			}
-			
-			var start=$("#start").val();
+	        var start=$("#start").val();
 			var end=$("#end").val();
 			if(start.length!=0&&end.length!=0){    
 		        var reg = /^\d{4}-\d{2}-\d{2}$/; //全局匹配       
@@ -154,6 +151,7 @@
 	            	return false;
 				}
 		    }
+		    
 	        return true;
 		}
 		</script>
@@ -189,20 +187,39 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="shopId" class="col-sm-2 control-label">商家:</label>
+               <label for="shopId" class="col-sm-2 control-label">总店:</label>
                <div class="col-sm-10">
                    <select id="shopId" name="shopId" class="form-control">
                			<option value="0">请选择...</option>
                			<c:forEach items="${shops }" var="shop">
-               			<option value="${shop.id }" <c:if test="${shop.id eq t.shopDto.id}">selected</c:if>>${shop.name }</option>
+               			<option value="${shop.id }" <c:if test="${shop.id eq t.shopId}">selected</c:if>>${shop.shopName }</option>
                			</c:forEach>
                		</select>
+               		
                </div>
+           </div>
+           <div class="form-group">
+               <label for="name" class="col-sm-2 control-label">选择分店:</label>
+               <div class="col-sm-10" id="branchshop">
+               		<c:forEach items="${branchShops }" var="branchShop">
+               		<input id="branchshopIds" name="branchshopIds" value="${branchShop.id }" type="checkbox" 
+	               		<c:forEach items="${t.shopDtos }" var="branchShopDto">
+	               		<c:if test="${branchShopDto.id eq branchShop.id }">checked</c:if>
+	               		</c:forEach>
+               		/>${branchShop.name }
+               		</c:forEach>
+               	</div>
            </div>
            <div class="form-group">
                <label for="name" class="col-sm-2 control-label">商品名称:</label>
                <div class="col-sm-10">
                    <input class="form-control" name="name" value="${t.name }">*
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="type" class="col-sm-2 control-label">是否实物商品:</label>
+               <div class="col-sm-10">
+               	<input type="checkbox" name="type" value="1" <c:if test="${t.type eq '1'}">checked</c:if>/>
                </div>
            </div>
            <div class="form-group">
@@ -212,36 +229,9 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="stock" class="col-sm-2 control-label">库存:</label>
+               <label for="price" class="col-sm-2 control-label">价格:</label>
                <div class="col-sm-10">
-                   <input type="tel" class="form-control" name="stock" value="${t.stock }">*
-               </div>
-           </div>
-           <div class="form-group">
-               <label for="original" class="col-sm-2 control-label">渠道专享:</label>
-               <div class="col-sm-10">
-                   <input class="form-control" name="original" value="${t.original }">
-               </div>
-           </div>
-           <div class="form-group">
-               <label for="mainPic" class="col-sm-2 control-label">主图片:</label>
-               <div class="col-sm-10">
-                   <a id="upload_mainpic" href="javascript:;" class="file">上传<input name='mainpicFile' type="file" ></a><br>
-                   <img id="mainImage" src="${t.mainPicDto.url }" height='200'>
-               </div>
-           </div>
-           <div class="form-group">
-               <label for="mediaFile" class="col-sm-2 control-label">图片:</label>
-               <div class="col-sm-10">
-               	   <a id="upload_media" href="javascript:;" class="file">上传<input name='mediaFiles' type="file"  ></a> 
-               	   <div id="showImage">
-               	   		<c:forEach items="${t.mediaDtos}" var="media">
-               	   		<div class="col-sm-4">
-               	   			<img name="mediaImage" src="${media.url }" height='200'>
-               	   			<a class="btn btn-link" onclick="deleteMedia('${t.id}','${media.id}',this)">删除</a> 
-               	   		</div>
-               	   		</c:forEach>	
-               		</div>
+                   <input id="price" type="tel" class="form-control" name="price" value="${t.price }">
                </div>
            </div>
            <div class="form-group">
@@ -262,20 +252,39 @@
                    <input id="end" class="form-control" name="end" value="${t.end}"  placeholder="例如:格式为2001-01-01">
                </div>
            </div>
+           
            <div class="form-group">
-               <label for="address" class="col-sm-2 control-label">地址:</label>
+               <label for="stock" class="col-sm-2 control-label">库存:</label>
                <div class="col-sm-10">
-                   <input id="address" class="form-control" name="address" placeholder="请输入商品的地址" 
-                   value="<c:if test="${t.type eq '0' }">${t.address }</c:if>">
+                   <input type="tel" class="form-control" name="stock" value="${t.stock }">*
                </div>
            </div>
            <div class="form-group">
-               <label for="point" class="col-sm-2 control-label">位置:</label>
+               <label for="original" class="col-sm-2 control-label">渠道专享:</label>
                <div class="col-sm-10">
-               	   <input id="longitude" type="hidden" class="form-control" name="longitude" value="${t.longitude}">
-                   <input id="latitude" type="hidden" class="form-control" name="latitude" value="${t.latitude}">
-                   <p id="point" class="form-control">${t.longitude},${t.latitude}</p><span>点击地图选择具体位置</span>
-                   <div id="map" style="width:100%;height:600px"></div>
+                   <input class="form-control" name="original" value="${t.original }">
+               </div>
+           </div>
+
+           <div class="form-group">
+               <label for="mainPic" class="col-sm-2 control-label">主图片:</label>
+               <div class="col-sm-10">
+                   <a id="upload_mainpic" href="javascript:;" class="file">上传<input name='mainpicFile' type="file"  ></a><br>
+                   <img id="mainImage" src="${t.mainPicDto.url }" height="200">
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="mediaFile" class="col-sm-2 control-label">图片:</label>
+               <div class="col-sm-10">
+               	   <a id="upload_media" href="javascript:;" class="file">上传<input name='mediaFiles' type="file" ></a> 
+               	   <div id="showImage">
+               	   		<c:forEach items="${t.mediaDtos}" var="media">
+               	   		<div class="col-sm-4">
+               	   			<img src="${media.url }" height="200" name='mediaImage'>
+               	   			<a class="btn btn-link" onclick="deleteMedia('${t.id}','${media.id}',this)">删除</a> 
+               	   		</div>
+               	   		</c:forEach>	
+               		</div>
                </div>
            </div>
            <div class="form-group">

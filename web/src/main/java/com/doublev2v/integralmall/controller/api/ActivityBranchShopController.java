@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.dics.CategoryItemDtoService;
 import com.doublev2v.integralmall.activity.entity.ActivityBranchShop;
-import com.doublev2v.integralmall.find.service.BranchShopVoService;
+import com.doublev2v.integralmall.activity.service.ActivityBranchShopService;
 import com.doublev2v.integralmall.util.RequestResult;
 @RestController("shopRestController")
 public class ActivityBranchShopController{
 	@Autowired
-	private BranchShopVoService service;
+	private ActivityBranchShopService service;
 	@Autowired
 	private CategoryItemDtoService categoryItemService;
 	
@@ -28,8 +28,8 @@ public class ActivityBranchShopController{
 	 */
 	@RequestMapping(value="/getShops",method=RequestMethod.GET)
 	public String getShops(@RequestParam(defaultValue="1")Integer page,
-			@RequestParam(defaultValue="5")Integer size,String tagName){
-		PagedList<ActivityBranchShop> list=service.findPage(page, size,tagName); 
+			@RequestParam(defaultValue="5")Integer size,String tagId){
+		PagedList<ActivityBranchShop> list=service.findPage(page, size,tagId); 
 		return RequestResult.success(list).toJson();
 	}
 	

@@ -98,4 +98,5 @@ public interface CrudService<T, ID extends Serializable> {
 	 * Deletes all entities managed by the repository.
 	 */
 	void deleteAll(Iterable<ID> ids);
+	
 }

@@ -5,7 +5,6 @@ import java.io.Serializable;
 import com.doublev2v.foundation.core.model.PagedList;
 
 public interface PagingService<T, ID extends Serializable> extends CrudService<T, ID> {
-	
 	/**
 	 * Returns a {@link PagedList} of entities meeting the paging restriction.
 	 * @param page page number from 1
@@ -13,4 +12,5 @@ public interface PagingService<T, ID extends Serializable> extends CrudService<T
 	 * @return
 	 */
 	PagedList<T> findPage(int page, int size);
+	
 }

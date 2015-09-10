@@ -1,4 +1,4 @@
-package com.doublev2v.integralmall.find.service;
+package com.doublev2v.integralmall.activity.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,25 +15,24 @@ import com.doublev2v.foundation.core.dto.AbstractDtoPagingService;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.dics.CategoryItemService;
+import com.doublev2v.integralmall.activity.converter.ActivityBranchShopConverter;
 import com.doublev2v.integralmall.activity.entity.ActivityBranchShop;
-import com.doublev2v.integralmall.find.converter.BranchShopVoConverter;
 import com.doublev2v.integralmall.shop.branch.BranchShop;
 import com.doublev2v.integralmall.shop.branch.BranchShopService;
-import com.doublev2v.integralmall.util.Dics;
 @Service
-public class BranchShopVoService extends AbstractDtoPagingService<BranchShop,ActivityBranchShop,String>{
+public class ActivityBranchShopService extends AbstractDtoPagingService<BranchShop,ActivityBranchShop,String>{
 	@Autowired
-	private BranchShopVoConverter voConverter;
+	private ActivityBranchShopConverter voConverter;
 	@Autowired
 	private BranchShopService service;
 	@Autowired
 	private CategoryItemService categoryItemService;
 	
-	public PagedList<ActivityBranchShop> findPage(Integer pageNo,Integer pageSize,String tagName){
+	public PagedList<ActivityBranchShop> findPage(Integer pageNo,Integer pageSize,String tagId){
 		Pageable page=new PageRequest(pageNo-1, pageSize);
 		CategoryItem tag=null;
-		if(StringUtils.isNotBlank(tagName)){
-			tag=categoryItemService.getCategoryItemsByTypeAndName(Dics.SHOP_CLASSIFY_TYPE, tagName);
+		if(StringUtils.isNotBlank(tagId)){
+			tag=categoryItemService.findOne(tagId);
 		}
 		Page<BranchShop> list=service.findPage(page, null,tag);
 		List<ActivityBranchShop> listDetail=

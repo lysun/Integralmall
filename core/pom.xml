@@ -11,6 +11,10 @@
 			<groupId>com.doublev2v</groupId>
 			<artifactId>doublev2v-integralmall-domain</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.doublev2v</groupId>
+			<artifactId>doublev2v-integralmall-admin</artifactId>
+		</dependency>
 		<!-- spring start -->
         <dependency>
             <groupId>org.springframework</groupId>

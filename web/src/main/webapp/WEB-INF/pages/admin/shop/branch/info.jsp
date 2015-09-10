@@ -40,6 +40,12 @@
                </div>
            </div>
            <div class="form-group">
+               <label for="address" class="col-sm-2 control-label">地址:</label>
+               <div class="col-sm-10">
+                   <p id="address" class="form-control">${branch.address }</p>
+               </div>
+           </div>
+           <div class="form-group">
                <label for="description" class="col-sm-2 control-label">位置:</label>
                <div class="col-sm-10">
                    <input id="longitude" type="hidden" class="form-control" name="longitude" value="${branch.longitude}">

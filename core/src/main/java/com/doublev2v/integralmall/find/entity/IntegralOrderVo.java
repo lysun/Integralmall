@@ -1,8 +1,13 @@
 package com.doublev2v.integralmall.find.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 import com.doublev2v.foundation.core.entity.Identified;
+import com.doublev2v.integralmall.entity.BranchShopDto;
+import com.doublev2v.integralmall.util.Constant;
+import com.doublev2v.integralmall.util.MapPointDistance;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -27,6 +32,8 @@ public class IntegralOrderVo implements Identified<String>{
 	@JsonInclude(Include.NON_NULL)
 	private String couponCode;//兑换码(消费凭证)
 	private String status;//未使用:00,已使用:01,待发货:10,已发货:11,已取消:20
+	@JsonIgnore
+	private Set<BranchShopDto> shopDtos;//用于获取出来比较哪个分店近
 	public String getId() {
 		return id;
 	}
@@ -124,6 +131,41 @@ public class IntegralOrderVo implements Identified<String>{
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
 	}
+	public Set<BranchShopDto> getShopDtos() {
+		return shopDtos;
+	}
+	public void setShopDtos(Set<BranchShopDto> shopDtos) {
+		this.shopDtos = shopDtos;
+	}
 
-	
+	/**
+	 * 计算所给经纬度坐标与当前商品的位置的距离最近的分店,并给对象中的部分属性赋值
+	 * @param lat_a
+	 * @param lng_a
+	 * @return
+	 */
+	public BranchShopDto calculateNearestBranchShop(double lng_a,double lat_a){
+		if(Constant.ACTUAL.equals(this.getType())){
+			return null;
+		}
+		if(shopDtos==null||shopDtos.size()==0){
+			return null;
+		}
+		BranchShopDto one=shopDtos.iterator().next();
+		double distance=MapPointDistance.getPointsDistance(lng_a, lat_a,
+				Double.valueOf(one.getLongitude()), Double.valueOf(one.getLatitude()));
+		for(BranchShopDto bs:shopDtos){
+			double d=MapPointDistance.getPointsDistance(lng_a, lat_a,
+					Double.valueOf(bs.getLongitude()), Double.valueOf(bs.getLatitude()));
+			if(d<distance){
+				distance=d;
+				one=bs;
+			}
+		}
+		this.shopName=one.getName();
+		this.address=one.getAddress();
+		this.longitude=one.getLongitude();
+		this.latitude=one.getLatitude();
+		return one;
+	}
 }

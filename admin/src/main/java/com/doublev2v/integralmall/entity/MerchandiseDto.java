@@ -21,6 +21,7 @@ public class MerchandiseDto implements Identified<String>{
 	private String type;//商品类型
 	private long integralCount;//所需积分
 	private long stock;//库存
+	private String price;
 	private String original;//渠道专享
 	private String remark;//简介
 	private String isShelve;
@@ -30,7 +31,8 @@ public class MerchandiseDto implements Identified<String>{
 	private Set<MediaContentDto> mediaDtos;
 	@JsonIgnore
 	private MultipartFile[] mediaFiles;
-	private BranchShopDto shopDto;
+	private Set<BranchShopDto> shopDtos;
+	private Set<String> branchshopIds;//一个商品对应好几个分店，但是总店肯定只有一个
 	private String shopId;
 	private String brief;
 	private String start;
@@ -138,17 +140,12 @@ public class MerchandiseDto implements Identified<String>{
 	public void setMainpicFile(MultipartFile mainpicFile) {
 		this.mainpicFile = mainpicFile;
 	}
-	public BranchShopDto getShopDto() {
-		return shopDto;
+	
+	public Set<BranchShopDto> getShopDtos() {
+		return shopDtos;
 	}
-	public void setShopDto(BranchShopDto shopDto) {
-		this.shopDto = shopDto;
-	}
-	public String getShopId() {
-		return shopId;
-	}
-	public void setShopId(String shopId) {
-		this.shopId = shopId;
+	public void setShopDtos(Set<BranchShopDto> shopDtos) {
+		this.shopDtos = shopDtos;
 	}
 	public String getStart() {
 		return start;
@@ -167,6 +164,24 @@ public class MerchandiseDto implements Identified<String>{
 	}
 	public void setBrief(String brief) {
 		this.brief = brief;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
+	public Set<String> getBranchshopIds() {
+		return branchshopIds;
+	}
+	public void setBranchshopIds(Set<String> branchshopIds) {
+		this.branchshopIds = branchshopIds;
+	}
+	public String getShopId() {
+		return shopId;
+	}
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
 	}
 	
 	

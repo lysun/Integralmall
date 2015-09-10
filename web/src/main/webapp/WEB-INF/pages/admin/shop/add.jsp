@@ -61,7 +61,7 @@
            <div class="form-group">
                <label for="description" class="col-sm-2 control-label">简介:</label>
                <div class="col-sm-10">
-                   <input class="form-control" name="description" placeholder="please input description">
+               <textarea rows="10" cols="170" name="description"></textarea>
                </div>
            </div>
            <div class="form-group">

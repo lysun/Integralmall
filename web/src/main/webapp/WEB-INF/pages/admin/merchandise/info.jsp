@@ -7,15 +7,6 @@
 	<jsp:attribute name="nav">
 		<my:merchandise-nav tab="shelve"></my:merchandise-nav>
 	</jsp:attribute>
-	<jsp:attribute name="script">
-		<script>
-		$(function(){
-			loadScript();
-			addMapListener=function(){};
-		});
-		</script>
-	
-	</jsp:attribute>
 	<jsp:body>
 		<form role="form" class="form-horizontal" method="post">
            <div class="form-group">
@@ -37,9 +28,23 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="classify" class="col-sm-2 control-label">商家:</label>
+               <label for="classify" class="col-sm-2 control-label">总店:</label>
                <div class="col-sm-10">
-                    <p class="form-control">${t.shopDto.name }</p>
+                <c:forEach items="${shops }" var="shop">
+               		<c:if test="${shop.id eq t.shopId}">
+               		<p class="form-control">${shop.shopName }</p>
+               		</c:if>
+               	</c:forEach>
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="classify" class="col-sm-2 control-label">分店:</label>
+               <div class="col-sm-10">
+               <p class="form-control">
+                    <c:forEach items="${t.shopDtos}" var="shopDto">
+                    ${shopDto.name };
+                    </c:forEach>
+               </p>
                </div>
            </div>
            <div class="form-group">
@@ -48,20 +53,34 @@
                     <p class="form-control">${t.name }</p>
                </div>
            </div>
-           
-           <div class="form-group">
-               <label for="type" class="col-sm-2 control-label">是否实物商品:</label>
-               <div class="col-sm-10">
-               <p class="form-control">
-               		<c:if test="${t.type eq '0'}">否</c:if>
-               	   	<c:if test="${t.type eq '1'}">是</c:if>
-               	   </p>
-               </div>
-           </div>
            <div class="form-group">
                <label for="integralCount" class="col-sm-2 control-label">所需积分:</label>
                <div class="col-sm-10">
                    <p class="form-control">${t.integralCount }</p>
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="price" class="col-sm-2 control-label">价格:</label>
+               <div class="col-sm-10">
+               		<p id="price" class="form-control">${t.price }</p>
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="brief" class="col-sm-2 control-label">活动内容:</label>
+               <div class="col-sm-10">
+                   <p id="brief" class="form-control">${t.brief }</p>
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="start" class="col-sm-2 control-label">开始日期:</label>
+               <div class="col-sm-10">
+                  <p id="start" class="form-control">${t.start }</p>
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="end" class="col-sm-2 control-label">结束日期:</label>
+               <div class="col-sm-10">
+                  <p id="end" class="form-control">${t.end }</p>
                </div>
            </div>
            <div class="form-group">
@@ -98,50 +117,17 @@
            <div class="form-group">
                <label for="mediaFile" class="col-sm-2 control-label">主图片:</label>
                <div class="col-sm-10">
-            	   	<img src="${t.mainPicDto.url }" height='200'> 
+            	   <img src="${t.mainPicDto.url }" height="200" > 
                </div>
            </div>
            <div class="form-group">
                <label for="mediaFile" class="col-sm-2 control-label">图片:</label>
                <div class="col-sm-10">
             	   	<c:forEach items="${t.mediaDtos}" var="media">
-            	   	<div class="col-sm-4">
-            	   		<img src="${media.url }" height='200' >
+            	    <div class="col-sm-4">
+            	   		<img src="${media.url }" height="200" >
             	   	</div>
             	   	</c:forEach>	
-               </div>
-           </div>
-           <div class="form-group">
-               <label for="brief" class="col-sm-2 control-label">活动内容:</label>
-               <div class="col-sm-10">
-                   <p id="brief" class="form-control">${t.brief }</p>
-               </div>
-           </div>
-           <div class="form-group">
-               <label for="start" class="col-sm-2 control-label">开始日期:</label>
-               <div class="col-sm-10">
-                  <p id="start" class="form-control">${t.start }</p>
-               </div>
-           </div>
-           <div class="form-group">
-               <label for="end" class="col-sm-2 control-label">结束日期:</label>
-               <div class="col-sm-10">
-                  <p id="end" class="form-control">${t.end }</p>
-               </div>
-           </div>
-           <div class="form-group">
-               <label for="address" class="col-sm-2 control-label">地址:</label>
-               <div class="col-sm-10">
-                   <p id="address" class="form-control">${t.address }</p>
-               </div>
-           </div>
-           <div class="form-group">
-               <label for="point" class="col-sm-2 control-label">位置:</label>
-               <div class="col-sm-10">
-                    <input id="longitude" type="hidden" class="form-control" name="longitude" value="${t.longitude}">
-                   <input id="latitude" type="hidden" class="form-control" name="latitude" value="${t.latitude}">
-                   <p id="point" class="form-control">${t.longitude},${t.latitude}</p><span>点击地图选择具体位置</span>
-                   <div id="map" style="width:100%;height:600px"></div>
                </div>
            </div>
            <div class="form-group">

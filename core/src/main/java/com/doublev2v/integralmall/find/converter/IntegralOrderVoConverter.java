@@ -1,11 +1,16 @@
 package com.doublev2v.integralmall.find.converter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.doublev2v.foundation.core.dto.common.SimpleDtoConverter;
+import com.doublev2v.integralmall.converter.BranchShopDtoConverter;
+import com.doublev2v.integralmall.entity.BranchShopDto;
 import com.doublev2v.integralmall.find.entity.IntegralOrderVo;
-import com.doublev2v.integralmall.merchandise.Coupon;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.order.IntegralOrder;
 import com.doublev2v.integralmall.order.om.OrderMerchandise;
@@ -15,6 +20,9 @@ import com.doublev2v.integralmall.util.DateUtil;
 @Component
 public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, IntegralOrderVo> {
 
+	@Autowired
+	private BranchShopDtoConverter branchShopDtoConverter;
+	
 	@Override
 	public IntegralOrderVo convert(IntegralOrder d) {
 		IntegralOrderVo t=new IntegralOrderVo();
@@ -41,14 +49,13 @@ public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, 
 				switch(m.getType()){
 				case Constant.VIRTUAL:
 					t.setType(Constant.VIRTUAL);
-					Coupon c=(Coupon)m;
 					if(m.getEndDate()!=null){
-						t.setExpiryTime(DateUtil.format(m.getEndDate()));
+						t.setExpiryTime(DateUtil.format(m.getEndDate()).substring(0,10));
 					}
-					t.setAddress(c.getAddress());
-					t.setShopName(c.getShop().getName());
-					t.setLongitude(c.getLongitude());
-					t.setLatitude(c.getLatitude());
+					if(m.getShops()!=null){//将shopDto信息转过去用于比较哪个距离短
+						Set<BranchShopDto> set=new HashSet<BranchShopDto>(branchShopDtoConverter.convertTs(m.getShops()));
+						t.setShopDtos(set);
+					}
 					if(om.getUsageDate()!=null){
 						t.setUsageDate(DateUtil.format(om.getUsageDate()));	
 					}
@@ -89,14 +96,13 @@ public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, 
 				switch(m.getType()){
 				case Constant.VIRTUAL:
 					t.setType(Constant.VIRTUAL);
-					Coupon c=(Coupon)m;
 					if(m.getEndDate()!=null){
-						t.setExpiryTime(DateUtil.format(m.getEndDate()));
+						t.setExpiryTime(DateUtil.format(m.getEndDate()).substring(0,10));
 					}
-					t.setAddress(c.getAddress());
-					t.setShopName(c.getShop().getName());
-					t.setLongitude(c.getLongitude());
-					t.setLatitude(c.getLatitude());
+					if(m.getShops()!=null){//将shopDto信息转过去用于比较哪个距离短
+						Set<BranchShopDto> set=new HashSet<BranchShopDto>(branchShopDtoConverter.convertTs(m.getShops()));
+						t.setShopDtos(set);
+					}
 					break;
 				case Constant.ACTUAL:
 					t.setType(Constant.ACTUAL);

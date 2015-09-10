@@ -134,9 +134,9 @@ public class ApiControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.post("/exchangeCoupon")
-	    				.param("merchandiseId", "4040409e4fa12601014fa126fbf90004")
-	    				.param("addressId", "ddddddd")
-	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb"))
+	    				.param("merchandiseId", "4040409e4ef31284014ef314eff50004")
+	    				.param("addressId", "000000004fa5f69c014fa6985f9a0004")
+	    				.param("token", "b1b211057fb74ebe9f19288a9257d5f2"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();  

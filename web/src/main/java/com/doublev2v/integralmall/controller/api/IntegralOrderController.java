@@ -45,9 +45,9 @@ public class IntegralOrderController{
 	 */
 	@RequestMapping(value="/myCouponsList",method=RequestMethod.GET)
 	public String integralOrders(@RequestParam(defaultValue="1") Integer page,
-			@RequestParam(defaultValue="5") Integer size,String token) throws ParseException {
+			@RequestParam(defaultValue="5") Integer size,String token,String localAddress) throws ParseException {
 		UserInfo user=userTokenService.getUser(token);
-		PagedList<IntegralOrderVo> list=voService.getList(page, size, user);
+		PagedList<IntegralOrderVo> list=voService.getList(page, size, user,localAddress);
 		return RequestResult.success(list).toJson();
 	}
 
@@ -57,8 +57,8 @@ public class IntegralOrderController{
 	 * @return
 	 */
 	@RequestMapping(value="/myCouponOrGoodDetail",method=RequestMethod.GET)
-	public String integralOrder(String id) {
-		return RequestResult.success(voService.findOne(id)).toJson();
+	public String integralOrder(String id,String localAddress) {
+		return RequestResult.success(voService.findOne(id,localAddress)).toJson();
 	}
 	
 	/**

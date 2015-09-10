@@ -15,12 +15,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.service.PagingService;
 import com.doublev2v.foundation.dics.CategoryItemDtoService;
-import com.doublev2v.integralmall.entity.CouponDto;
-import com.doublev2v.integralmall.entity.GiftDto;
 import com.doublev2v.integralmall.entity.MerchandiseDto;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
 import com.doublev2v.integralmall.service.BranchShopDtoService;
 import com.doublev2v.integralmall.service.MerchandiseDtoService;
+import com.doublev2v.integralmall.service.ShopDtoService;
 import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
 @Controller
@@ -34,7 +33,9 @@ public class MerchandiseController extends SimpleController<MerchandiseDto> {
 	@Autowired
 	private CategoryItemDtoService categoryItemService;
 	@Autowired
-	private BranchShopDtoService shopDtoService;
+	private ShopDtoService shopDtoService;
+	@Autowired
+	private BranchShopDtoService branchShopDtoService;
 
 	@Override
 	protected PagingService<MerchandiseDto, String> getService() {
@@ -63,10 +64,9 @@ public class MerchandiseController extends SimpleController<MerchandiseDto> {
 		PagedList<MerchandiseDto> pageList=dtoService.getList(page, size, type,search, orderBy, seq);
 		return RequestResult.success(pageList).toJson();
 	}
-	
-	@RequestMapping(value="/{type}/add",method=RequestMethod.GET)
-	public ModelAndView add(@PathVariable String type) {
-		String viewPath=getBasePath()+type+"/add";
+	@RequestMapping(value="/add",method=RequestMethod.GET)
+	public ModelAndView add() {
+		String viewPath=getBasePath()+"add";
 		ModelAndView view=new ModelAndView(viewPath);
 		view.addObject("top", getMenuService().getTopMenus());
 		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
@@ -76,48 +76,32 @@ public class MerchandiseController extends SimpleController<MerchandiseDto> {
 		return view;
 	}
 	
-	@RequestMapping(value="/{type}/{id}/edit",method=RequestMethod.GET)
-	public ModelAndView edit(@PathVariable String type,@PathVariable String id) {
-		String viewPath=getBasePath()+type+"/edit";
+	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
+	public ModelAndView edit(@PathVariable String id) {
+		String viewPath=getBasePath()+"edit";
 		ModelAndView view=new ModelAndView(viewPath);
+		MerchandiseDto t=getService().findOne(id);
 		view.addObject("top", getMenuService().getTopMenus());
 		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
-		view.addObject("t",getService().findOne(id));
+		view.addObject("t",t);
 		view.addObject("brands", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_BRAND_TYPE));
 		view.addObject("classifies", categoryItemService.getCategoryItemsByType(Dics.MERCHANDISE_CLASSIFY_TYPE));
 		view.addObject("shops", shopDtoService.findAll());
+		view.addObject("branchShops", branchShopDtoService.findByShopId(t.getShopId()));
 		return view;
-	}
-	@RequestMapping(value="/{type}/{id}",method=RequestMethod.GET)
-	public ModelAndView info(@PathVariable String type,@PathVariable String id) {
-		String viewPath=getBasePath()+type+"/info";
-		ModelAndView view=new ModelAndView(viewPath);
-		view.addObject("top", getMenuService().getTopMenus());
-		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
-		view.addObject("t", getService().findOne(id));
-		return view;
-	}
-	@RequestMapping(value="/coupon",method=RequestMethod.POST)
-	public ModelAndView add(CouponDto t) {
-		getService().add(t);
-		return index();
-	}
-	@RequestMapping(value="/gift",method=RequestMethod.POST)
-	public ModelAndView add(GiftDto t) {
-		getService().add(t);
-		return index();
-	}
-	@RequestMapping(value="/coupon/{id}",method=RequestMethod.POST)
-	public ModelAndView edit(CouponDto t) {
-		getService().update(t);
-		return info("coupon",t.getId());
-	}
-	@RequestMapping(value="/gift/{id}",method=RequestMethod.POST)
-	public ModelAndView edit(GiftDto t) {
-		getService().update(t);
-		return info("gift",t.getId());
 	}
 	
+	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	public ModelAndView info(@PathVariable String id) {
+		String viewPath=getBasePath()+"info";
+		ModelAndView view=new ModelAndView(viewPath);
+		MerchandiseDto t=getService().findOne(id);
+		view.addObject("t", t);
+		view.addObject("top", getMenuService().getTopMenus());
+		view.addObject("subMenu", getMenuService().getSecondMenus(getMenuTab()));
+		view.addObject("shops", shopDtoService.findAll());
+		return view;
+	}
 	/**
 	 * 将商品下架
 	 * @param id

@@ -1,6 +1,6 @@
 package com.doublev2v.integralmall.activity.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import com.doublev2v.foundation.core.entity.Identified;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,10 +14,9 @@ public class ActivityBranchShop implements Identified<String>{
 	private String descr;//商家介绍
 	private String picUrl;
 	private String address;//具体地址
-	@JsonInclude(Include.NON_NULL)
 	private String tel;//联系电话
 	@JsonInclude(Include.NON_NULL)
-	private Set<ActivityMerchandise> list;
+	private List<ActivityMerchandise> list;
 	@JsonInclude(Include.NON_NULL)
 	private String leastIntegral;
 	public String getId() {
@@ -51,10 +50,11 @@ public class ActivityBranchShop implements Identified<String>{
 	public void setPicUrl(String picUrl) {
 		this.picUrl = picUrl;
 	}	
-	public Set<ActivityMerchandise> getList() {
+	
+	public List<ActivityMerchandise> getList() {
 		return list;
 	}
-	public void setList(Set<ActivityMerchandise> list) {
+	public void setList(List<ActivityMerchandise> list) {
 		this.list = list;
 	}
 	public String getDescr() {

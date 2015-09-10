@@ -3,12 +3,16 @@ package com.doublev2v.integralmall.shop.branch;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.shop.Shop;
+import com.doublev2v.integralmall.util.MapPointDistance;
 @Entity
 public class BranchShop extends UUIDBaseModel{
 
@@ -18,7 +22,6 @@ public class BranchShop extends UUIDBaseModel{
 	private String longitude;//经度
 	private String latitude;//纬度
 	private String contact;//联系人
-	private String description;//商家介绍
 	private String address;//具体地址
 	private String tel;//联系电话
 	private Set<Merchandise> merchs;
@@ -65,24 +68,32 @@ public class BranchShop extends UUIDBaseModel{
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
 	public String getAddress() {
 		return address;
 	}
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	@OneToMany(mappedBy="shop")
+	@ManyToMany(mappedBy="shops")
+	@OrderBy("seq")
 	public Set<Merchandise> getMerchs() {
 		return merchs;
 	}
 	public void setMerchs(Set<Merchandise> merchs) {
 		this.merchs = merchs;
 	}
-	
+	/**
+	 * 计算所给经纬度坐标与当前商品的位置的距离(单位：米)
+	 * @param lat_a
+	 * @param lng_a
+	 * @return
+	 */
+	public double calculateDistance(double lng_a,double lat_a){
+		if(StringUtils.isBlank(longitude)||StringUtils.isBlank(latitude)){
+			return 0;
+		}
+		double lng_b=Double.valueOf(longitude);
+		double lat_b=Double.valueOf(latitude);
+		return MapPointDistance.getPointsDistance(lng_a, lat_a, lng_b, lat_b);
+	}
 }

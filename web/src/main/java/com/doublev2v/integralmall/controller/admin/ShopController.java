@@ -88,14 +88,27 @@ public class ShopController extends SimpleController<ShopDto> {
 		return index();
 	}
 	@RequestMapping(value="/{shopId}/branch/{id}",method=RequestMethod.POST)
-	public ModelAndView editbranch(@PathVariable String shopId,BranchShopDto entity) {
+	public String editbranch(@PathVariable String shopId,BranchShopDto entity) {
 		branchShopDtoService.update(entity);
-		return edit(shopId);
+		return "redirect:/admin/shop/"+shopId+"/edit";
 	}
 	@RequestMapping(value="/{shopId}/branch/{id}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public String deletebranch(@PathVariable String shopId,@PathVariable String id) {
-		branchShopDtoService.delete(id);;
+		branchShopDtoService.delete(id);
+		return RequestResult.success("删除成功").toJson();
+	}
+	
+	@RequestMapping(value="/getShop",method=RequestMethod.GET)
+	@ResponseBody
+	public String getShop(String shopId) {
+		System.out.println(shopId);
+		return RequestResult.success(service.findOne(shopId)).toJson();
+	}
+	
+	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
+	public @ResponseBody String delete(@PathVariable String id) {
+		getService().delete(id);
 		return RequestResult.success("删除成功").toJson();
 	}
 }

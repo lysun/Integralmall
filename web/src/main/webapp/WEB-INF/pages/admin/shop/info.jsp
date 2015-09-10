@@ -30,7 +30,7 @@
            <div class="form-group">
                <label for="description" class="col-sm-2 control-label">简介:</label>
                <div class="col-sm-10">
-               		<p class="form-control">${t.description }</p>
+               		<textarea rows="10" cols="170" name="description" readonly="readonly">${t.description }</textarea>
                </div>
            </div>
            <div class="form-group">
@@ -69,7 +69,9 @@
 					         <td>联系人：${branch.contact }</td>
 					         <td>联系电话：${branch.tel }</td>
 					     </tr>
-					    
+					     <tr>
+					         <td colspan="2">地址：${branch.address }</td>
+					     </tr>
 					   </table>
 						
 					   </div>

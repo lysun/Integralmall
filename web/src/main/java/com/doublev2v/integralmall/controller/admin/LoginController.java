@@ -36,7 +36,7 @@ public class LoginController{
 	public ModelAndView submit(String username, String password) {
 	    User user = userService.findByUsername(username);
     	if(user==null)
-    		throw new IllegalArgumentException("传入参数错误");
+    		return new ModelAndView("redirect:/login");  
         try {
             // 如果登陆成功  
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {

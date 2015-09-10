@@ -9,12 +9,44 @@
 	</jsp:attribute>
 	<jsp:attribute name="script">
 		<script>
-		loadScript();
+		$(function(){
+			loadScript();
+			//input事件监听
+			if(/msie/i.test(navigator.userAgent)) {//ie浏览器
+				document.getElementById('address').onpropertychange=handle;
+			}else{//非ie浏览器，比如Firefox 
+				//firefox下检测状态改变只能用oninput,且需要用addEventListener来注册事件。 
+				document.getElementById('address').addEventListener("input",handle,false); 
+			}
+			
+		});
 
+		//地址输入框的内容发生改变时发生的事件
+		function handle(){
+			var input=document.getElementById('address').value;
+			//根据输入的内容进行搜索，搜索的结果有标注和批注信息
+			var local = new BMap.LocalSearch(map, {renderOptions:{map: map}});
+			local.search(input);
+		}
+
+		function validate(){
+			if($("#name").val()==""){
+				alert('分店名称不能为空!');
+		        return false;
+			}
+			if($("#address").val()==""){
+				alert('地址不能为空!');
+		        return false;
+			}
+			if($("#point").html().trim()==""||$("#longitude").val()==""||$("#latitude").val()==""){
+				alert('请选择位置');
+		        return false;
+			}
+		}
 		</script>
 	</jsp:attribute>
 <jsp:body>
-		<form action="./" role="form" class="form-horizontal" method="post" enctype="multipart/form-data">
+		<form action="./" role="form" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return validate()">
            <div class="form-group">
                <label for="num" class="col-sm-2 control-label">分店编号:</label>
                <div class="col-sm-10">
@@ -24,7 +56,7 @@
            <div class="form-group">
                <label for="shopName" class="col-sm-2 control-label">分店名称:</label>
                <div class="col-sm-10">
-                   <input class="form-control" name="name" value="${branch.name }" placeholder="please input name">
+                   <input id="name" class="form-control" name="name" value="${branch.name }" placeholder="please input name">
                </div>
            </div>
            <div class="form-group">
@@ -37,6 +69,13 @@
                <label for="tel" class="col-sm-2 control-label">联系电话:</label>
                <div class="col-sm-10">
                   <input class="form-control" name="tel" value="${branch.tel }" placeholder="please input tel">
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="address" class="col-sm-2 control-label">地址:</label>
+               <div class="col-sm-10">
+                   <input id="address" class="form-control" name="address" placeholder="请输入商品的地址" 
+                   value="${branch.address }">
                </div>
            </div>
            <div class="form-group">

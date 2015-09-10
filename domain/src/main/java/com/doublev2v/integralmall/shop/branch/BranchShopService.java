@@ -18,15 +18,36 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
+import com.doublev2v.foundation.core.rest.ErrorCodeException;
+import com.doublev2v.foundation.core.service.AbstractLogicDeleteService;
 import com.doublev2v.foundation.dics.CategoryItem;
+import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.shop.Shop;
+import com.doublev2v.integralmall.util.Constant;
+import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
 @Transactional
-public class BranchShopService extends AbstractPagingAndSortingService<BranchShop,String>{
+public class BranchShopService extends AbstractLogicDeleteService<BranchShop,String>{
 	@Autowired
 	private BranchShopRepository repository;
 	
+	public void delete(BranchShop t) {
+		if(t.getMerchs()!=null&&t.getMerchs().size()>0){//遍历商品看是否有上架的
+			for(Merchandise m:t.getMerchs()){
+				if(Constant.SHELVE.equals(m.getIsShelve())){
+					throw new ErrorCodeException(SystemErrorCodes.BRANCHSHOP_HAS_MERCHS);
+				}
+				
+			}
+		}
+		t.setDeleted(true);
+		getRepository().save(t);
+	}
+	
+	public List<BranchShop> findByShopId(String shopId){
+		return repository.findByDeletedAndShop_id(false,shopId);
+	}
+
 	public Page<BranchShop> findPage(Pageable page,String num,CategoryItem tag){
 		return repository.findAll(getQueryClause(num,tag), page);
 	}
@@ -37,6 +58,7 @@ public class BranchShopService extends AbstractPagingAndSortingService<BranchSho
             public Predicate toPredicate(Root<BranchShop> root, CriteriaQuery<?> query,
             		CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
+                predicate.add(cb.isFalse(root.get("deleted")));
                 if(StringUtils.isNotBlank(num)){
                 	predicate.add(cb.equal(root.get("num"), num));
                 }

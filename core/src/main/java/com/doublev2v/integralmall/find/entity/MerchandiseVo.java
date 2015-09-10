@@ -10,6 +10,10 @@ public class MerchandiseVo implements Identified<String>{
 
 	private String id;
 	private String name;
+	@JsonInclude(Include.NON_NULL)
+	private String classifyName;
+	@JsonInclude(Include.NON_NULL)
+	private String brandName;
 	private String integralCount;//所需积分
 	private String stock;
 	@JsonInclude(Include.NON_NULL)//如果为空就不参与序列化
@@ -59,6 +63,18 @@ public class MerchandiseVo implements Identified<String>{
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getClassifyName() {
+		return classifyName;
+	}
+	public void setClassifyName(String classifyName) {
+		this.classifyName = classifyName;
+	}
+	public String getBrandName() {
+		return brandName;
+	}
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
 	}
 	
 	

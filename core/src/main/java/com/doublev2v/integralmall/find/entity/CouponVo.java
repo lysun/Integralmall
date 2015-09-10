@@ -1,36 +1,21 @@
 package com.doublev2v.integralmall.find.entity;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.Set;
 
+import com.doublev2v.integralmall.entity.BranchShopDto;
 import com.doublev2v.integralmall.util.MapPointDistance;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 public class CouponVo extends MerchandiseVo	{
-	@JsonInclude(Include.NON_NULL)
-	private String classifyName;
-	@JsonInclude(Include.NON_NULL)
-	private String brandName;
-	private String expiryTime;
-	private String address;//地址
-	private String shopName;//商户名称
-	private String longitude;//经度
-	private String latitude;//纬度
+	private String expiryTime="";//有效期
+	private String address="";//地址
+	private String shopName="";//商户名称
+	private String longitude="";//经度
+	private String latitude="";//纬度
 	@JsonIgnore
 	private double distance;
-	public String getClassifyName() {
-		return classifyName;
-	}
-	public void setClassifyName(String classifyName) {
-		this.classifyName = classifyName;
-	}
-	public String getBrandName() {
-		return brandName;
-	}
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
-	}
+	@JsonIgnore
+	private Set<BranchShopDto> shopDtos;//用于获取出来比较哪个分店近
 	public String getExpiryTime() {
 		return expiryTime;
 	}
@@ -67,18 +52,41 @@ public class CouponVo extends MerchandiseVo	{
 	public void setDistance(double distance) {
 		this.distance = distance;
 	}
+	
+	public Set<BranchShopDto> getShopDtos() {
+		return shopDtos;
+	}
+	public void setShopDtos(Set<BranchShopDto> shopDtos) {
+		this.shopDtos = shopDtos;
+	}
+	
 	/**
-	 * 计算所给经纬度坐标与当前商品的位置的距离(单位：米)
+	 * 根据实体中的分店集合信息中的经纬度坐标与当前商品的位置的距离最近的分店,并给对象中的经纬度、地址、商户名称属性赋值
 	 * @param lat_a
 	 * @param lng_a
 	 * @return
 	 */
 	public double calculateDistance(double lng_a,double lat_a){
-		if(StringUtils.isBlank(longitude)||StringUtils.isBlank(latitude)){
+		if(shopDtos==null||shopDtos.size()==0){
 			return 0;
 		}
-		double lng_b=Double.valueOf(longitude);
-		double lat_b=Double.valueOf(latitude);
-		return MapPointDistance.getPointsDistance(lng_a, lat_a, lng_b, lat_b);
+		BranchShopDto one=shopDtos.iterator().next();
+		distance=MapPointDistance.getPointsDistance(lng_a, lat_a,
+				Double.valueOf(one.getLongitude()), Double.valueOf(one.getLatitude()));
+		for(BranchShopDto bs:shopDtos){
+			double d=MapPointDistance.getPointsDistance(lng_a, lat_a,
+					Double.valueOf(bs.getLongitude()), Double.valueOf(bs.getLatitude()));
+			if(d<distance){
+				distance=d;
+				one=bs;
+			}
+		}
+		this.shopName=one.getName();
+		this.address=one.getAddress();
+		this.longitude=one.getLongitude();
+		this.latitude=one.getLatitude();
+		
+		return distance;
 	}
+
 }

@@ -19,6 +19,7 @@ public class SystemErrorCodes {
 	public static final ErrorCode COUPONCODE_CANNOT_USE;
 	public static final ErrorCode REMOTE_DATA_ERROR;
 	public static final ErrorCode REMOTE_DATA_PARSE_ERROR;
+	public static final ErrorCode BRANCHSHOP_HAS_MERCHS;
 	static {
 		/**
 		 * 系统相关的异常，1**
@@ -44,6 +45,10 @@ public class SystemErrorCodes {
 		 */
 		REMOTE_DATA_ERROR=new ErrorCode(400, "数据错误");
 		REMOTE_DATA_PARSE_ERROR=new ErrorCode(401, "数据解析错误");
+		/**
+		 * 商户相关的异常，5**
+		 */
+		BRANCHSHOP_HAS_MERCHS=new ErrorCode(501, "分店有上架的商品，不能删除");
 	}
 }
 

@@ -18,8 +18,8 @@
                  <td>{{value.stock }}</td>
                  <td>{{if value.classifyDto}}{{value.classifyDto.name }}{{/if}}</td>
                  <td>{{if value.brandDto}}{{value.brandDto.name }}{{/if}}</td>
-                 <td>{{if value.type=='0'}}<a href="<c:url value='/admin/merchandise/coupon/{{value.id }}'/>">查看</a>{{/if}}{{if value.type=='1'}}<a href="<c:url value='/admin/merchandise/gift/{{value.id }}'/>">查看</a>{{/if}}|
-                     {{if value.type=='0'}}<a href="<c:url value='/admin/merchandise/coupon/{{value.id }}/edit'/>">修改</a>{{/if}}{{if value.type=='1'}}<a href="<c:url value='/admin/merchandise/gift/{{value.id }}/edit'/>">修改</a>{{/if}}|
+                 <td><a href="<c:url value='/admin/merchandise/{{value.id }}'/>">查看</a>|
+                     <a href="<c:url value='/admin/merchandise/{{value.id }}/edit'/>">修改</a>|
                  <a onclick="unshelve('{{value.id }}')">下架</a></td>
             </tr>
 		{{/each}}
@@ -110,14 +110,7 @@
 		</script>
 	</jsp:attribute>
 	<jsp:body>
-		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-			      添加<span class="caret"></span></button>
-		   <ul class="dropdown-menu" role="menu">
-		      <li><a href="<c:url value="/admin/merchandise/coupon/add"/>">优惠券</a></li>
-		      <li><a href="<c:url value="/admin/merchandise/gift/add"/>">实物商品</a></li>
-		   </ul>
-	    </div>
+		<button class="btn btn-default" onclick="window.location.href='<c:url value="/admin/merchandise/add"/>'">添加</button>
 		<button id="orderByUpdateTime" class="btn btn-default">按照更新时间</button>
 		<button id="orderByStock" class="btn btn-default">按照商品库存倒序</button>
 		<button id="orderByIntegral" class="btn btn-default">按照所需积分</button>

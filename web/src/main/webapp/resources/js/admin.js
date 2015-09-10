@@ -24,7 +24,7 @@ function del(url,id) {
 	        	if(data.errcode=="0"){
 	        		$("#"+id).remove();
 	        	}else{
-	        		alert("此用户不能删除");
+	        		alert(data.errmsg);
 	        	}
 	        },
 	        error:function() {

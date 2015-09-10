@@ -21,6 +21,21 @@
 				addImage(this);
             }
 		});
+		//给总店选择改变事件
+		$("#shopId").change(function(){
+			var html="";
+			ajax("<c:url value='/admin/shop/getShop'/>",{shopId:this.value},"get",function(data){
+				var bs=data.data.branchs;
+				
+				for(var i=0;i<bs.length;i++){
+					html+='<input id="branchshopIds" name="branchshopIds" value="'+bs[i].id+'" type="checkbox">'+bs[i].name;
+				}
+				//先清空再追加
+				$("#branchshop").html("");
+				$("#branchshop").append(html);
+			});
+
+		});
 	});
 	
 	function addImage(input){
@@ -50,8 +65,9 @@
 			alert('请选择商品品牌!');
         	return false;
 		}
-		if($("#shopId").val()=="0"){
-			alert('请选择商家!');
+		//必须要选择一家分店
+	    if($("#branchshopIds:checked").length==0){
+	    	alert('请至少选择一家分店');
         	return false;
 		}
 		if($("#name").val()==""){
@@ -155,20 +171,33 @@
                </div>
            </div>
            <div class="form-group">
-               <label for="brandId" class="col-sm-2 control-label">商家:</label>
+               <label for="brandId" class="col-sm-2 control-label">总店:</label>
                <div class="col-sm-10">
                    <select id="shopId" name="shopId" class="form-control">
                    		<option value="0">请选择...</option>
                			<c:forEach items="${shops }" var="shop">
-               			<option value="${shop.id }">${shop.name }</option>
+               			<option value="${shop.id }">${shop.shopName }</option>
                			</c:forEach>
                		</select>
+               		
                </div>
+           </div>
+           <div class="form-group">
+               <label for="name" class="col-sm-2 control-label">选择分店:</label>
+               <div class="col-sm-10" id="branchshop">
+               		<%-- <input id="branchshopIds" name="branchshopIds" value="${shop.id }" type="checkbox">${shop.name} --%>
+               	</div>
            </div>
            <div class="form-group">
                <label for="name" class="col-sm-2 control-label">商品名称:</label>
                <div class="col-sm-10">
                    <input id="name" class="form-control" name="name" placeholder="please input name">*
+               </div>
+           </div>
+           <div class="form-group">
+               <label for="type" class="col-sm-2 control-label">是否实物商品:</label>
+               <div class="col-sm-10">
+               		<input type="checkbox" value="1" name="type"/>
                </div>
            </div>
            <div class="form-group">

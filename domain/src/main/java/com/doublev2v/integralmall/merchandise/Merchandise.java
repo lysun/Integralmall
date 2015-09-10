@@ -3,13 +3,9 @@ package com.doublev2v.integralmall.merchandise;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -19,8 +15,6 @@ import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.media.MediaContent;
 import com.doublev2v.integralmall.shop.branch.BranchShop;
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING)
 public class Merchandise extends UUIDBaseModel{
 	private String seq;//编号
 	private CategoryItem classify;//商品分类
@@ -28,13 +22,14 @@ public class Merchandise extends UUIDBaseModel{
 	private String name;//商品名称
 	private long integralCount;//所需积分
 	private long stock;//库存
+	private double price;//价格
 	private String original;//渠道专享
 	private String remark;//简介
 	private String isShelve;//是否下架:true.上架，false.下架
 	private MediaContent mainPicMedia;
 	private Set<MediaContent> medias;
 	private String type;
-	private BranchShop shop;
+	private Set<BranchShop> shops;//一个商品对应好几个分店，但是总店肯定只有一个
 	private Date startDate;
 	private Date endDate;
 	private String brief;//概要
@@ -109,19 +104,19 @@ public class Merchandise extends UUIDBaseModel{
 	public void setMainPicMedia(MediaContent mainPicMedia) {
 		this.mainPicMedia = mainPicMedia;
 	}
-	@Column(name="type",insertable=false,updatable=false)
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
-	@ManyToOne
-	public BranchShop getShop() {
-		return shop;
+	@ManyToMany
+	@JoinTable(name="merch_branchshop")
+	public Set<BranchShop> getShops() {
+		return shops;
 	}
-	public void setShop(BranchShop shop) {
-		this.shop = shop;
+	public void setShops(Set<BranchShop> shops) {
+		this.shops = shops;
 	}
 	
 	public String getBrief() {
@@ -141,6 +136,12 @@ public class Merchandise extends UUIDBaseModel{
 	}
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	
 	
