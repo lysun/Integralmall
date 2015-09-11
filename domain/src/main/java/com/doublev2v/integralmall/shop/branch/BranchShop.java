@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Where;
 
 import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 import com.doublev2v.integralmall.merchandise.Merchandise;
@@ -76,6 +77,7 @@ public class BranchShop extends UUIDBaseModel{
 	}
 	@ManyToMany(mappedBy="shops")
 	@OrderBy("seq")
+	@Where(clause="is_shelve='1'")
 	public Set<Merchandise> getMerchs() {
 		return merchs;
 	}

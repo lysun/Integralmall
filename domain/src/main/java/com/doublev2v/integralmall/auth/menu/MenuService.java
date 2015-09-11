@@ -29,7 +29,10 @@ public class MenuService extends AbstractPagingAndSortingService<Menu, String>{
 	public List<Menu> getTopMenus(){
 		List<Menu> list=repository.findByParent(null);
 		//根据角色或权限过滤
-		return list.stream().filter((m)->menuFilter(m)).collect(Collectors.toList());
+		return list.stream()
+				.filter((m)->menuFilter(m))
+				.sorted((a,b)->a.getSeq()-b.getSeq())
+				.collect(Collectors.toList());
 	}
 	/**
 	 * 根据UrlAccessDefinition表过滤menu，返回false表示当前用户无权限访问此menu的url

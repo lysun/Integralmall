@@ -19,6 +19,7 @@ public class Menu extends UUIDBaseModel{
 	private Menu parent;
 	@JsonIgnore
 	private Set<Menu> childs;
+	private int seq;//用于菜单排序
 	public String getName() {
 		return name;
 	}
@@ -39,7 +40,7 @@ public class Menu extends UUIDBaseModel{
 		this.parent = parent;
 	}
 	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER)
-	@OrderBy("tab")
+	@OrderBy("seq")
 	public Set<Menu> getChilds() {
 		return childs;
 	}
@@ -52,6 +53,13 @@ public class Menu extends UUIDBaseModel{
 	public void setTab(String tab) {
 		this.tab = tab;
 	}
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	
 	
 	
 }

@@ -4,10 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-<my:admin tab="integralOrder">
-	<jsp:attribute name="nav">
-		<my:integralOrder-nav tab="integralOrder"></my:integralOrder-nav>
-	</jsp:attribute>
+<my:admin tab="integralOrder" subtab="integralOrder">
 	<jsp:body>
 		<form role="form" class="form-horizontal" method="post">
 		  <div class="form-group">

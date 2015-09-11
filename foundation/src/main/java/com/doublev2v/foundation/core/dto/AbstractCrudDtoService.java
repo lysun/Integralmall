@@ -19,7 +19,7 @@ import com.doublev2v.foundation.core.service.CrudService;
  * @param <ID>
  */
 @Transactional
-public class AbstractDtoCrudService<D extends Identified<ID>, T extends Identified<ID>, ID extends Serializable>
+public class AbstractCrudDtoService<D extends Identified<ID>, T extends Identified<ID>, ID extends Serializable>
 	implements CrudService<T, ID>{
 	
 	@Autowired

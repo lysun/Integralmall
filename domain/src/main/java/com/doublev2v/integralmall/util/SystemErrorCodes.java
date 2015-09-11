@@ -20,6 +20,8 @@ public class SystemErrorCodes {
 	public static final ErrorCode REMOTE_DATA_ERROR;
 	public static final ErrorCode REMOTE_DATA_PARSE_ERROR;
 	public static final ErrorCode BRANCHSHOP_HAS_MERCHS;
+	public static final ErrorCode ACCOUNT_HAS_INTEGRAL;
+	public static final ErrorCode NONE_ACCOUNT;
 	static {
 		/**
 		 * 系统相关的异常，1**
@@ -30,11 +32,10 @@ public class SystemErrorCodes {
 		/**
 		 * 商品相关的异常，2**
 		 */
-		NOTENOUGH_INTEGRAL=new ErrorCode(200, "对不起，您的积分不足");
-		NOTENOUGH_STOCK=new ErrorCode(201, "抱歉，库存不足");
-		MERCHANDISE_UNSTART=new ErrorCode(202, "抱歉，商品活动未开始");
-		MERCHANDISE_EXPIRE=new ErrorCode(203, "抱歉，商品已过期");
-		MERCHANDISE_UNSHELVE=new ErrorCode(204, "抱歉，商品已下架");
+		NOTENOUGH_STOCK=new ErrorCode(200, "抱歉，库存不足");
+		MERCHANDISE_UNSTART=new ErrorCode(201, "抱歉，商品活动未开始");
+		MERCHANDISE_EXPIRE=new ErrorCode(202, "抱歉，商品已过期");
+		MERCHANDISE_UNSHELVE=new ErrorCode(203, "抱歉，商品已下架");
 		/**
 		 * 积分订单相关的异常，3**
 		 */
@@ -49,6 +50,12 @@ public class SystemErrorCodes {
 		 * 商户相关的异常，5**
 		 */
 		BRANCHSHOP_HAS_MERCHS=new ErrorCode(501, "分店有上架的商品，不能删除");
+		/**
+		 * 积分相关的异常，6**
+		 */
+		NONE_ACCOUNT=new ErrorCode(600, "该账户不存在");
+		ACCOUNT_HAS_INTEGRAL=new ErrorCode(600, "该账户已经存在积分信息");
+		NOTENOUGH_INTEGRAL=new ErrorCode(601, "对不起，您的积分不足");
 	}
 }
 

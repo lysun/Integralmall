@@ -12,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.doublev2v.foundation.core.dto.AbstractDtoPagingService;
+import com.doublev2v.foundation.core.dto.AbstractPagingDtoService;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.integralmall.find.converter.MerchandiseVoConverter;
 import com.doublev2v.integralmall.find.entity.CouponVo;
@@ -20,7 +20,7 @@ import com.doublev2v.integralmall.find.entity.MerchandiseVo;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
 @Service
-public class MerchandiseVoService extends AbstractDtoPagingService<Merchandise,MerchandiseVo,String>{
+public class MerchandiseVoService extends AbstractPagingDtoService<Merchandise,MerchandiseVo,String>{
 	@Autowired
 	private MerchandiseVoConverter voConverter;
 	@Autowired

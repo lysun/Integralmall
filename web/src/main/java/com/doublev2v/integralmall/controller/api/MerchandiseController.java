@@ -32,6 +32,17 @@ public class MerchandiseController{
 			@RequestParam(defaultValue="5") Integer size) {
 		return RequestResult.success(service.getActuals(page, size, Constant.ACTUAL)).toJson();
 	}
+	
+	/**
+	 * 获取实物商品详情
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="/giftDetail",method=RequestMethod.GET)
+	public String giftDetail(String id) {
+		return RequestResult.success(service.findOne(id)).toJson();
+	}
+	
 	/**
 	 * 获取附近商家列表
 	 * @param page
@@ -44,23 +55,15 @@ public class MerchandiseController{
 			@RequestParam(defaultValue="5") Integer size,String localAddress) {
 		return RequestResult.success(service.getVirtuals(page, size,Constant.VIRTUAL,localAddress)).toJson();
 	}
-	/**
-	 * 获取实物商品详情
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value="/giftDetail",method=RequestMethod.GET)
-	public String giftDetail(String id,String localAddress) {
-		return RequestResult.success(service.getVirtual(id,localAddress)).toJson();
-	}
+	
 	/**
 	 * 获取优惠券商品
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value="/couponDetail",method=RequestMethod.GET)
-	public String couponDetail(String id) {
-		return RequestResult.success(service.findOne(id)).toJson();
+	public String couponDetail(String id,String localAddress) {
+		return RequestResult.success(service.getVirtual(id,localAddress)).toJson();
 	}
 	
 	

@@ -65,13 +65,9 @@ public abstract class AbstractCrudService<T,ID extends Serializable> implements 
 	public long count() {
 		return getRepository().count();
 	}
-
-	@Override
-	public void delete(ID id) {
-		if(id==null)return;
-		getRepository().delete(id);
-	}
-
+	/**
+	 * 所有的删除方法都是调用的这个删除，如果重写删除方法，只要重写这个方法就可以了
+	 */
 	@Override
 	public void delete(T entity) {
 		if(entity==null)return;
@@ -79,9 +75,18 @@ public abstract class AbstractCrudService<T,ID extends Serializable> implements 
 	}
 
 	@Override
+	public void delete(ID id) {
+		if(id==null)return;
+		T t=getRepository().findOne(id);
+		delete(t);
+	}
+
+	@Override
 	public void delete(Iterable<? extends T> entities) {
 		if(entities==null)return;
-		getRepository().delete(entities);
+		for(T t:entities){
+			delete(t);
+		}
 	}
 
 	@Override

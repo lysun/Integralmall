@@ -9,10 +9,6 @@ import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 @Transactional
 public class UserInfoService extends AbstractPagingAndSortingService<UserInfo, String>{
 
-	@Override
-	public UserInfo update(UserInfo entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }

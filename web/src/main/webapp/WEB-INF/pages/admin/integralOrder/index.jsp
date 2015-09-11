@@ -3,10 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-<my:admin tab="integralOrder">
-	<jsp:attribute name="nav">
-		<my:integralOrder-nav tab="integralOrder"></my:integralOrder-nav>
-	</jsp:attribute>
+<my:admin tab="integralOrder" subtab="integralOrder">
 	<jsp:attribute name="script">
 		<script id="template" type="text/html">
 		{{each list as value i}}

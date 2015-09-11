@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>  
 <%@ attribute name="tab" %>
-<%@ attribute name="nav" fragment="true" %>
+<%@ attribute name="subtab" %>
 <%@ attribute name="script" fragment="true" %>
 <%@ attribute name="style" fragment="true" %>
 <%@ attribute name="htmlClass" %>
@@ -32,10 +32,13 @@
 	   </div>
     </nav>
     <div class="container-fluid">
-        
         <div class="row">
             <div class="col-sm-2">
-            	<jsp:invoke fragment="nav"/>                
+            	<ul class="nav nav-pills nav-stacked">
+				    <c:forEach items="${subMenu}" var="submenu"> 
+					<li <c:if test="${subtab eq submenu.tab }">class="active"</c:if>><a href="<c:url value='${submenu.url }'/>">${submenu.name }</a></li>
+					</c:forEach>
+				</ul>
             </div>
             <div class="col-sm-10">
             	<jsp:doBody/>

@@ -17,7 +17,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.doublev2v.foundation.core.service.AbstractLogicDeleteService;
-import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.integralmall.shop.branch.BranchShopService;
 @Service
 @Transactional
@@ -27,13 +26,14 @@ public class ShopService extends AbstractLogicDeleteService<Shop,String>{
 	@Autowired
 	private BranchShopService branchShopService;
 	
-	public void delete(Shop t) {
-		t.setDeleted(true);
+	public void logicDelete(String id){
+		Shop t=repository.findOne(id);
 		if(t.getBranchShops()!=null&&t.getBranchShops().size()>0){//删除所有分店
-			branchShopService.delete(t.getBranchShops());
+			t.getBranchShops().forEach((b)->branchShopService.logicDelete(b.getId()));
 		}
-		getRepository().save(t);
+		repository.logicDelete(id);
 	}
+	
 	/**
 	 * 根据不同的条件查询商户信息
 	 * @param page
@@ -42,8 +42,8 @@ public class ShopService extends AbstractLogicDeleteService<Shop,String>{
 	 * @param tag
 	 * @return
 	 */
-	public Page<Shop> findPage(Pageable page,String num,CategoryItem tag){
-		return repository.findAll(getQueryClause(num,tag), page);
+	public Page<Shop> findPage(Pageable page,String num){
+		return repository.findAll(getQueryClause(num), page);
 	}
 	/**
 	 * 返回查询条件Specification
@@ -53,22 +53,19 @@ public class ShopService extends AbstractLogicDeleteService<Shop,String>{
 	 * @param endDate
 	 * @return
 	 */
-	private Specification<Shop> getQueryClause(String num,CategoryItem tag){
+	private Specification<Shop> getQueryClause(String num){
         return new Specification<Shop>() {
             @Override
             public Predicate toPredicate(Root<Shop> root, CriteriaQuery<?> query,
             		CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
-                predicate.add(cb.isFalse(root.get("deleted")));
+                predicate.add(cb.isFalse(root.get("deleted")));//过滤删除了的
                 if(StringUtils.isNotBlank(num)){
                 	predicate.add(cb.equal(root.get("num"), num));
                 }
-                if (tag!=null){
-                    predicate.add(cb.isMember(tag, root.get("tags")));
-                }
                 Predicate[] pre = new Predicate[predicate.size()];
                 query.where(predicate.toArray(pre));//将where字句给query
-                query.orderBy(cb.desc(root.get("createTime")));//默认按创建日期排序
+                query.orderBy(cb.desc(root.get("num")));//默认按序号排序
                 return query.getRestriction();
             }
         };

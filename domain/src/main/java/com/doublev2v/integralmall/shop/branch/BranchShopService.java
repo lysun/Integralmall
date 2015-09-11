@@ -31,7 +31,8 @@ public class BranchShopService extends AbstractLogicDeleteService<BranchShop,Str
 	@Autowired
 	private BranchShopRepository repository;
 	
-	public void delete(BranchShop t) {
+	public void logicDelete(String id) {
+		BranchShop t=repository.findOne(id);
 		if(t.getMerchs()!=null&&t.getMerchs().size()>0){//遍历商品看是否有上架的
 			for(Merchandise m:t.getMerchs()){
 				if(Constant.SHELVE.equals(m.getIsShelve())){
@@ -40,8 +41,7 @@ public class BranchShopService extends AbstractLogicDeleteService<BranchShop,Str
 				
 			}
 		}
-		t.setDeleted(true);
-		getRepository().save(t);
+		repository.logicDelete(id);
 	}
 	
 	public List<BranchShop> findByShopId(String shopId){
@@ -58,7 +58,7 @@ public class BranchShopService extends AbstractLogicDeleteService<BranchShop,Str
             public Predicate toPredicate(Root<BranchShop> root, CriteriaQuery<?> query,
             		CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
-                predicate.add(cb.isFalse(root.get("deleted")));
+                predicate.add(cb.isFalse(root.get("deleted")));//过滤删除了的
                 if(StringUtils.isNotBlank(num)){
                 	predicate.add(cb.equal(root.get("num"), num));
                 }

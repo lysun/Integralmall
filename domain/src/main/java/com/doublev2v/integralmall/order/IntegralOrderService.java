@@ -62,7 +62,7 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 	 */
 	public void order(UserInfo user,String merchandiseId,String addressId) {
 		if(StringUtils.isBlank(merchandiseId)||merchandiseService.findOne(merchandiseId)==null)
-			throw new ErrorCodeException(SystemErrorCodes.IIIEGAL_ARGUMENT,"传入商品参数不正确");
+			throw new ErrorCodeException(SystemErrorCodes.IIIEGAL_ARGUMENT,"您购买的商品不存在");
 		Merchandise m=merchandiseService.findOne(merchandiseId);
 		if(Constant.UNSHELVE.equals(m.getIsShelve()))
 			throw new ErrorCodeException(SystemErrorCodes.MERCHANDISE_UNSHELVE,"商品已下架");

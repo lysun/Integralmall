@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.doublev2v.foundation.core.dto.AbstractDtoPagingService;
+import com.doublev2v.foundation.core.dto.AbstractPagingDtoService;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.dics.CategoryItemService;
@@ -20,7 +20,7 @@ import com.doublev2v.integralmall.activity.entity.ActivityBranchShop;
 import com.doublev2v.integralmall.shop.branch.BranchShop;
 import com.doublev2v.integralmall.shop.branch.BranchShopService;
 @Service
-public class ActivityBranchShopService extends AbstractDtoPagingService<BranchShop,ActivityBranchShop,String>{
+public class ActivityBranchShopService extends AbstractPagingDtoService<BranchShop,ActivityBranchShop,String>{
 	@Autowired
 	private ActivityBranchShopConverter voConverter;
 	@Autowired

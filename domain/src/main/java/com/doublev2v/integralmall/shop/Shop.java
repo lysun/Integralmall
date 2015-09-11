@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Where;
+
 import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 import com.doublev2v.foundation.dics.CategoryItem;
 import com.doublev2v.foundation.media.MediaContent;
@@ -73,6 +75,7 @@ public class Shop extends UUIDBaseModel{
 		this.integral = integral;
 	}
 	@OneToMany(mappedBy="shop")
+	@Where(clause="deleted=0")
 	public Set<BranchShop> getBranchShops() {
 		return branchShops;
 	}

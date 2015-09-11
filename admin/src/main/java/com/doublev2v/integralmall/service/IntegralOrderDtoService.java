@@ -7,14 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.doublev2v.foundation.core.dto.AbstractDtoPagingService;
+import com.doublev2v.foundation.core.dto.AbstractPagingDtoService;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.integralmall.converter.IntegralOrderDtoConverter;
 import com.doublev2v.integralmall.entity.IntegralOrderDto;
 import com.doublev2v.integralmall.order.IntegralOrder;
 import com.doublev2v.integralmall.order.IntegralOrderService;
 @Service
-public class IntegralOrderDtoService extends AbstractDtoPagingService<IntegralOrder,IntegralOrderDto,String>{
+public class IntegralOrderDtoService extends AbstractPagingDtoService<IntegralOrder,IntegralOrderDto,String>{
 	@Autowired
 	private IntegralOrderDtoConverter dtoConverter;
 	@Autowired

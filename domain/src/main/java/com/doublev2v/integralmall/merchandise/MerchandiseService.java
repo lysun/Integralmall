@@ -109,16 +109,16 @@ public class MerchandiseService extends AbstractPagingAndSortingService<Merchand
             public Predicate toPredicate(Root<Merchandise> root, CriteriaQuery<?> query,
             		CriteriaBuilder cb) {
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
+                predicate.add(cb.equal(root.get("isShelve").as(String.class), Constant.SHELVE));//过滤掉下架的
                 if(StringUtils.isNotBlank(type)){
                 	predicate.add(cb.equal(root.get("type").as(String.class), type));
                 }
-                predicate.add(cb.equal(root.get("isShelve").as(String.class), Constant.SHELVE));
                 if(StringUtils.isNotBlank(search)){
                 	predicate.add(cb.like(root.get("name").as(String.class), "%" + search + "%"));
                 }
                 Predicate[] pre = new Predicate[predicate.size()];
                 query.where(predicate.toArray(pre));//将where字句给query
-                query.orderBy(cb.desc(root.get("createTime")));//默认按创建日期排序
+                query.orderBy(cb.desc(root.get("seq")));//默认按序号排序
                 return query.getRestriction();
             }
         };

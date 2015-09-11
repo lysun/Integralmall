@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.doublev2v.foundation.core.dto.AbstractDtoPagingService;
+import com.doublev2v.foundation.core.dto.AbstractPagingDtoService;
 import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.integralmall.find.converter.IntegralOrderVoConverter;
@@ -21,7 +21,7 @@ import com.doublev2v.integralmall.order.IntegralOrderService;
 import com.doublev2v.integralmall.userinfo.UserInfo;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
-public class IntegralOrderVoService extends AbstractDtoPagingService<IntegralOrder,IntegralOrderVo,String>{
+public class IntegralOrderVoService extends AbstractPagingDtoService<IntegralOrder,IntegralOrderVo,String>{
 	@Autowired
 	private IntegralOrderVoConverter voConverter;
 	@Autowired

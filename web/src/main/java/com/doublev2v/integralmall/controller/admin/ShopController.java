@@ -20,7 +20,7 @@ import com.doublev2v.integralmall.util.RequestResult;
 
 @Controller
 @RequestMapping("/admin/shop")
-public class ShopController extends SimpleController<ShopDto> {
+public class ShopController extends LogicDeleteController<ShopDto> {
 	
 	@Autowired
 	private ShopDtoService service;
@@ -95,20 +95,19 @@ public class ShopController extends SimpleController<ShopDto> {
 	@RequestMapping(value="/{shopId}/branch/{id}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public String deletebranch(@PathVariable String shopId,@PathVariable String id) {
-		branchShopDtoService.delete(id);
+		branchShopDtoService.logicDelete(id);
 		return RequestResult.success("删除成功").toJson();
 	}
 	
 	@RequestMapping(value="/getShop",method=RequestMethod.GET)
 	@ResponseBody
 	public String getShop(String shopId) {
-		System.out.println(shopId);
 		return RequestResult.success(service.findOne(shopId)).toJson();
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public @ResponseBody String delete(@PathVariable String id) {
-		getService().delete(id);
+		service.logicDelete(id);
 		return RequestResult.success("删除成功").toJson();
 	}
 }

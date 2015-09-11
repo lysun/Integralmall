@@ -3,10 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-<my:admin tab="user">
-<jsp:attribute name="nav">
-		<my:user-nav tab="role"></my:user-nav>
-	</jsp:attribute>
+<my:admin tab="user" subtab="role">
 	<jsp:body>
 		<form role="form" class="form-horizontal" method="post">
           <div class="form-group">

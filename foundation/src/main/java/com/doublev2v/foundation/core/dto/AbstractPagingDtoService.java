@@ -13,8 +13,8 @@ import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 import com.doublev2v.foundation.core.service.PagingService;
 
-public class AbstractDtoPagingService <D extends Identified<ID>, T extends Identified<ID>, ID extends Serializable> 
-	extends AbstractDtoCrudService<D, T, ID> implements PagingService<T, ID>{
+public class AbstractPagingDtoService <D extends Identified<ID>, T extends Identified<ID>, ID extends Serializable> 
+	extends AbstractCrudDtoService<D, T, ID> implements PagingService<T, ID>{
 	@Autowired
 	protected AbstractPagingAndSortingService<D, ID> service;
 	@Override

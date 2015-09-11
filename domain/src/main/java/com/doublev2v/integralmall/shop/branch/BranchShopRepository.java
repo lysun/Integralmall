@@ -7,8 +7,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.doublev2v.foundation.core.repository.LogicDeleteRepository;
 
-public interface BranchShopRepository extends PagingAndSortingRepository<BranchShop, String>,
-	LogicDeleteRepository<BranchShop, String>,
+public interface BranchShopRepository extends LogicDeleteRepository<BranchShop, String>,
+	PagingAndSortingRepository<BranchShop, String>,
 	JpaSpecificationExecutor<BranchShop>{
 	
 	public List<BranchShop> findByDeletedAndShop_id(boolean deleted,String shopId);

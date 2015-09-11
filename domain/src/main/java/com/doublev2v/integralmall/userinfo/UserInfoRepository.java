@@ -4,4 +4,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface UserInfoRepository extends PagingAndSortingRepository<UserInfo, String>{
 
+	public UserInfo findByAccount(String account);
 }

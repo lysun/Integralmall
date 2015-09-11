@@ -4,10 +4,7 @@
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %> 
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-<my:admin tab="merchandise">
-	<jsp:attribute name="nav">
-		<my:merchandise-nav tab="shelve"></my:merchandise-nav>
-	</jsp:attribute>
+<my:admin tab="merchandise" subtab="shelve">
 	<jsp:attribute name="script">
 		<script id="template" type="text/html">
 		{{each list as value i}}

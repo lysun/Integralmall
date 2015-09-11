@@ -46,7 +46,10 @@ public class LoginController{
                 subject.login(token);
                 Session session=subject.getSession();
                 session.setAttribute("user", user);//将用户信息放入session
-                return new ModelAndView("redirect:/admin");  
+                if(subject.isPermitted("user:*"))
+                	return new ModelAndView("redirect:/admin/user");
+                else
+                	return new ModelAndView("redirect:/admin/merchandise");
             }  
         } catch (Exception e) {  
             e.printStackTrace();  
