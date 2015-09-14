@@ -10,7 +10,7 @@
 		//给图片添加事件
 		$(document).on("change","input[name='mainpicFile']",function(){
 			if(validateImage(this)){
-            	showImage(document.getElementById("mainImage"),this);
+            	showImage(document.getElementById("mainImage"),this.files[0]);
             }
 		});
 		$(document).on("change","input[name='mediaFiles']",function(){
@@ -36,20 +36,24 @@
 	});
 	
 	function addImage(input){
-		 $div=$("<div class='col-sm-4'></div>");
-		 $input=$(input);
-		 $input.css("display","none");
-		 $img=$("<img height='200' name='mediaImage'></img>");
-		 $a=$("<a class='btn btn-link'>删除</a> ");
-		 $a.click(function(){
-			 $(this).parent().remove();
-		 });
-		 $div.append($input);
-		 $div.append($img);
-		 $div.append($a);
-		 showImage($img.get(0),input);
-		 $("#showImage").append($div);
-		 $("#upload_media").append('<input name="mediaFiles" type="file">');
+		for(var i=0;i<input.files.length;i++){
+			var $div=$("<div class='col-sm-4'></div>");
+			var $img=$("<img height='200' name='mediaImage'></img>");
+			var $a=$("<a class='btn btn-link'>删除</a> ");
+			$a.click(function(){
+				$(this).parent().remove();
+			});
+			showImage($img.get(0),input.files[i]);
+			$div.append($img);
+			$div.append($a);
+			if(i==input.files.length-1){
+				var $input=$(input);
+				$input.css("display","none");
+				$div.append($input);
+			}
+			$("#showImage").append($div);
+		 }
+		 $("#upload_media").append('<input name="mediaFiles" type="file" multiple="multiple">');
 	}
 
 	
@@ -250,7 +254,7 @@
            <div class="form-group">
                <label for="media" class="col-sm-2 control-label">图片:</label>
                <div class="col-sm-10">
-                   <a id="upload_media" href="javascript:;" class="file">上传<input name='mediaFiles' type="file" ></a>
+                   <a id="upload_media" href="javascript:;" class="file">上传<input name='mediaFiles' type="file" multiple="multiple"></a>
                    <div id="showImage">
 	               	   <%-- <div class='col-sm-4'>
 	               	   <input type="file"/>

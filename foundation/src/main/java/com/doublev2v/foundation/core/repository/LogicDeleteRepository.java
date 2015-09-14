@@ -22,6 +22,12 @@ public interface LogicDeleteRepository<T, ID extends Serializable> extends Pagin
 	@Query("select t from #{#entityName} t where t.deleted = false")
 	Iterable<T> findAll();
 
+	@Query("select t from #{#entityName} t where t.deleted = false")
+	Page<T> findAll(Pageable pageable);
+	
+	@Query("select t from #{#entityName} t where t.deleted = false")
+	Iterable<T> findAll(Sort sort);
+	
 	@Query("select count(*) from #{#entityName} t where t.deleted = false")
 	long count();
 
@@ -36,11 +42,5 @@ public interface LogicDeleteRepository<T, ID extends Serializable> extends Pagin
 	@Modifying
 	@Query("update #{#entityName} set deleted = true")
 	void logicDeleteAll();
-	
-	@Query("select t from #{#entityName} t where t.deleted = false")
-	Page<T> findAll(Pageable pageable);
-	
-	@Query("select t from #{#entityName} t where t.deleted = false")
-	Iterable<T> findAll(Sort sort);
 	
 }

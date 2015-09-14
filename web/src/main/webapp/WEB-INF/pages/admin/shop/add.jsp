@@ -10,7 +10,7 @@
 			//给图片添加事件
 			$(document).on("change","input[name='mainpicFile']",function(){
 				if(validateImage(this)){
-	            	showImage(document.getElementById("mainImage"),this);
+	            	showImage(document.getElementById("mainImage"),this.files[0]);
 	            }
 			});
 		});

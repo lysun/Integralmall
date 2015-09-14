@@ -8,16 +8,20 @@ function  validateImage(source){
     	alert("图片限于bmp,png,gif,jpeg,jpg格式");
     	return false;
     }
-    //判断图片大小
-    var file_size = source.files[0].size;
-    if(file_size==-1){ 
-    	alert("图片格式错误或已损坏，请重新选择");
-    	return false;
+    //判断input中选择的（支持多选）图片大小
+    for(var i=0;i<source.files.length;i++){
+    	var file_size = source.files[i].size;
+        if(file_size==-1){
+        	alert("图片格式错误或已损坏，请重新选择");
+        	return false;
+        }
+        if (file_size > 400 * 1024) {
+        	alert("图片大小不能大于400KB");
+        	return false;
+        }
+    	
     }
-    if (file_size > 400 * 1024) {
-    	alert("图片大小不能大于400KB");
-    	return false;
-    }
+    
     return true;
 }
 /**
@@ -25,14 +29,12 @@ function  validateImage(source){
  * @param ImgObj image标签对象
  * @param source input file对象
  */
-function showImage(ImgObj,source) {  
-    var file = source.files[0];  
+function showImage(ImgObj,file) {  
     if(window.FileReader) {  
         var fr = new FileReader();  
         fr.readAsDataURL(file);  
         fr.onloadend = function(e) {  
         	ImgObj.src = e.target.result;  
-			
         };  
         
     }  
