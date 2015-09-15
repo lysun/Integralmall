@@ -25,7 +25,20 @@ public class ShopService extends AbstractLogicDeleteService<Shop,String>{
 	private ShopRepository repository;
 	@Autowired
 	private BranchShopService branchShopService;
-	
+	/**
+	 * 根据商户id和积分数扣减商户的可分配积分
+	 * @param shopId
+	 * @param integral
+	 */
+	public void minusIntegral(String shopId,long integral) {
+		Shop t=repository.findOne(shopId);
+		if(t==null)throw new IllegalArgumentException("传入的商户id不对");
+		if(t.getIntegral()<integral)
+			throw new IllegalArgumentException("商户可分配积分不足");
+		t.setIntegral(t.getIntegral()-integral);
+		repository.save(t);
+	}
+
 	public void logicDelete(String id){
 		Shop t=repository.findOne(id);
 		if(t.getBranchShops()!=null&&t.getBranchShops().size()>0){//删除所有分店

@@ -11,7 +11,7 @@ import com.doublev2v.foundation.dics.CategoryItemDtoService;
 import com.doublev2v.integralmall.activity.entity.ActivityBranchShop;
 import com.doublev2v.integralmall.activity.service.ActivityBranchShopService;
 import com.doublev2v.integralmall.util.RequestResult;
-@RestController("shopRestController")
+@RestController("branchshopRestController")
 public class ActivityBranchShopController{
 	@Autowired
 	private ActivityBranchShopService service;

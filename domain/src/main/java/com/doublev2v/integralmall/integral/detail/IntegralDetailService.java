@@ -20,7 +20,7 @@ public class IntegralDetailService {
 	 * @param count
 	 * @return
 	 */
-	public IntegralDetail createIntegralDetail(Integral integral,long count,String origin){
+	public IntegralDetail createIntegralDetail(Integral integral,long count,IntegralOrigin origin){
 		IntegralDetail detail=new IntegralDetail();
 		detail.setIntegral(integral);
 		detail.setCount(count);

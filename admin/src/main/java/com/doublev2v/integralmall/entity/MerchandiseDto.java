@@ -33,7 +33,7 @@ public class MerchandiseDto implements Identified<String>{
 	private MultipartFile[] mediaFiles;
 	private Set<BranchShopDto> shopDtos;
 	private Set<String> branchshopIds;//一个商品对应好几个分店，但是总店肯定只有一个
-	private String shopId;
+	private String shopId;//总店id,用于显示总店
 	private String brief;
 	private String start;
 	private String end;

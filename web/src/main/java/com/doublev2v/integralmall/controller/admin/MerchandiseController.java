@@ -120,10 +120,10 @@ public class MerchandiseController extends SimpleController<MerchandiseDto> {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/delMedia",method=RequestMethod.GET)
+	@RequestMapping(value="/{id}/media/{mediaId}",method=RequestMethod.DELETE)
 	@ResponseBody
-	public String delMedia(String id,String mediaid) throws IOException {
-		service.deleteMedia(id, mediaid);
+	public String delMedia(@PathVariable String id,@PathVariable String mediaId) throws IOException {
+		service.deleteMedia(id, mediaId);
 		return RequestResult.success(null).toJson();
 		
 	}

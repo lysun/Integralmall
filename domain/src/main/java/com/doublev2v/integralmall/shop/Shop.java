@@ -25,7 +25,7 @@ public class Shop extends UUIDBaseModel{
 	private MediaContent mainPic;
 	private Set<CategoryItem> tags;
 	private Set<BranchShop> branchShops;
-	private long integral;
+	private long integral;//可分配积分
 	
 	public String getShopName() {
 		return shopName;

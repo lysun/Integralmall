@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 import com.doublev2v.integralmall.integral.IntegralService;
+import com.doublev2v.integralmall.integral.detail.IntegralOrigin;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.merchandise.MerchandiseService;
 import com.doublev2v.integralmall.order.om.OrderMerchandise;
@@ -69,7 +70,7 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 		//减少库存
 		merchandiseService.updateStock(merchandiseId, 1);
 		//扣减积分
-		integralService.minusIntegralCount(user,m.getIntegralCount(),Constant.CONVERT_MERCHANDISE);
+		integralService.minusIntegralCount(user,m.getIntegralCount(),IntegralOrigin.CONVERT_MERCHANDISE);
 		IntegralOrder order = new IntegralOrder();
 		OrderMerchandise om=new OrderMerchandise();
 		if(m.getEndDate()==null?false:m.getEndDate().before(new Date()))
@@ -91,7 +92,7 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 		order.setShop(m.getShops().iterator().next().getShop());
 		order.setUser(user);
 		order.setOrderDate(new Date());
-		order.setOrderNo(UUID.randomUUID().toString());
+		order.setOrderNo(UUID.randomUUID().toString().replace("-", ""));
 		om.setCount(1);
 		om.setIntegralCount(m.getIntegralCount());
 		om.setMerchandise(m);
@@ -117,7 +118,7 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 			Merchandise merchandise=om.getMerchandise();
 			merchandiseService.updateStock(merchandise.getId(), -1);//添加库存
 			integralService.plusIntegralCount(order.getUser(),merchandise.getIntegralCount(),
-					Constant.CONVERT_MERCHANDISE_CANCEL);//积分添加
+					IntegralOrigin.CONVERT_MERCHANDISE_CANCEL);//积分添加
 		}else{//已使用、已发货、已取消的订单不可取消
 			throw new ErrorCodeException(SystemErrorCodes.ORDER_CANNOT_CANCEL,"订单已取消或已生效，不可取消");
 		}

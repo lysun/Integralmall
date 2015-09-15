@@ -14,17 +14,7 @@
 	            }
 			});
 		}); 
-	    function deleteBranch(branchId){
-		    ajax("<c:url value='/admin/shop/${t.id}/branch/"+branchId+"'/>",null,"delete",function(data){
-		    	if(data.errcode=="0"){
-	        		$("#"+branchId).remove();
-	        	}else{
-	        		alert(data.errmsg);
-	        	}
-			});
-
-		}
-
+		
 	    function validate(){
 			if($("#shopName").val()==""){
 				alert('商户名称不能为空!');
@@ -114,7 +104,7 @@
 						 <button type="button" class="btn btn-default btn-xs"
 						      onclick="window.location.href='<c:url value="/admin/shop/${t.id }/branch/${branch.id}/edit"/>'">编辑</button>
 						 <button type="button" class="btn btn-default btn-xs"
-						      onclick="deleteBranch('${branch.id}')" >删除</button>
+						      onclick="del('<c:url value="/admin/shop/${t.id}/branch"/>','${branch.id}');">删除</button>
 					   </div>
 					</div>
 		           </c:forEach>

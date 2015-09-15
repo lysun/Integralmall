@@ -16,6 +16,7 @@ import com.doublev2v.integralmall.find.entity.MerchandiseVo;
 import com.doublev2v.integralmall.merchandise.Merchandise;
 import com.doublev2v.integralmall.util.Constant;
 import com.doublev2v.integralmall.util.DateUtil;
+import com.doublev2v.integralmall.util.DoubleSerializer;
 
 @Component
 public class MerchandiseVoConverter extends SimpleDtoConverter<Merchandise, MerchandiseVo> {
@@ -78,7 +79,7 @@ public class MerchandiseVoConverter extends SimpleDtoConverter<Merchandise, Merc
 		if(d.getType().equals(Constant.ACTUAL)){
 			GiftVo giftVo=new GiftVo();
 			t=giftVo;
-			giftVo.setPrice(String.valueOf(d.getPrice()));
+			giftVo.setPrice(String.valueOf(DoubleSerializer.format(d.getPrice())));//保留两位小数
 		}
 		t.setId(d.getId());
 		t.setName(d.getName());

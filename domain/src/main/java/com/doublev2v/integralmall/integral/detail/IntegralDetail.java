@@ -9,7 +9,7 @@ import com.doublev2v.integralmall.integral.Integral;
 public class IntegralDetail extends UUIDBaseModel{
 
 	private Integral integral;//对应积分主表
-	private String origin;//积分来源
+	private IntegralOrigin origin;//积分来源
 	private long count;//当前明细的积分增减数
 	@ManyToOne
 	public Integral getIntegral() {
@@ -18,10 +18,10 @@ public class IntegralDetail extends UUIDBaseModel{
 	public void setIntegral(Integral integral) {
 		this.integral = integral;
 	}
-	public String getOrigin() {
+	public IntegralOrigin getOrigin() {
 		return origin;
 	}
-	public void setOrigin(String origin) {
+	public void setOrigin(IntegralOrigin origin) {
 		this.origin = origin;
 	}
 	public long getCount() {

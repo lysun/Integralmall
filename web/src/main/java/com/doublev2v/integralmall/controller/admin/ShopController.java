@@ -96,9 +96,13 @@ public class ShopController extends LogicDeleteController<ShopDto> {
 	@ResponseBody
 	public String deletebranch(@PathVariable String shopId,@PathVariable String id) {
 		branchShopDtoService.logicDelete(id);
-		return RequestResult.success("删除成功").toJson();
+		return RequestResult.success(null).toJson();
 	}
-	
+	/**
+	 * 用于获取总店下的分店
+	 * @param shopId
+	 * @return
+	 */
 	@RequestMapping(value="/getShop",method=RequestMethod.GET)
 	@ResponseBody
 	public String getShop(String shopId) {
@@ -108,6 +112,6 @@ public class ShopController extends LogicDeleteController<ShopDto> {
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public @ResponseBody String delete(@PathVariable String id) {
 		service.logicDelete(id);
-		return RequestResult.success("删除成功").toJson();
+		return RequestResult.success(null).toJson();
 	}
 }

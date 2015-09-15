@@ -11,7 +11,7 @@ function ajax(url,params,type,showData){
 	});
 }
 
-/**通用列表页面删除方法*/
+/**通用删除方法*/
 function del(url,id) {
 	bootbox.confirm("确定要删除它吗？",
 			function(result){

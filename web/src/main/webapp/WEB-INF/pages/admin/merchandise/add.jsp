@@ -247,19 +247,19 @@
            <div class="form-group">
                <label for="mainPic" class="col-sm-2 control-label">主图片:</label>
                <div class="col-sm-10">
-                   <a id="upload_mainpic" href="javascript:;" class="file">上传<input name='mainpicFile' type="file"  ></a><br>
+                   <a id="upload_mainpic" href="javascript:;" class="file">上传<input name='mainpicFile' type="file"/></a><br>
                    <img id="mainImage" height='200'>
                </div>
            </div>
            <div class="form-group">
                <label for="media" class="col-sm-2 control-label">图片:</label>
                <div class="col-sm-10">
-                   <a id="upload_media" href="javascript:;" class="file">上传<input name='mediaFiles' type="file" multiple="multiple"></a>
+                   <a id="upload_media" href="javascript:;" class="file">上传<input name='mediaFiles' type="file" multiple="multiple"/></a>
                    <div id="showImage">
 	               	   <%-- <div class='col-sm-4'>
-	               	   <input type="file"/>
 		               	   <img height='200' name='mediaImage' />
-		               	   <a class="btn btn-link">删除</a> 
+		               	   <a class="btn btn-link">删除</a>
+		               	   <input type="file" name="mediaFiles" multiple="multiple" style="display: none;">
 	               		</div> --%>
                		</div>
                </div>

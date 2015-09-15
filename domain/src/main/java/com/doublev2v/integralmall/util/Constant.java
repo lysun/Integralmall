@@ -67,14 +67,6 @@ public class Constant {
 	 */
 	public static final String ORDER_CANCEL="20";
 	/**
-	 * 积分来源(扣除):兑换商品
-	 */
-	public static final String CONVERT_MERCHANDISE="兑换商品";
-	/**
-	 * 积分来源(增加):兑换商品取消
-	 */
-	public static final String CONVERT_MERCHANDISE_CANCEL="兑换商品取消";
-	/**
 	 * rest返回正确时的errmsg
 	 */
 	public static final String REST_MSG_OK="ok";
@@ -87,5 +79,5 @@ public class Constant {
 	 * 数据库中的角色定义
 	 */
 	public static final String ROLE_SHOP_USER="ROLE_SHOP";
-	public static final String ROLE_SYSTEM_USER="ROLE_SYSTEM";
+	public static final String ROLE_BRANCH_SHOP_USER="ROLE_BRANCH";
 }

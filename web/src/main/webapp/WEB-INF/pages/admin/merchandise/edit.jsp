@@ -57,24 +57,6 @@
 			 $("#upload_media").append('<input name="mediaFiles" type="file" multiple="multiple">');
 		}
 
-		function deleteMedia(id,mediaid,obj){
-			var statu = confirm("确认删除?");
-	        if(statu){
-	        	$.ajax({
-					url:"<c:url value='/admin/merchandise/delMedia'/>",
-					data:{id:id,mediaid:mediaid},
-					type:"get",
-					dataType:"json",
-					success:function(data){
-						if(data.errcode=="0"){
-							window.location.reload(); 
-						}
-					}
-				});	
-	        }
-			
-		}
-
 		function validate(){
 			if($("#classifyId").val()=="0"){
 				alert('请选择商品分类!');
@@ -280,9 +262,10 @@
                	   <a id="upload_media" href="javascript:;" class="file">上传<input name='mediaFiles' type="file" multiple="multiple"></a> 
                	   <div id="showImage">
                	   		<c:forEach items="${t.mediaDtos}" var="media">
-               	   		<div class="col-sm-4">
+               	   		<div id="${media.id }" class="col-sm-4">
                	   			<img src="${media.url }" height="200" name='mediaImage'>
-               	   			<a class="btn btn-link" onclick="deleteMedia('${t.id}','${media.id}',this)">删除</a> 
+               	   			<a class="btn btn-link" 
+               	   			 onclick="del('<c:url value='/admin/merchandise/${t.id}/media'/>','${media.id}');">删除</a> 
                	   		</div>
                	   		</c:forEach>	
                		</div>

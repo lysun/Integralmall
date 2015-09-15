@@ -22,6 +22,8 @@ import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 import com.doublev2v.integralmall.integral.detail.IntegralDetailService;
+import com.doublev2v.integralmall.integral.detail.IntegralOrigin;
+import com.doublev2v.integralmall.shop.ShopService;
 import com.doublev2v.integralmall.userinfo.UserInfo;
 import com.doublev2v.integralmall.userinfo.UserInfoRepository;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
@@ -34,6 +36,8 @@ public class IntegralService extends AbstractPagingAndSortingService<Integral, S
 	private IntegralRepository repository;
 	@Autowired
 	IntegralDetailService integralDetailService;
+	@Autowired
+	private ShopService shopService;
 	
 	public PagedList<Integral> findPage(int page, int size,String search) {
 		PageRequest pageable=new PageRequest(page-1, size);
@@ -86,7 +90,7 @@ public class IntegralService extends AbstractPagingAndSortingService<Integral, S
 	 * @param user
 	 * @return
 	 */
-	public Integral minusIntegralCount(UserInfo user,long usedCount,String origin){
+	public Integral minusIntegralCount(UserInfo user,long usedCount,IntegralOrigin origin){
 		Integral integral=repository.findByUser(user);
 		if(integral==null){
 			integral=createIntegral(user,0);
@@ -99,13 +103,23 @@ public class IntegralService extends AbstractPagingAndSortingService<Integral, S
 		integralDetailService.createIntegralDetail(integral, 0-usedCount,origin);
 		return integral;
 	}
-	
+	/**
+	 * 扣减商户可分配积分，并给用户增加积分
+	 * @param shopId
+	 * @param user
+	 * @param count
+	 * @param origin
+	 */
+	public void plusUserIntegral(String shopId,UserInfo user,long count,IntegralOrigin origin) {
+		shopService.minusIntegral(shopId,count);//给商户扣减可分配积分
+		plusIntegralCount(user,count,origin);//给用户增加积分
+	}
 	/**
 	 * 增加用户积分,并记录明细
 	 * @param user
 	 * @return
 	 */
-	public Integral plusIntegralCount(UserInfo user,long count,String origin){
+	public Integral plusIntegralCount(UserInfo user,long count,IntegralOrigin origin){
 		Integral integral=repository.findByUser(user);
 		if(integral==null){
 			integral=createIntegral(user,0);
