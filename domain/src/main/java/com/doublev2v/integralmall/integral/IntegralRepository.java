@@ -12,5 +12,4 @@ public interface IntegralRepository extends PagingAndSortingRepository<Integral,
 	 */
 	public Integral findByUser_id(String userId);
 	public Integral findByUser(UserInfo user);
-	public Integral findByUser_account(String account);
 }

@@ -22,7 +22,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.doublev2v.integralmall.controller.api.IntegralController;
 import com.doublev2v.integralmall.controller.api.IntegralOrderController;
 import com.doublev2v.integralmall.controller.api.MerchandiseController;
-import com.doublev2v.integralmall.integral.detail.IntegralOrigin;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext-shiro-test.xml",
 									"classpath:applicationContext.xml"})
@@ -55,7 +54,7 @@ public class ApiControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.get("/myIntegral")
-	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb"))
+	    				.param("userId", "faf08f184be41285014c4f457dd70043"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();  
@@ -137,7 +136,7 @@ public class ApiControllerTest {
 	    				.post("/exchangeCoupon")
 	    				.param("merchandiseId", "faf08f184f2bb57e014f2bb699f20002")
 	    				.param("addressId", "000000004fa5f69c014fa6985f9a0004")
-	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb"))
+	    				.param("userId", "faf08f184be41285014c4f457dd70043"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();  
@@ -153,7 +152,7 @@ public class ApiControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.get("/myCouponsList")
-	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb"))
+	    				.param("userId", "faf08f184be41285014c4f457dd70043"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();  
@@ -203,7 +202,7 @@ public class ApiControllerTest {
 	    		.perform(MockMvcRequestBuilders
 	    				.get("/plusUserIntegral")
 	    				.param("shopId", "faf08f184f69691e014f698429e3000d")
-	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb")
+	    				.param("userId", "faf08f184be41285014c4f457dd70043")
 	    				.param("integral", "100")
 	    				.param("origin","0"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 

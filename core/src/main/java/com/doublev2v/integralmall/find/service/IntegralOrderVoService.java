@@ -13,13 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.doublev2v.foundation.core.dto.AbstractPagingDtoService;
 import com.doublev2v.foundation.core.model.PagedList;
-import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.integralmall.find.converter.IntegralOrderVoConverter;
 import com.doublev2v.integralmall.find.entity.IntegralOrderVo;
 import com.doublev2v.integralmall.order.IntegralOrder;
 import com.doublev2v.integralmall.order.IntegralOrderService;
 import com.doublev2v.integralmall.userinfo.UserInfo;
-import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
 public class IntegralOrderVoService extends AbstractPagingDtoService<IntegralOrder,IntegralOrderVo,String>{
 	@Autowired
@@ -28,6 +26,7 @@ public class IntegralOrderVoService extends AbstractPagingDtoService<IntegralOrd
 	private IntegralOrderService service;
 	
 	public PagedList<IntegralOrderVo> getList(Integer pageNo,Integer pageSize,UserInfo user,String localAddress){
+		if(user==null)throw new IllegalArgumentException("获取不到用户");
 		Pageable page=new PageRequest(pageNo-1, pageSize);
 		Page<IntegralOrder> list = service.findPage(page, user, null, null, null, null, null);
 		List<IntegralOrderVo> listDetail=new ArrayList<IntegralOrderVo>();

@@ -62,6 +62,7 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 	 * @return
 	 */
 	public void order(UserInfo user,String merchandiseId,String addressId) {
+		if(user==null)throw new IllegalArgumentException("获取不到用户");
 		if(StringUtils.isBlank(merchandiseId)||merchandiseService.findOne(merchandiseId)==null)
 			throw new ErrorCodeException(SystemErrorCodes.IIIEGAL_ARGUMENT,"您购买的商品不存在");
 		Merchandise m=merchandiseService.findOne(merchandiseId);

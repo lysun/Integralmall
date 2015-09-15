@@ -17,14 +17,14 @@ public class IntegralController{
 	@Autowired
 	private IntegralService service;
 	@Autowired
-	private UserInfoTokenService userTokenService;
+	private UserInfoTokenService userInfoTokenService;
 	/**
 	 * 获取用户可用积分
 	 */
 	@RequestMapping(value="/myIntegral",method=RequestMethod.GET)
 	public String getUserIntegral(String token) {
 		Map<String,String> map=new HashMap<String,String>();
-		map.put("integral",String.valueOf(service.getIntegralCount(userTokenService.getUser(token))));
+		map.put("integral",String.valueOf(service.getIntegralCount(userInfoTokenService.getUser(token))));
 		return RequestResult.success(map).toJson();
 	}
 	
@@ -37,7 +37,7 @@ public class IntegralController{
 	 */
 	@RequestMapping(value="/plusUserIntegral",method=RequestMethod.GET)
 	public String plusUserIntegral(String shopId,String token,String integral,String origin) {
-		service.plusUserIntegral(shopId,userTokenService.getUser(token), Long.valueOf(integral), IntegralOrigin.get(Integer.valueOf(origin)));
+		service.plusUserIntegral(shopId,userInfoTokenService.getUser(token), Long.valueOf(integral), IntegralOrigin.get(Integer.valueOf(origin)));
 		return RequestResult.success(null).toJson();
 	}
 }

@@ -12,7 +12,6 @@ import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.integralmall.find.entity.IntegralOrderVo;
 import com.doublev2v.integralmall.find.service.IntegralOrderVoService;
 import com.doublev2v.integralmall.order.IntegralOrderService;
-import com.doublev2v.integralmall.userinfo.UserInfo;
 import com.doublev2v.integralmall.userinfo.token.UserInfoTokenService;
 import com.doublev2v.integralmall.util.RequestResult;
 
@@ -24,14 +23,13 @@ public class IntegralOrderController{
 	@Autowired
 	private IntegralOrderService service;
 	@Autowired
-	private UserInfoTokenService userTokenService;
+	private UserInfoTokenService userInfoTokenService;
 	/**
 	 * 兑换商品
 	 */
 	@RequestMapping(value="/exchangeCoupon",method=RequestMethod.POST)
 	public String createIntegralOrder(String merchandiseId,String token,String addressId) {
-		UserInfo user=userTokenService.getUser(token);
-		service.order(user,merchandiseId,addressId);
+		service.order(userInfoTokenService.getUser(token),merchandiseId,addressId);
 		return RequestResult.success(null).toJson();
 	}
 	
@@ -46,8 +44,7 @@ public class IntegralOrderController{
 	@RequestMapping(value="/myCouponsList",method=RequestMethod.GET)
 	public String integralOrders(@RequestParam(defaultValue="1") Integer page,
 			@RequestParam(defaultValue="5") Integer size,String token,String localAddress) throws ParseException {
-		UserInfo user=userTokenService.getUser(token);
-		PagedList<IntegralOrderVo> list=voService.getList(page, size, user,localAddress);
+		PagedList<IntegralOrderVo> list=voService.getList(page, size, userInfoTokenService.getUser(token),localAddress);
 		return RequestResult.success(list).toJson();
 	}
 

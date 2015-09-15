@@ -25,13 +25,13 @@ import com.doublev2v.integralmall.integral.detail.IntegralDetailService;
 import com.doublev2v.integralmall.integral.detail.IntegralOrigin;
 import com.doublev2v.integralmall.shop.ShopService;
 import com.doublev2v.integralmall.userinfo.UserInfo;
-import com.doublev2v.integralmall.userinfo.UserInfoRepository;
+import com.doublev2v.integralmall.userinfo.UserInfoService;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 @Service
 @Transactional
 public class IntegralService extends AbstractPagingAndSortingService<Integral, String>{
 	@Autowired
-	private UserInfoRepository userInfoRepository;
+	private UserInfoService userInfoService;
 	@Autowired
 	private IntegralRepository repository;
 	@Autowired
@@ -44,21 +44,22 @@ public class IntegralService extends AbstractPagingAndSortingService<Integral, S
 		Page<Integral> result=repository.findAll(getQueryClause(search), pageable);
 		return new PagedList<Integral>(result);
 	}
-	
-	public void validateForm(String account){
-		UserInfo user=userInfoRepository.findByAccount(account);
-		if(user==null){
-			throw new ErrorCodeException(SystemErrorCodes.NONE_ACCOUNT);
-		}
-		Integral integral=repository.findByUser_account(account);
+	public Integral findByUser(UserInfo user) {
+		if(user==null)throw new IllegalArgumentException("传入用户错误");
+		Integral integral=repository.findByUser(user);
 		if(integral!=null){
 			throw new ErrorCodeException(SystemErrorCodes.ACCOUNT_HAS_INTEGRAL);
 		}
+		return integral;
 	}
+	public Integral validateForm(String account){
+		return findByUser(userInfoService.findByAccount(account));
+	}
+	
 	public Integral add(Integral t){
 		validateForm(t.getUser().getAccount());
 		Integral integral=new Integral();
-		integral.setUser(userInfoRepository.findByAccount(t.getUser().getAccount()));
+		integral.setUser(userInfoService.findByAccount(t.getUser().getAccount()));
 		integral.setTotalcount(t.getTotalcount());
 		return repository.save(integral);
 	}
@@ -78,6 +79,7 @@ public class IntegralService extends AbstractPagingAndSortingService<Integral, S
 	 * @return
 	 */
 	public long getIntegralCount(UserInfo user){
+		if(user==null)throw new IllegalArgumentException("获取不到用户");
 		Integral integral=repository.findByUser(user);
 		if(integral==null){
 			integral=createIntegral(user,0);
@@ -120,6 +122,7 @@ public class IntegralService extends AbstractPagingAndSortingService<Integral, S
 	 * @return
 	 */
 	public Integral plusIntegralCount(UserInfo user,long count,IntegralOrigin origin){
+		if(user==null)throw new IllegalArgumentException("获取不到用户");
 		Integral integral=repository.findByUser(user);
 		if(integral==null){
 			integral=createIntegral(user,0);
