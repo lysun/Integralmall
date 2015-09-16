@@ -32,6 +32,8 @@ public class IntegralOrderVo implements Identified<String>{
 	@JsonInclude(Include.NON_NULL)
 	private String couponCode;//兑换码(消费凭证)
 	private String status;//未使用:00,已使用:01,待发货:10,已发货:11,已取消:20
+	@JsonInclude(Include.NON_NULL)
+	private String remark;
 	@JsonIgnore
 	private Set<BranchShopDto> shopDtos;//用于获取出来比较哪个分店近
 	public String getId() {
@@ -137,7 +139,12 @@ public class IntegralOrderVo implements Identified<String>{
 	public void setShopDtos(Set<BranchShopDto> shopDtos) {
 		this.shopDtos = shopDtos;
 	}
-
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	/**
 	 * 计算所给经纬度坐标与当前商品的位置的距离最近的分店,并给对象中的部分属性赋值
 	 * @param lat_a

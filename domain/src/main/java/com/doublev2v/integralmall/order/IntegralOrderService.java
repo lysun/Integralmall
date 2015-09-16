@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -26,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
+import com.doublev2v.foundation.utils.UUID;
 import com.doublev2v.integralmall.integral.IntegralService;
 import com.doublev2v.integralmall.integral.detail.IntegralOrigin;
 import com.doublev2v.integralmall.merchandise.Merchandise;
@@ -81,7 +81,7 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 		switch(m.getType()){
 			case Constant.VIRTUAL:
 				order.setStatus(Constant.UNUSED);
-				om.setCouponCode(UUID.randomUUID().toString());
+				om.setCouponCode(UUID.uuid2());
 				break;
 			case Constant.ACTUAL:
 				if(StringUtils.isBlank(addressId))//实物必须有收货地址
@@ -93,7 +93,7 @@ public class IntegralOrderService extends AbstractPagingAndSortingService<Integr
 		order.setShop(m.getShops().iterator().next().getShop());
 		order.setUser(user);
 		order.setOrderDate(new Date());
-		order.setOrderNo(UUID.randomUUID().toString().replace("-", ""));
+		order.setOrderNo(UUID.uuid2());
 		om.setCount(1);
 		om.setIntegralCount(m.getIntegralCount());
 		om.setMerchandise(m);

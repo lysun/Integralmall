@@ -44,6 +44,7 @@ public class IntegralOrderVoConverter extends SimpleDtoConverter<IntegralOrder, 
 				if(m.getMainPicMedia()!=null){
 					t.setMainPic(m.getMainPicMedia().getUrl());
 				}
+				t.setRemark(m.getRemark());
 				t.setUsageDate("");
 				t.setCouponCode("");
 				switch(m.getType()){

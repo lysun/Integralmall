@@ -54,7 +54,7 @@ public class ApiControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.get("/myIntegral")
-	    				.param("userId", "faf08f184be41285014c4f457dd70043"))
+	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();  
@@ -134,9 +134,9 @@ public class ApiControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.post("/exchangeCoupon")
-	    				.param("merchandiseId", "faf08f184f2bb57e014f2bb699f20002")
+	    				.param("merchandiseId", "faf08f184fb13015014fb15534090025")
 	    				.param("addressId", "000000004fa5f69c014fa6985f9a0004")
-	    				.param("userId", "faf08f184be41285014c4f457dd70043"))
+	    				.param("token", "2826dd6b9f094f33bd88aa859fb0d50f"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();  
@@ -152,7 +152,7 @@ public class ApiControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.get("/myCouponsList")
-	    				.param("userId", "faf08f184be41285014c4f457dd70043"))
+	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();  
@@ -202,7 +202,7 @@ public class ApiControllerTest {
 	    		.perform(MockMvcRequestBuilders
 	    				.get("/plusUserIntegral")
 	    				.param("shopId", "faf08f184f69691e014f698429e3000d")
-	    				.param("userId", "faf08f184be41285014c4f457dd70043")
+	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb")
 	    				.param("integral", "100")
 	    				.param("origin","0"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 

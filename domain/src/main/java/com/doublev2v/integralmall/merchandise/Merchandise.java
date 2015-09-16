@@ -28,7 +28,7 @@ public class Merchandise extends UUIDBaseModel{
 	private String isShelve;//是否下架:true.上架，false.下架
 	private MediaContent mainPicMedia;
 	private Set<MediaContent> medias;
-	private String type;
+	private String type;//1代表实物，0代表优惠券
 	private Set<BranchShop> shops;//一个商品对应好几个分店，但是总店肯定只有一个
 	private Date startDate;
 	private Date endDate;

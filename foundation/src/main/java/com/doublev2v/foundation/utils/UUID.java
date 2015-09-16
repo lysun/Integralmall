@@ -1,23 +1,22 @@
 package com.doublev2v.foundation.utils;
 
 import java.security.SecureRandom;
-import java.util.UUID;
 
-public class Identities {
+public class UUID {
 	private static SecureRandom random = new SecureRandom();
 
 	/**
 	 * 封装JDK自带的UUID, 通过Random数字生成, 中间有-分割.
 	 */
 	public static String uuid() {
-		return UUID.randomUUID().toString();
+		return java.util.UUID.randomUUID().toString();
 	}
 
 	/**
 	 * 封装JDK自带的UUID, 通过Random数字生成, 中间无-分割.
 	 */
 	public static String uuid2() {
-		return UUID.randomUUID().toString().replaceAll("-", "");
+		return java.util.UUID.randomUUID().toString().replaceAll("-", "");
 	}
 
 	/**
