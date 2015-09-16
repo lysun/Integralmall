@@ -25,7 +25,7 @@ public class Merchandise extends UUIDBaseModel{
 	private double price;//价格
 	private String original;//渠道专享
 	private String remark;//简介
-	private String isShelve;//是否下架:true.上架，false.下架
+	private String isShelve;//是否下架:1.上架，0.下架
 	private MediaContent mainPicMedia;
 	private Set<MediaContent> medias;
 	private String type;//1代表实物，0代表优惠券
