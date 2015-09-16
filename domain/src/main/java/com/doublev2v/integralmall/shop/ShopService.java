@@ -39,14 +39,12 @@ public class ShopService extends AbstractLogicDeleteService<Shop,String>{
 		repository.save(t);
 	}
 
-	public void logicDelete(String id){
-		Shop t=repository.findOne(id);
+	public void logicDelete(Shop t){
 		if(t.getBranchShops()!=null&&t.getBranchShops().size()>0){//删除所有分店
-			t.getBranchShops().forEach((b)->branchShopService.logicDelete(b.getId()));
+			branchShopService.logicDelete(t.getBranchShops());
 		}
-		repository.logicDelete(id);
+		repository.logicDelete(t);
 	}
-	
 	/**
 	 * 根据不同的条件查询商户信息
 	 * @param page

@@ -15,7 +15,7 @@ import com.doublev2v.integralmall.auth.user.dto.UserDto;
 
 @Controller
 @RequestMapping("/admin/user")
-public class UserController extends SimpleController<UserDto> {
+public class UserController extends SimpleMenuController<UserDto> {
 	@Autowired
 	private MenuService menuService;
 	@Autowired

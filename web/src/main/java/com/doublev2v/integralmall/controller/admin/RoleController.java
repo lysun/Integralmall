@@ -15,7 +15,7 @@ import com.doublev2v.integralmall.auth.role.dto.RoleDto;
 
 @Controller
 @RequestMapping("/admin/role")
-public class RoleController extends SimpleController<RoleDto> {
+public class RoleController extends SimpleMenuController<RoleDto> {
 	
 	@Autowired
 	private RoleDtoService service;

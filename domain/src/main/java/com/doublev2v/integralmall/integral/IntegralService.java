@@ -57,19 +57,21 @@ public class IntegralService extends AbstractPagingAndSortingService<Integral, S
 	}
 	
 	public Integral add(Integral t){
-		validateForm(t.getUser().getAccount());
 		Integral integral=new Integral();
 		integral.setUser(userInfoService.findByAccount(t.getUser().getAccount()));
 		integral.setTotalcount(t.getTotalcount());
-		return repository.save(integral);
+		repository.save(integral);
+		integralDetailService.createIntegralDetail(integral, t.getTotalcount(), IntegralOrigin.BUY_OFFLINE);
+		return integral;
 	}
 	
 	
 	@Override
-	public Integral update(Integral entity) {
-		Integral integral=repository.findOne(entity.getId());
+	public Integral update(Integral t) {
+		Integral integral=repository.findOne(t.getId());
 		if(integral==null)return null;
-		integral.setTotalcount(entity.getTotalcount());
+		integralDetailService.createIntegralDetail(integral, t.getTotalcount()-integral.getTotalcount(), IntegralOrigin.BUY_OFFLINE);
+		integral.setTotalcount(t.getTotalcount());
 		return repository.save(integral);
 	}
 	

@@ -58,7 +58,7 @@
            <div class="form-group">
                <label for="description" class="col-sm-2 control-label">简介:</label>
                <div class="col-sm-10">
-               <textarea rows="10" cols="170" name="description">${t.description }</textarea>
+               <textarea name="description" style="resize:none;height:150px;width:100%;">${t.description }</textarea>
                </div>
            </div>
            <div class="form-group">

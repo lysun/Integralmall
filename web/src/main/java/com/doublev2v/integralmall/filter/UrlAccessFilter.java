@@ -16,7 +16,14 @@ import com.doublev2v.integralmall.auth.permission.UrlAccessDefinition;
 import com.doublev2v.integralmall.auth.permission.UrlAccessDefinitionManager;
 import com.doublev2v.integralmall.controller.admin.ApiExceptionHandlerAdvice;
 
-
+/**
+ * 用于拦截当前请求并并匹配url表达式，判断当前用户是否有进入此请求的角色及权限
+ * 如果未登录，转到登录界面
+ * 如果没权限，输出error access
+ * 
+ * @author Administrator
+ *
+ */
 public class UrlAccessFilter extends PathMatchingFilter{  
 	Logger logger = LogManager.getLogger(ApiExceptionHandlerAdvice.class);
 	
@@ -38,7 +45,7 @@ public class UrlAccessFilter extends PathMatchingFilter{
 		String requestUrl=req.getServletPath();
 		Iterable<UrlAccessDefinition> list=urlAccessDefinitionManager.findAll();
 		if(list!=null){
-			for(UrlAccessDefinition u:list){
+			for(UrlAccessDefinition u:list){//遍历所有url权限数据，如果url匹配当前请求，则判断当前用户是否拥有此url所具备的角色或权限
 				if(pathMatcher.matches(u.getUrl(), requestUrl)){
 					if(!SecurityUtils.getSubject().isAuthenticated()){
 						res.sendRedirect(getLoginUrl(req));
@@ -46,7 +53,7 @@ public class UrlAccessFilter extends PathMatchingFilter{
 					}
 					boolean role=true;
 					if(StringUtils.isNotBlank(u.getRole())){
-						role=SecurityUtils.getSubject().hasRole(u.getRole());;
+						role=SecurityUtils.getSubject().hasRole(u.getRole());
 					}
 					boolean perm=true;
 					if(StringUtils.isNotBlank(u.getPerm())){

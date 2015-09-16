@@ -23,7 +23,7 @@ public class ApiExceptionHandlerAdvice{
 	
 	@ExceptionHandler(Exception.class)//捕获所有异常
 	public String execute(HttpServletRequest request , Exception ex) {
-		
+		//记录异常信息
 		logger.error(ex.getMessage(),ex);
 		if(ex instanceof ErrorCodeException){
 			ErrorCodeException eex=(ErrorCodeException)ex;

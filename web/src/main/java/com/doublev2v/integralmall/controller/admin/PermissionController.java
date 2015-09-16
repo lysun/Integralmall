@@ -10,7 +10,7 @@ import com.doublev2v.integralmall.auth.permission.PermissionService;
 
 @Controller
 @RequestMapping("/admin/perm")
-public class PermissionController extends SimpleController<Permission> {
+public class PermissionController extends SimpleMenuController<Permission> {
 	
 	@Autowired
 	private PermissionService service;

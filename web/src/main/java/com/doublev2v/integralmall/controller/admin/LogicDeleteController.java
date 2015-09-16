@@ -11,7 +11,7 @@ import com.doublev2v.foundation.core.service.LogicDeleteService;
 import com.doublev2v.integralmall.util.RequestResult;
 
 
-public abstract class LogicDeleteController<T extends Identified<String>> extends SimpleController<T>{
+public abstract class LogicDeleteController<T extends Identified<String>> extends SimpleMenuController<T>{
 
 	@Autowired
 	private LogicDeleteService<T,String> service;

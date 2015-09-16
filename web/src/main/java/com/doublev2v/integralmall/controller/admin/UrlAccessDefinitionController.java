@@ -9,7 +9,7 @@ import com.doublev2v.integralmall.auth.permission.UrlAccessDefinition;
 import com.doublev2v.integralmall.auth.permission.UrlAccessDefinitionManager;
 @Controller
 @RequestMapping("/admin/url")
-public class UrlAccessDefinitionController extends SimpleController<UrlAccessDefinition> {
+public class UrlAccessDefinitionController extends SimpleMenuController<UrlAccessDefinition> {
 
 	@Autowired
 	private UrlAccessDefinitionManager service;

@@ -267,7 +267,7 @@
            <div class="form-group">
                <label for="remark" class="col-sm-2 control-label">详情介绍:</label>
                <div class="col-sm-10">
-               <textarea rows="10" cols="170" name="remark"></textarea>
+               <textarea name="remark" style="resize:none;height:150px;width:100%;"></textarea>
                </div>
            </div>
 		   <div class="form-group">

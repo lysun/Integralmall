@@ -14,7 +14,7 @@ import com.doublev2v.integralmall.util.RequestResult;
 
 @Controller
 @RequestMapping("/admin/integral")
-public class IntegralController extends SimpleController<Integral> {
+public class IntegralController extends SimpleMenuController<Integral> {
 	
 	@Autowired
 	private IntegralService service;

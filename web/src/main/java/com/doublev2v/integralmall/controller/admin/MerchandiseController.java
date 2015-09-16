@@ -24,7 +24,7 @@ import com.doublev2v.integralmall.util.Dics;
 import com.doublev2v.integralmall.util.RequestResult;
 @Controller
 @RequestMapping("/admin/merchandise")
-public class MerchandiseController extends SimpleController<MerchandiseDto> {
+public class MerchandiseController extends SimpleMenuController<MerchandiseDto> {
 
 	@Autowired
 	private MerchandiseDtoService dtoService;

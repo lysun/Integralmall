@@ -37,11 +37,8 @@
            <div class="form-group">
                <label for="classify" class="col-sm-2 control-label">分店:</label>
                <div class="col-sm-10">
-               <p class="form-control">
-                    <c:forEach items="${t.shopDtos}" var="shopDto">
-                    ${shopDto.name };
-                    </c:forEach>
-               </p>
+                <textarea name="remark" readonly="readonly" style="resize:none;height:50px;width:100%;"><c:forEach items="${t.shopDtos}" var="shopDto">${shopDto.name };</c:forEach>
+               </textarea>
                </div>
            </div>
            <div class="form-group">
@@ -130,7 +127,7 @@
            <div class="form-group">
                <label for="remark" class="col-sm-2 control-label">简介:</label>
                <div class="col-sm-10">
-                   <textarea rows="10" cols="170" name="remark" readonly="readonly">${t.remark }</textarea>
+                   <textarea name="remark" readonly="readonly" style="resize:none;height:150px;width:100%;">${t.remark }</textarea>
                </div>
            </div>
        </form>

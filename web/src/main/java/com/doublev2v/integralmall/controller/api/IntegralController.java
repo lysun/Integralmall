@@ -29,15 +29,15 @@ public class IntegralController{
 	}
 	
 	/**
-	 * 给用户添加积分
+	 * 购买商品后给用户添加积分
 	 * @param token 用户token
 	 * @param integral 增加的积分数
 	 * @param origin 积分来源(传入数字)
 	 * @return
 	 */
 	@RequestMapping(value="/plusUserIntegral",method=RequestMethod.GET)
-	public String plusUserIntegral(String shopId,String token,String integral,String origin) {
-		service.plusUserIntegral(shopId,userInfoTokenService.getUser(token), Long.valueOf(integral), IntegralOrigin.get(Integer.valueOf(origin)));
+	public String plusUserIntegral(String shopId,String token,String integral) {
+		service.plusUserIntegral(shopId,userInfoTokenService.getUser(token), Long.valueOf(integral),IntegralOrigin.BUY_ONLINE);
 		return RequestResult.success(null).toJson();
 	}
 }

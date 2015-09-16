@@ -31,8 +31,7 @@ public class BranchShopService extends AbstractLogicDeleteService<BranchShop,Str
 	@Autowired
 	private BranchShopRepository repository;
 	
-	public void logicDelete(String id) {
-		BranchShop t=repository.findOne(id);
+	public void logicDelete(BranchShop t) {
 		if(t.getMerchs()!=null&&t.getMerchs().size()>0){//遍历商品看是否有上架的
 			for(Merchandise m:t.getMerchs()){
 				if(Constant.SHELVE.equals(m.getIsShelve())){
@@ -41,9 +40,8 @@ public class BranchShopService extends AbstractLogicDeleteService<BranchShop,Str
 				
 			}
 		}
-		repository.logicDelete(id);
+		repository.logicDelete(t);
 	}
-	
 	public List<BranchShop> findByShopId(String shopId){
 		return repository.findByDeletedAndShop_id(false,shopId);
 	}

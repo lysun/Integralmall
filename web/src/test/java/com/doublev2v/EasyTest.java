@@ -1,6 +1,5 @@
 package com.doublev2v;
 
-import com.doublev2v.integralmall.integral.detail.IntegralOrigin;
 import com.doublev2v.integralmall.order.IntegralOrder;
 import com.doublev2v.integralmall.order.om.OrderMerchandise;
 import com.doublev2v.integralmall.util.Constant;
@@ -18,7 +17,6 @@ public class EasyTest {
 		order=setValue(order);
 		System.out.println(order.getStatus());
 		System.out.println(order.getOrderMerchandise().getCouponCode());
-		System.out.println(IntegralOrigin.BUY_MERCHANDISE.ordinal());
 	}
 	public static IntegralOrder setValue(IntegralOrder order){
 		order.setStatus(Constant.ORDER_CANCEL);

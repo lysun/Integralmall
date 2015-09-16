@@ -13,7 +13,7 @@ import com.doublev2v.integralmall.auth.menu.MenuService;
  * @author Administrator
  *
  */
-public abstract class SimpleController<T extends Identified<String>> extends CommonController<T> {
+public abstract class SimpleMenuController<T extends Identified<String>> extends CommonController<T> {
 	@Autowired
 	private MenuService menuService;
 

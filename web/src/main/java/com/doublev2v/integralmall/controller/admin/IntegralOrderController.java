@@ -18,7 +18,7 @@ import com.doublev2v.integralmall.util.RequestResult;
 
 @Controller
 @RequestMapping("/admin/integralOrder")
-public class IntegralOrderController extends SimpleController<IntegralOrderDto>{
+public class IntegralOrderController extends SimpleMenuController<IntegralOrderDto>{
 
 	@Autowired
 	private IntegralOrderDtoService service;

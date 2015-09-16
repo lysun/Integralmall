@@ -28,7 +28,21 @@ public class AbstractLogicDeleteDtoService<D extends Identified<ID>, T extends I
 		service.logicDelete(id);
 		
 	}
+	@Override
+	public void logicDelete(T t) {
+		if(t==null)return;
+		service.logicDelete(t.getId());
+		
+	}
 	
+	@Override
+	public void logicDelete(Iterable<T> ts) {
+		if(ts==null)return;
+		for(T t:ts){
+			logicDelete(t.getId());
+		}
+	}
+
 	@Override	
 	public void logicDeleteAll(Iterable<ID> ids) {
 		if(ids==null)return;

@@ -90,7 +90,7 @@ public abstract class CommonController<T extends Identified<String>> {
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public @ResponseBody String delete(@PathVariable String id) {
 		getService().delete(id);
-		return RequestResult.success("删除成功").toJson();
+		return RequestResult.success(null).toJson();
 	}
 	
 	/**

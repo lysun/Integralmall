@@ -75,14 +75,15 @@ public abstract class AbstractCrudService<T,ID extends Serializable> implements 
 	}
 
 	@Override
-	public void delete(ID id) {
+	public final void delete(ID id) {
 		if(id==null)return;
 		T t=getRepository().findOne(id);
+		if(t==null)return;
 		delete(t);
 	}
 
 	@Override
-	public void delete(Iterable<? extends T> entities) {
+	public final void delete(Iterable<? extends T> entities) {
 		if(entities==null)return;
 		for(T t:entities){
 			delete(t);
@@ -90,7 +91,7 @@ public abstract class AbstractCrudService<T,ID extends Serializable> implements 
 	}
 
 	@Override
-	public void deleteAll(Iterable<ID> ids) {
+	public final void deleteAll(Iterable<ID> ids) {
 		if(ids==null)return;
 		for (ID id : ids) {
 			delete(id);
