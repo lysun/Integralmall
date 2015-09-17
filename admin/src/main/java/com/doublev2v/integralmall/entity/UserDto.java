@@ -1,9 +1,8 @@
-package com.doublev2v.integralmall.auth.user.dto;
+package com.doublev2v.integralmall.entity;
 
 import java.util.Set;
 
 import com.doublev2v.foundation.core.entity.Identified;
-import com.doublev2v.integralmall.auth.role.dto.RoleDto;
 
 public class UserDto implements Identified<String>{
 

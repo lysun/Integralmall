@@ -1,4 +1,4 @@
-package com.doublev2v.integralmall.auth.user.dto;
+package com.doublev2v.integralmall.converter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 import com.doublev2v.foundation.core.dto.common.SimpleDtoConverter;
 import com.doublev2v.integralmall.auth.role.Role;
 import com.doublev2v.integralmall.auth.role.RoleRepository;
-import com.doublev2v.integralmall.auth.role.dto.RoleDto;
-import com.doublev2v.integralmall.auth.role.dto.RoleDtoConverter;
 import com.doublev2v.integralmall.auth.user.User;
+import com.doublev2v.integralmall.entity.RoleDto;
+import com.doublev2v.integralmall.entity.UserDto;
 
 @Component
 public class UserDtoConverter extends SimpleDtoConverter<User, UserDto> {

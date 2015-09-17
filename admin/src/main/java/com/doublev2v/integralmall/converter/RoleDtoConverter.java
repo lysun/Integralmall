@@ -1,4 +1,4 @@
-package com.doublev2v.integralmall.auth.role.dto;
+package com.doublev2v.integralmall.converter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +11,7 @@ import com.doublev2v.integralmall.auth.menu.MenuRepository;
 import com.doublev2v.integralmall.auth.permission.Permission;
 import com.doublev2v.integralmall.auth.permission.PermissionRepository;
 import com.doublev2v.integralmall.auth.role.Role;
+import com.doublev2v.integralmall.entity.RoleDto;
 
 @Component
 public class RoleDtoConverter extends SimpleDtoConverter<Role, RoleDto> {

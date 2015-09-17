@@ -10,8 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.doublev2v.foundation.core.service.PagingService;
 import com.doublev2v.integralmall.auth.menu.MenuService;
 import com.doublev2v.integralmall.auth.role.RoleService;
-import com.doublev2v.integralmall.auth.user.UserDtoService;
-import com.doublev2v.integralmall.auth.user.dto.UserDto;
+import com.doublev2v.integralmall.entity.UserDto;
+import com.doublev2v.integralmall.service.UserDtoService;
 
 @Controller
 @RequestMapping("/admin/user")

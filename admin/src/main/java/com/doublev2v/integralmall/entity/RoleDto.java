@@ -1,4 +1,4 @@
-package com.doublev2v.integralmall.auth.role.dto;
+package com.doublev2v.integralmall.entity;
 
 import java.util.Set;
 

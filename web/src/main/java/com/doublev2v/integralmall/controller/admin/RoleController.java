@@ -10,8 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.doublev2v.foundation.core.service.PagingService;
 import com.doublev2v.integralmall.auth.menu.MenuService;
 import com.doublev2v.integralmall.auth.permission.PermissionService;
-import com.doublev2v.integralmall.auth.role.dto.RoleDto;
-import com.doublev2v.integralmall.auth.role.dto.RoleDtoService;
+import com.doublev2v.integralmall.entity.RoleDto;
+import com.doublev2v.integralmall.service.RoleDtoService;
 
 @Controller
 @RequestMapping("/admin/role")
