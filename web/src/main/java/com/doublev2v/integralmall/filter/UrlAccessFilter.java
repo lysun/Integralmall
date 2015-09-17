@@ -34,9 +34,6 @@ public class UrlAccessFilter extends PathMatchingFilter{
 		this.urlAccessDefinitionManager = urlAccessDefinitionManager;
 	}
 
-	private String getLoginUrl(HttpServletRequest req){
-		return req.getContextPath()+"/login";
-	}
 	@Override
 	protected boolean preHandle(ServletRequest request, ServletResponse response)
 			throws Exception {
@@ -70,5 +67,7 @@ public class UrlAccessFilter extends PathMatchingFilter{
 		return true;
 	}
    
-  
+	private String getLoginUrl(HttpServletRequest req){
+		return req.getContextPath()+"/login";
+	}
 }  
