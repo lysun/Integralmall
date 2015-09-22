@@ -1,5 +1,6 @@
 package com.doublev2v.integralmall.auth.realm;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -9,8 +10,10 @@ import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import com.doublev2v.integralmall.auth.user.User;
 import com.doublev2v.integralmall.auth.user.UserService;
  
 /**
@@ -36,7 +39,16 @@ public class UserRealm extends AuthorizingRealm {
             throw new AuthorizationException("AuthenticationToken argument cannot be null.");  
         }
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        return new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), getName());
+        User user=userService.findByUsername(token.getUsername());
+        if(user==null)
+        	throw new AuthorizationException("用户不存在");
+        if(user.getPassword().equals(new String(token.getPassword()))){
+        	Session session=SecurityUtils.getSubject().getSession();
+            session.setAttribute("user", user);//将用户信息放入session
+            return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+        }
+        return null;		
+        
     } 
     /**
      * 根据用户身份获取授权信息
@@ -54,7 +66,7 @@ public class UserRealm extends AuthorizingRealm {
         info.addRoles(userService.loadRoles(username));
         // 增加权限 
         info.addStringPermissions(userService.loadPermissions(username));
-        return info;  
+        return info;
     }  
   
      
