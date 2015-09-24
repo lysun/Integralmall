@@ -16,13 +16,11 @@ public class UrlAccessDefinitionController extends SimpleMenuController<UrlAcces
 	
 	@Override
 	protected String getMenuTab() {
-		// TODO Auto-generated method stub
 		return "url";
 	}
 
 	@Override
 	protected PagingService<UrlAccessDefinition, String> getService() {
-		// TODO Auto-generated method stub
 		return service;
 	}
 

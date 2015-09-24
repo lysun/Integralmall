@@ -43,7 +43,6 @@
             <value>  
                 /login=anon
                 /logout=logout
-                /admin=authc
                 /admin/**=auth1
             </value>
         </property>  

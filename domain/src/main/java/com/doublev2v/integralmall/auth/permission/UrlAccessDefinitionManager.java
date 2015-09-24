@@ -13,7 +13,13 @@ public class UrlAccessDefinitionManager extends AbstractPagingAndSortingService<
 	@Autowired
 	public UrlAccessDefinitionRepository repository;
 
-	
-	
+	@Override
+	public UrlAccessDefinition update(UrlAccessDefinition t) {
+		UrlAccessDefinition d=repository.findOne(t.getId());
+		d.setPerm(t.getPerm());
+		d.setRole(t.getRole());
+		d.setUrl(t.getUrl());
+		return repository.save(d);
+	}
 	
 }

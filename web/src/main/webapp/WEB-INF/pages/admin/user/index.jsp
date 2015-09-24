@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>    
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <my:admin tab="user" subtab="user">
@@ -9,9 +10,9 @@
 		{{each list as value i}}
 			<tr id="{{value.id }}">
                  <td>{{value.username }}</td>
-                 <td><a href="<c:url value='/admin/user/{{value.id }}/edit'/>">修改</a>|
-                     <a href="<c:url value='/admin/user/{{value.id }}'/>">查看</a>|
-                     <a onclick="del('<c:url value="/admin/user"/>','{{value.id }}')">删除</a>
+                 <td><shiro:hasPermission name="user:update"><a href="<c:url value='/admin/user/{{value.id }}/edit'/>">修改</a>|</shiro:hasPermission>
+                     <a href="<c:url value='/admin/user/{{value.id }}'/>">查看</a>
+                     <shiro:hasPermission name="user:delete">|<a onclick="del('<c:url value="/admin/user"/>','{{value.id }}')">删除</a></shiro:hasPermission>
                  </td>
             </tr>
 		{{/each}}
@@ -32,7 +33,9 @@
 		</script>
 	</jsp:attribute>
 	<jsp:body>
+	<shiro:hasPermission name="user:add">
 	<button class="btn btn-default" onclick="window.location.href='<c:url value="/admin/user/add"/>'">添加</button>
+	</shiro:hasPermission>
 		<table class="table table-bordered text-center mgt-2">
             <thead>
                 <tr>
