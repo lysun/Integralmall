@@ -16,8 +16,8 @@ import com.doublev2v.integralmall.util.SystemErrorCodes;
  * @author Administrator
  *
  */
-//@ControllerAdvice
-//@ResponseBody
+@ControllerAdvice
+@ResponseBody
 public class ApiExceptionHandlerAdvice{
 	Logger logger = LogManager.getLogger(ApiExceptionHandlerAdvice.class);
 	

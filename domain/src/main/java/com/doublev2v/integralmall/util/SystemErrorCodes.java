@@ -10,6 +10,7 @@ public class SystemErrorCodes {
 	public static final ErrorCode SERVER_EXCEPTION;
 	public static final ErrorCode UNLOGIN;
 	public static final ErrorCode IIIEGAL_ARGUMENT;
+	public static final ErrorCode NOUSER;
 	public static final ErrorCode NOTENOUGH_INTEGRAL;
 	public static final ErrorCode NOTENOUGH_STOCK;
 	public static final ErrorCode MERCHANDISE_UNSTART;
@@ -28,7 +29,8 @@ public class SystemErrorCodes {
 		 */
 		SERVER_EXCEPTION=new ErrorCode(100, "服务器异常，请稍后再试");
 		UNLOGIN=new ErrorCode(101, "用户未登录");
-		IIIEGAL_ARGUMENT=new ErrorCode(101, "传入的参数不正确");
+		IIIEGAL_ARGUMENT=new ErrorCode(102, "传入的参数不正确");
+		NOUSER=new ErrorCode(103, "该用户不存在");
 		/**
 		 * 商品相关的异常，2**
 		 */

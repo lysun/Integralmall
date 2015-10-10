@@ -58,7 +58,7 @@ public class BranchShopService extends AbstractLogicDeleteService<BranchShop,Str
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
                 predicate.add(cb.isFalse(root.get("deleted")));//过滤删除了的
                 if(StringUtils.isNotBlank(num)){
-                	predicate.add(cb.equal(root.get("num"), num));
+                	predicate.add(cb.like(root.get("num"), "%"+num+"%"));
                 }
                 if (tag!=null){
                 	 Join<BranchShop,Shop> join = root.join(root.getModel().getSingularAttribute("shop",Shop.class),JoinType.INNER);

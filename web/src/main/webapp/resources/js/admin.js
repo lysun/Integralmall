@@ -62,3 +62,28 @@ function pagination(totalPages,size,url,params,callback) {
           }
     });
 }
+/**加载模态框html页面到指定位置并显示*/
+function loadModal(obj,url){
+	$(obj).load(url,null,function(){
+		$('#myModal').modal('show');
+	});
+	
+}
+
+function changepassword(url){
+	var new_password=$("#new_password").val();
+	var confirm_password=$("#confirm_password").val();
+	if(new_password!=confirm_password){
+		alert("您两次输入的密码不一致");
+		return;
+	}
+	ajax(url,{password:new_password},"POST",function(data){
+		$('#myModal').modal('hide');
+		if(data.errcode=="0"){
+			alert("修改密码成功");
+		}else{
+			alert("修改密码失败");
+		}
+		
+	});
+}

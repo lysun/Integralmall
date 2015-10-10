@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.doublev2v.integralmall.auth.menu.MenuService;
 import com.doublev2v.integralmall.auth.user.UserService;
+import com.doublev2v.integralmall.util.RequestResult;
 
 @Controller
 public class LoginController{
@@ -26,7 +28,7 @@ public class LoginController{
         	UsernamePasswordToken token = new UsernamePasswordToken(username, password);  
             Subject subject = SecurityUtils.getSubject();  
             subject.login(token);
-            if(subject.isPermitted("user:*"))
+            if(subject.isPermitted("user:list"))
             	return new ModelAndView("redirect:/admin/user");
             else
             	return new ModelAndView("redirect:/admin/merchandise"); 
@@ -48,4 +50,17 @@ public class LoginController{
 		view.addObject("subMenu", menuService.getSecondMenus("user"));
 		return view;
 	}
+	
+	@RequestMapping(value="/changepassword",method=RequestMethod.GET)
+	public ModelAndView changepassword(){
+		ModelAndView view=new ModelAndView("admin/changepassword");
+		return view;
+	}
+	@RequestMapping(value="/passwordchange",method=RequestMethod.POST)
+	@ResponseBody
+	public String passwordchange(String password){
+		userService.changePassword(SecurityUtils.getSubject().getPrincipal().toString(),password);
+		return RequestResult.success(null).toJson();
+	}
+	
 }

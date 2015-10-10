@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.foundation.core.service.AbstractPagingAndSortingService;
 import com.doublev2v.integralmall.auth.permission.Permission;
 import com.doublev2v.integralmall.auth.role.Role;
+import com.doublev2v.integralmall.util.SystemErrorCodes;
 
 @Service
 @Transactional
@@ -51,7 +53,13 @@ public class UserService extends AbstractPagingAndSortingService<User, String>{
         return permissions;
 	}
 	
-	
-	
+	public void changePassword(String username,String password){
+		User user = findByUsername(username);
+		if(user==null){
+			throw new ErrorCodeException(SystemErrorCodes.NOUSER);
+		}
+		user.setPassword(password);
+		userRepository.save(user);
+	}
 	
 }

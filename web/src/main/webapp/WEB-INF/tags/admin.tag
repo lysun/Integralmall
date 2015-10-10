@@ -28,6 +28,8 @@
 	     </c:forEach>
 		</ul>
 	    <p class="navbar-text navbar-right"><a href="<c:url value='/logout'/>">退出</a></p>
+	    <p class="navbar-text navbar-right"><a href="javascript:;" onclick="loadModal(document.getElementById('changepassword'),'<c:url value="/changepassword"/>')">修改密码</a></p>
+	    <div id="changepassword"></div>
 	    <p class="navbar-text navbar-right"><shiro:principal/>,欢迎您</p>
 	   </div>
     </nav>

@@ -12,6 +12,7 @@ import com.doublev2v.foundation.core.model.PagedList;
 import com.doublev2v.integralmall.find.entity.IntegralOrderVo;
 import com.doublev2v.integralmall.find.service.IntegralOrderVoService;
 import com.doublev2v.integralmall.order.IntegralOrderService;
+import com.doublev2v.integralmall.userinfo.UserInfoService;
 import com.doublev2v.integralmall.userinfo.token.UserInfoTokenService;
 import com.doublev2v.integralmall.util.RequestResult;
 
@@ -24,6 +25,8 @@ public class IntegralOrderController{
 	private IntegralOrderService service;
 	@Autowired
 	private UserInfoTokenService userInfoTokenService;
+	@Autowired
+	private UserInfoService userInfoService;
 	/**
 	 * 兑换商品
 	 */
@@ -32,7 +35,11 @@ public class IntegralOrderController{
 		service.order(userInfoTokenService.getUser(token),merchandiseId,addressId);
 		return RequestResult.success(null).toJson();
 	}
-	
+	@RequestMapping(value="/integralConvert",method=RequestMethod.POST)
+	public String IntegralOrderCreate(String merchandiseId,String userId,String addressId) {
+		service.order(userInfoService.findOne(userId),merchandiseId,addressId);
+		return RequestResult.success(null).toJson();
+	}
 	/**
 	 * 获取我的列表
 	 * @param page
@@ -47,7 +54,12 @@ public class IntegralOrderController{
 		PagedList<IntegralOrderVo> list=voService.getList(page, size, userInfoTokenService.getUser(token),localAddress);
 		return RequestResult.success(list).toJson();
 	}
-
+	@RequestMapping(value="/myConvertionList",method=RequestMethod.GET)
+	public String ConvertionList(@RequestParam(defaultValue="1") Integer page,
+			@RequestParam(defaultValue="5") Integer size,String userId,String localAddress) throws ParseException {
+		PagedList<IntegralOrderVo> list=voService.getList(page, size, userInfoService.findOne(userId),localAddress);
+		return RequestResult.success(list).toJson();
+	}
 	/**
 	 * 获取某个订单
 	 * @param id
@@ -63,7 +75,7 @@ public class IntegralOrderController{
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value="/cancelCoupon",method=RequestMethod.POST)
+	@RequestMapping(value="/cancelConvert",method=RequestMethod.POST)
 	public String cancelIntegralOrder(String id) {
 		service.cancelOrder(id);
 		return RequestResult.success(null).toJson();

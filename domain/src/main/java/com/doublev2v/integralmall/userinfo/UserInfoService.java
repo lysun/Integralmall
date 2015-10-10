@@ -15,7 +15,6 @@ public class UserInfoService extends AbstractPagingAndSortingService<UserInfo, S
 	@Autowired
 	private UserInfoRepository userInfoRepository;
 	
-	
 	public UserInfo findByAccount(String account) {
 		if(StringUtils.isBlank(account))throw new IllegalArgumentException("传入账户错误");
 		UserInfo user=userInfoRepository.findByAccount(account);

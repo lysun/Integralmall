@@ -72,7 +72,7 @@ public class ShopService extends AbstractLogicDeleteService<Shop,String>{
                 List<Predicate> predicate = new ArrayList<>();//一个predicate为一个条件
                 predicate.add(cb.isFalse(root.get("deleted")));//过滤删除了的
                 if(StringUtils.isNotBlank(num)){
-                	predicate.add(cb.equal(root.get("num"), num));
+                	predicate.add(cb.like(root.get("num"), "%"+num+"%"));
                 }
                 Predicate[] pre = new Predicate[predicate.size()];
                 query.where(predicate.toArray(pre));//将where字句给query
