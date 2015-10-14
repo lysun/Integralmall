@@ -262,6 +262,11 @@
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-ehcache</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.cloopen</groupId>
+			<artifactId>com.cloopen.rest.sdk</artifactId>
+			<version>2.6.3</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
