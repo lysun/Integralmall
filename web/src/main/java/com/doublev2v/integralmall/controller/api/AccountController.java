@@ -1,6 +1,7 @@
 package com.doublev2v.integralmall.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
@@ -24,6 +25,7 @@ public class AccountController {
 	@Autowired
 	private MessageSender sender;
 	
+	@RequestMapping("sendPassword")
 	public String sendPassword(String telephone) {
 		UserInfo userInfo=repository.findByAccount(telephone);
 		if(userInfo==null) {
