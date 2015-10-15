@@ -52,8 +52,9 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="socialBind",method=RequestMethod.POST)
-	public String socialBind(String userid, String phoneNum, int type) {
-		LoginResult result=socialManager.bind(phoneNum, userid, type);
+	public String socialBind(String userid, String phoneNum, int type, 
+			String nickname, String avatarUrl) {
+		LoginResult result=socialManager.bind(phoneNum, userid, type, nickname, avatarUrl);
 		return RequestResult.success(result).toJson();
 	}
 }

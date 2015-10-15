@@ -6,5 +6,6 @@ public interface SocialLoginMapper {
 
 	UserProfile getProfileBySocialId(String id);
 	
-	void bindSocialAccount(@Param("account") String account,@Param("socialId") String socialId);
+	void bindSocialAccount(@Param("account") String account,
+			@Param("socialId") String socialId, @Param("socialAvatar") String socialAvatar);
 }

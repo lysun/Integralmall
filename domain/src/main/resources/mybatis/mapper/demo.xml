@@ -9,17 +9,22 @@
   		select
   		u.id as userId,
   		u.account as account,
+  		u.username as nickname,
+  		u.social_avatar as socialAvatar,
   		t.token as userToken,
+  		a.saveFileName as avatar,
   		count(c.id) as recordbodysize
   		from jefen.userinfo as u
   		left join jefen.userinfotoken t on u.id=t.userinfoid
   		left join jefen.customer as c on u.id=c.userinfoid
+  		left join jefen.attachments as a on u.avatarid=a.id
   		where u.social_id=#{id}
   	</select>
   	
   	<update id="bindSocialAccount">
   		update jefen.userinfo u
-  		set u.social_id=#{socialId}
+  		set u.social_id=#{socialId},
+  		u.social_avatar=#{socialAvatar},
   		where u.account=#{account}
   	</update>
   	

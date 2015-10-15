@@ -17,15 +17,15 @@ public class SocialLoginTest {
 	@Autowired
 	private SocialLoginManager manager;
 	
-	//@Test
+	@Test
 	public void login() {
-		LoginResult result=manager.login("2");
+		LoginResult result=manager.login("1");
 		System.out.println(RequestResult.success(result).toJson());
 	}
 	
-	@Test
+	//@Test
 	public void bind() {
-		LoginResult result=manager.bind("18612444099", "1", 1);
+		LoginResult result=manager.bind("18612444099", "1", 1, "易天明", null);
 		System.out.println(RequestResult.success(result).toJson());
 	}
 }

@@ -3,7 +3,6 @@ package com.doublev2v.integralmall.social;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,19 +24,19 @@ public class SocialLoginManager {
 		return LoginResult.getResult(profile);
 	}
 	
-	public LoginResult bind(String account, String socialId, int type) {
+	public LoginResult bind(String account, String socialId, int type, String nickname, String avatarUrl) {
 		UserInfo userInfo=userInfoRepository.findByAccount(account);
 		//如果为空，需要先注册
 		if(userInfo==null) {
-			regist(account, type);
+			regist(account, nickname, type);
 		}
-		mapper.bindSocialAccount(account, socialId);
+		mapper.bindSocialAccount(account, socialId, avatarUrl);
 		return login(socialId);
 	}
 	
-	private void regist(String account, int type) {
+	private void regist(String account, String username, int type) {
 		Map<String, String> params=new HashMap<>();
-		params.put("username", account);
+		params.put("username", username);
 		params.put("account", account);
 		params.put("type", Integer.toString(type));
 		client.post("http://122.112.15.152:8094/jefen/user/register.action", params);
