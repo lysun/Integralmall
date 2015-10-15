@@ -51,6 +51,7 @@ public class Client {
 		Builder builder=target.request();
 		Response response=builder.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
 		String result=response.readEntity(String.class);
+//		System.out.println(result);
 		return readTree(result);
 	}
 	public JsonNode delete(String url,Map<String,String> params){

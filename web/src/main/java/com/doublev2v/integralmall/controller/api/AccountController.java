@@ -2,12 +2,15 @@ package com.doublev2v.integralmall.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.foundation.core.rest.RequestResult;
 import com.doublev2v.foundation.shortmessage.MessageSender;
 import com.doublev2v.foundation.shortmessage.SendMessageException;
+import com.doublev2v.integralmall.social.SocialLoginManager;
+import com.doublev2v.integralmall.social.SocialLoginManager.LoginResult;
 import com.doublev2v.integralmall.userinfo.UserInfo;
 import com.doublev2v.integralmall.userinfo.UserInfoRepository;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
@@ -24,6 +27,8 @@ public class AccountController {
 	private UserInfoRepository repository;
 	@Autowired
 	private MessageSender sender;
+	@Autowired
+	private SocialLoginManager socialManager;
 	
 	@RequestMapping("sendPassword")
 	public String sendPassword(String telephone) {
@@ -38,5 +43,17 @@ public class AccountController {
 			throw new ErrorCodeException(SystemErrorCodes.NOUSER, e);
 		}
 		return RequestResult.success("发送成功").toJson();
+	}
+	
+	@RequestMapping(value="socialLogin",method=RequestMethod.POST)
+	public String socialLogin(String userid) {
+		LoginResult result=socialManager.login(userid);
+		return RequestResult.success(result).toJson();
+	}
+	
+	@RequestMapping(value="socialBind",method=RequestMethod.POST)
+	public String socialBind(String userid, String phoneNum, int type) {
+		LoginResult result=socialManager.bind(phoneNum, userid, type);
+		return RequestResult.success(result).toJson();
 	}
 }
