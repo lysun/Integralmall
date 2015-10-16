@@ -16,7 +16,7 @@ public class UserProfile {
 	private String avatar;
 	@JsonIgnore
 	private String socialAvatar;
-	private int recordbodysize;
+	private String recordbodysize;
 	public String getUserId() {
 		return userId;
 	}
@@ -63,10 +63,10 @@ public class UserProfile {
 	public void setSocialAvatar(String socialAvatar) {
 		this.socialAvatar = socialAvatar;
 	}
-	public int getRecordbodysize() {
+	public String getRecordbodysize() {
 		return recordbodysize;
 	}
-	public void setRecordbodysize(int recordbodysize) {
+	public void setRecordbodysize(String recordbodysize) {
 		this.recordbodysize = recordbodysize;
 	}
 }

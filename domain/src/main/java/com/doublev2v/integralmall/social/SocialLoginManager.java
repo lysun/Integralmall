@@ -45,26 +45,26 @@ public class SocialLoginManager {
 	public static class LoginResult {
 		
 		private UserProfile userInfo;
-		private int isRegister;
+		private String isRegister;
 		public UserProfile getUserInfo() {
 			return userInfo;
 		}
 		public void setUserInfo(UserProfile userInfo) {
 			this.userInfo = userInfo;
 		}
-		public int getIsRegister() {
+		public String getIsRegister() {
 			return isRegister;
 		}
-		public void setIsRegister(int isRegister) {
+		public void setIsRegister(String isRegister) {
 			this.isRegister = isRegister;
 		}
 		
 		public static LoginResult getResult(UserProfile profile) {
 			LoginResult result=new LoginResult();
 			if(profile==null) {
-				result.isRegister=0;
+				result.isRegister="0";
 			} else {
-				result.isRegister=1;
+				result.isRegister="1";
 				result.userInfo=profile;
 			}
 			return result;
