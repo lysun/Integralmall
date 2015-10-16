@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.doublev2v.foundation.core.rest.ErrorCodeException;
-import com.doublev2v.foundation.core.rest.RequestResult;
 import com.doublev2v.foundation.shortmessage.MessageSender;
 import com.doublev2v.foundation.shortmessage.SendMessageException;
 import com.doublev2v.integralmall.social.SocialLoginManager;
 import com.doublev2v.integralmall.social.SocialLoginManager.LoginResult;
 import com.doublev2v.integralmall.userinfo.UserInfo;
 import com.doublev2v.integralmall.userinfo.UserInfoRepository;
+import com.doublev2v.integralmall.util.RequestResult;
 import com.doublev2v.integralmall.util.SystemErrorCodes;
 
 /**
