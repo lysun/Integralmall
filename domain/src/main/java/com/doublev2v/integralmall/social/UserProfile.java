@@ -42,11 +42,12 @@ public class UserProfile {
 		this.nickname = nickname;
 	}
 	public String getAvatar() {
-		if(avatar!=null) {
-			return avatar;
-		} else {
-			return socialAvatar;
-		}
+//		if(avatar!=null) {
+//			return avatar;
+//		} else {
+//			return socialAvatar;
+//		}
+		return avatar;
 	}
 	public void setAvatar(String avatar) {
 		if(avatar==null) {

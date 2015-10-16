@@ -24,7 +24,7 @@
   	<update id="bindSocialAccount">
   		update jefen.userinfo u
   		set u.social_id=#{socialId},
-  		u.social_avatar=#{socialAvatar},
+  		u.social_avatar=#{socialAvatar}
   		where u.account=#{account}
   	</update>
   	
