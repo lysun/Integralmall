@@ -62,7 +62,7 @@ public class FavourController{
 	 * @param originId
 	 * @return
 	 */
-	@RequestMapping(value="/isclick",method=RequestMethod.GET)
+	@RequestMapping(value="/isClickFavour",method=RequestMethod.GET)
 	public String getUserFavourCount(String userId,String originId) {
 		Map<String,String> map=new HashMap<String,String>();
 		map.put("count", String.valueOf(favourService.getUserFavourCount(userInfoService.findOne(userId))));
