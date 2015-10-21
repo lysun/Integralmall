@@ -37,7 +37,7 @@ public class DesignerCraft {
 	
 	
 	@OneToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="craftphotosattachment",joinColumns={@JoinColumn(name="craftid")},
+	@JoinTable(catalog="jefen",name="craftphotosattachment",joinColumns={@JoinColumn(name="craftid")},
 	inverseJoinColumns={@JoinColumn(name="ATTACHMENTID")})
 	@OrderBy("id")
 	public Set<Attachments> getAttachments() {
