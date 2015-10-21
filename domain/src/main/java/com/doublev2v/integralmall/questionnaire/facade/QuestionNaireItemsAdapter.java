@@ -37,6 +37,7 @@ public class QuestionNaireItemsAdapter {
 		items.setSize(ltc(vo.getSize()));
 		items.setSkirt(ltc(vo.getSkirt()));
 		items.setStyle(ltc(vo.getStyle()));
+		items.setPrice(ltc(vo.getPrice()));
 		return items;
 	}
 	

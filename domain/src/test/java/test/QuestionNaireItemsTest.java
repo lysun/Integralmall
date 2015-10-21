@@ -28,7 +28,7 @@ public class QuestionNaireItemsTest {
 		System.out.println(RequestResult.success(vo1).toJson());
 	}
 	
-	//@Test
+	@Test
 	public void save() {
 		QuestionNaireItemsVo vo=new QuestionNaireItemsVo();
 		List<String> age=list("25-29岁,30-34岁,40-49岁,50岁以上");
