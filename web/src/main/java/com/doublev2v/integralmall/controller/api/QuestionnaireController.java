@@ -1,6 +1,8 @@
 package com.doublev2v.integralmall.controller.api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,17 @@ public class QuestionnaireController {
 		Map<String, String> result=new HashMap<String, String>();
 		result.put("hasAnswered", hasAnswered?"1":"0");
 		return RequestResult.success(result).toJson();
+	}
+	
+	@RequestMapping(value="user/couponses",method=RequestMethod.GET)
+	public @ResponseBody String mycouponses(String userId) {
+		if(questionNaireService.hasAnswered(userId)) {
+			List<String> couponses=new ArrayList<String>();
+			couponses.add("http://doublev2v.com/integralmall/resources/img/coupons.jpg");
+			return RequestResult.success(couponses).toJson();
+		} else {
+			return RequestResult.success(null).toJson();
+		}		
 	}
 	
 	@RequestMapping(value="questionnaire",method=RequestMethod.GET)
