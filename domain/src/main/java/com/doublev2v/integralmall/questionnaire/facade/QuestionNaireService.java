@@ -24,8 +24,9 @@ public class QuestionNaireService {
 		if(StringUtils.isBlank(userId)) {
 			throw new ErrorCodeException(SystemErrorCodes.NONE_ACCOUNT,"用户账号错误");
 		}
-		QuestionNaire qn=repository.getByUserId(userId);
-		return qn!=null;
+		//QuestionNaire qn=repository.getByUserId(userId);
+		//return qn!=null;
+		return repository.countByUserId(userId)>0;
 	}
 	
 	public boolean save(QuestionNaire qn) {

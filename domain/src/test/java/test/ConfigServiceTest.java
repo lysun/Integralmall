@@ -18,7 +18,7 @@ public class ConfigServiceTest {
 	@Test
 	public void saveAddress() {
 		service.saveLiveAddress(
-				"http://114.112.74.76/live.butel.com/i61f317eeeda44dddb29d11e559189c53.flv", 
+				"http://live.butel.com/i61f317eeeda44dddb29d11e559189c53.flv", 
 				"http://114.112.74.76/live.butel.com/i61f317eeeda44dddb29d11e559189c53.flv");
 	}
 }
