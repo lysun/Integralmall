@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.doublev2v.integralmall.controller.api.IntegralController;
 import com.doublev2v.integralmall.controller.api.IntegralOrderController;
 import com.doublev2v.integralmall.controller.api.MerchandiseController;
-import com.doublev2v.integralmall.controller.api.UserFavourController;
+import com.doublev2v.integralmall.controller.api.FavourController;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext-shiro-test.xml",
 									"classpath:applicationContext.xml"})
@@ -38,7 +38,7 @@ public class ApiControllerTest {
 	@Autowired
 	MerchandiseController mcontroller;
 	@Autowired
-	UserFavourController userFavourController;
+	FavourController favourController;
 	
 	@Before
 	public void init(){
@@ -46,7 +46,7 @@ public class ApiControllerTest {
 		//设置securityManager
 		SecurityUtils.setSecurityManager(securityManager);
 		mockMvc = MockMvcBuilders.standaloneSetup(icontroller,integralOrderRestController
-				,mcontroller,userFavourController).build();
+				,mcontroller,favourController).build();
 	}
 	/**
 	 * 用户的积分
@@ -220,8 +220,35 @@ public class ApiControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.post("/clickFavour")
-	    				.param("userId", "000000004aec8fac014b05e2df590072")
+	    				.param("userId", "000000004b1fafb1014b1fcf8dc50001")
 	    				.param("originId", "4040409e4ed7e888014ed7ecbbf50001"))
+	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
+	    		.andDo(MockMvcResultHandlers.print())  
+		        .andReturn();
+	    MockHttpServletResponse response=result.getResponse();
+	    System.out.println(response.getContentAsString());//打印返回结果
+	}
+	
+	@Test
+	public void test11() throws Exception { 
+	    MvcResult result = mockMvc
+	    		.perform(MockMvcRequestBuilders
+	    				.post("/cancelFavour")
+	    				.param("userId", "000000004aec8fac014b05e2df590072")
+	    				.param("originId", "4040409e4ed7e888014ed7ecbbf50002"))
+	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
+	    		.andDo(MockMvcResultHandlers.print())  
+		        .andReturn();
+	    MockHttpServletResponse response=result.getResponse();
+	    System.out.println(response.getContentAsString());//打印返回结果
+	}
+	
+	@Test
+	public void test12() throws Exception { 
+	    MvcResult result = mockMvc
+	    		.perform(MockMvcRequestBuilders
+	    				.get("/getUserFavourCount")
+	    				.param("userId", "000000004aec8fac014b05e2df590072"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();

@@ -23,7 +23,8 @@ public class SystemErrorCodes {
 	public static final ErrorCode BRANCHSHOP_HAS_MERCHS;
 	public static final ErrorCode ACCOUNT_HAS_INTEGRAL;
 	public static final ErrorCode NONE_ACCOUNT;
-	public static final ErrorCode USER_FAVOUR_ENOUGH;
+	public static final ErrorCode USER_CLICK_FAVOUR;
+	public static final ErrorCode USER_FAVOUR_FIVE;
 	static {
 		/**
 		 * 系统相关的异常，1**
@@ -60,7 +61,8 @@ public class SystemErrorCodes {
 		ACCOUNT_HAS_INTEGRAL=new ErrorCode(601, "该账户已经存在积分信息");
 		NOTENOUGH_INTEGRAL=new ErrorCode(602, "对不起，您的积分不足");
 		
-		USER_FAVOUR_ENOUGH=new ErrorCode(701, "用户点赞数已有5次");
+		USER_CLICK_FAVOUR=new ErrorCode(700, "您已经点过赞了");
+		USER_FAVOUR_FIVE=new ErrorCode(701, "点赞不能超过5次");
 	}
 }
 

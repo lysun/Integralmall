@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doublev2v.integralmall.favour.UserFavourService;
+import com.doublev2v.integralmall.favour.FavourService;
 import com.doublev2v.integralmall.userinfo.UserInfoService;
 import com.doublev2v.integralmall.util.RequestResult;
-@RestController("userFavourRestController")
-public class UserFavourController{
+@RestController("favourRestController")
+public class FavourController{
 	
 	@Autowired
 	private UserInfoService userInfoService;
 	
 	@Autowired
-	private UserFavourService userFavourService;
+	private FavourService favourService;
 	/**
 	 * 点赞
 	 * @param userId
@@ -27,9 +27,22 @@ public class UserFavourController{
 	 */
 	@RequestMapping(value="/clickFavour",method=RequestMethod.POST)
 	public String clickFavour(String userId,String originId) {
-		userFavourService.clickFavour(originId, userInfoService.findOne(userId));
+		favourService.clickFavour(userInfoService.findOne(userId),originId);
 		return RequestResult.success(null).toJson();
 	}
+	
+	/**
+	 * 取消点赞
+	 * @param userId
+	 * @param originId
+	 * @return
+	 */
+	@RequestMapping(value="/cancelFavour",method=RequestMethod.POST)
+	public String cancelFavour(String userId,String originId) {
+		favourService.cancelFavour(userInfoService.findOne(userId), originId);
+		return RequestResult.success(null).toJson();
+	}
+	
 	/**
 	 * 获取某个用户某个商品的点赞数
 	 * @param userId
@@ -37,10 +50,11 @@ public class UserFavourController{
 	 * @return
 	 */
 	@RequestMapping(value="/getUserFavourCount",method=RequestMethod.GET)
-	public String getUserFavourCount(String userId,String originId) {
+	public String getUserFavourCount(String userId) {
 		Map<String,String> map=new HashMap<String,String>();
-		map.put("count", String.valueOf(userFavourService.queryFavour(originId, userInfoService.findOne(userId))));
+		map.put("count", String.valueOf(favourService.getUserFavourCount(userInfoService.findOne(userId))));
 		return RequestResult.success(map).toJson();
 	}
+	
 	
 }
