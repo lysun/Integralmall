@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doublev2v.foundation.core.rest.ErrorCodeException;
 import com.doublev2v.foundation.shortmessage.MessageSender;
 import com.doublev2v.foundation.shortmessage.SendMessageException;
 import com.doublev2v.integralmall.social.SocialLoginManager;
@@ -34,13 +33,14 @@ public class AccountController {
 	public String sendPassword(String telephone) {
 		UserInfo userInfo=repository.findByAccount(telephone);
 		if(userInfo==null) {
-			throw new ErrorCodeException(SystemErrorCodes.NOUSER);
+			return RequestResult.error(null, SystemErrorCodes.NOUSER, "用户不存在").toJson();
 		}
 		String[] data={userInfo.getPassword()};
 		try {
 			sender.sendMessage(telephone, "40950", data);
 		} catch (SendMessageException e) {
-			throw new ErrorCodeException(SystemErrorCodes.NOUSER, e);
+			String message=e.getMessage().split(telephone)[0];
+			return RequestResult.error(null, SystemErrorCodes.NOUSER, message).toJson();
 		}
 		return RequestResult.success("发送成功").toJson();
 	}

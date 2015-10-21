@@ -61,7 +61,7 @@ public class SocialLoginManager {
 		
 		public static LoginResult getResult(UserProfile profile) {
 			LoginResult result=new LoginResult();
-			if(profile==null) {
+			if(profile==null || profile.getUserId()==null) {
 				result.isRegister="0";
 			} else {
 				result.isRegister="1";
