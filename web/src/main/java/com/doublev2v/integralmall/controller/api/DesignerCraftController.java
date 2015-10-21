@@ -23,6 +23,6 @@ public class DesignerCraftController{
 		for(String id:ids.split(",")){
 			list.add(id);
 		}
-		return RequestResult.success(service.findAll(list)).toJson();
+		return RequestResult.success(service.findList(list)).toJson();
 	}
 }

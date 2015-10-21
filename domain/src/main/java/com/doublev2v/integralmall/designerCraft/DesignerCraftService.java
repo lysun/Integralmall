@@ -16,8 +16,8 @@ public class DesignerCraftService extends AbstractPagingAndSortingService<Design
 	
 	@Autowired
 	private DesignerCraftRepository designerCraftRepository;
-	@Override
-	public Iterable<DesignerCraft> findAll(Iterable<String> ids) {
+	
+	public Iterable<DesignerCraft> findList(Iterable<String> ids) {
 		List<DesignerCraft> list=new ArrayList<DesignerCraft>();
 		for(String id:ids){
 			DesignerCraft dc=designerCraftRepository.findOne(id);
