@@ -24,7 +24,7 @@ public class Constant {
 	/**
 	 * rest远程请求地址
 	 */
-	public static final String REMOTE_PATH=prop.getProperty("remotePath");
+	public static final String REMOTE_PATH=prop.getProperty("JefenImageServer.address");
 	/**
 	 * 商品是否是实物商品：否
 	 */

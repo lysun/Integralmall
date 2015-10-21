@@ -44,7 +44,7 @@ public class FavourController{
 	}
 	
 	/**
-	 * 获取某个用户某个商品的点赞数
+	 * 获取某个用户的点赞数
 	 * @param userId
 	 * @param originId
 	 * @return
@@ -56,5 +56,16 @@ public class FavourController{
 		return RequestResult.success(map).toJson();
 	}
 	
-	
+	/**
+	 * 获取某个用户对某个的点赞数
+	 * @param userId
+	 * @param originId
+	 * @return
+	 */
+	@RequestMapping(value="/isclick",method=RequestMethod.GET)
+	public String getUserFavourCount(String userId,String originId) {
+		Map<String,String> map=new HashMap<String,String>();
+		map.put("count", String.valueOf(favourService.getUserFavourCount(userInfoService.findOne(userId))));
+		return RequestResult.success(map).toJson();
+	}
 }

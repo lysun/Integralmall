@@ -1,11 +1,9 @@
 package com.doublev2v.integralmall.favour;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -62,9 +60,7 @@ public class FavourService extends AbstractPagingAndSortingService<Favour, Strin
 		if(user==null)throw new IllegalArgumentException("获取不到用户");
 		if(favourRepository.findOne(getQueryClause(user,originId))!=null){
 			Favour favour=favourRepository.findByOriginId(originId);
-			System.out.println(favour.getUsers());
 			Set<UserInfo> users=favour.getUsers().stream().filter((f)->!f.getId().equals(user.getId())).collect(Collectors.toSet());
-			System.out.println(users);
 			favour.setUsers(users);
 			favour.setTotalCount(favour.getTotalCount()-1);
 			favourRepository.save(favour);
@@ -79,7 +75,10 @@ public class FavourService extends AbstractPagingAndSortingService<Favour, Strin
 		if(user==null)throw new IllegalArgumentException("获取不到用户");
 		return favourRepository.findAll(getQueryClause(user,null)).size();
 	}
-	
+	public int getUserFavourCount(UserInfo user,String originId){
+		if(user==null)throw new IllegalArgumentException("获取不到用户");
+		return favourRepository.findAll(getQueryClause(user,originId)).size();
+	}
 	private Specification<Favour> getQueryClause(UserInfo user,String originId){
         return new Specification<Favour>() {
             @Override

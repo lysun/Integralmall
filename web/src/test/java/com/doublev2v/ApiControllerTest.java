@@ -234,8 +234,8 @@ public class ApiControllerTest {
 	    MvcResult result = mockMvc
 	    		.perform(MockMvcRequestBuilders
 	    				.post("/cancelFavour")
-	    				.param("userId", "000000004aec8fac014b05e2df590072")
-	    				.param("originId", "4040409e4ed7e888014ed7ecbbf50002"))
+	    				.param("userId", "000000004b1fafb1014b1fcf8dc50001")
+	    				.param("originId", "4040409e4ed7e888014ed7ecbbf50001"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();
