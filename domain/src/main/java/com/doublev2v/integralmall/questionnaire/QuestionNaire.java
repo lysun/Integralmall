@@ -1,28 +1,30 @@
 package com.doublev2v.integralmall.questionnaire;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 import com.doublev2v.foundation.core.entity.UUIDBaseModel;
 
+@Entity
 public class QuestionNaire extends UUIDBaseModel {
 
 	private String userId;
 	private String name;
 	private String age;
 	private String occupation;
-	private Set<String> color;
+	private List<String> color;
 	private String size;
-	private Set<String> shirt;
-	private Set<String> skirt;
-	private Set<String> pants;
-	private Set<String> style;
+	private List<String> shirt;
+	private List<String> skirt;
+	private List<String> pants;
+	private List<String> style;
 	private String price;
 	
-	@Column(unique=true)
+	@Column(unique=true,nullable=false)
 	public String getUserId() {
 		return userId;
 	}
@@ -48,10 +50,10 @@ public class QuestionNaire extends UUIDBaseModel {
 		this.occupation = occupation;
 	}
 	@ElementCollection(fetch=FetchType.EAGER)
-	public Set<String> getColor() {
+	public List<String> getColor() {
 		return color;
 	}
-	public void setColor(Set<String> color) {
+	public void setColor(List<String> color) {
 		this.color = color;
 	}
 	public String getSize() {
@@ -61,31 +63,31 @@ public class QuestionNaire extends UUIDBaseModel {
 		this.size = size;
 	}
 	@ElementCollection(fetch=FetchType.EAGER)
-	public Set<String> getShirt() {
+	public List<String> getShirt() {
 		return shirt;
 	}
-	public void setShirt(Set<String> shirt) {
+	public void setShirt(List<String> shirt) {
 		this.shirt = shirt;
 	}
 	@ElementCollection(fetch=FetchType.EAGER)
-	public Set<String> getSkirt() {
+	public List<String> getSkirt() {
 		return skirt;
 	}
-	public void setSkirt(Set<String> skirt) {
+	public void setSkirt(List<String> skirt) {
 		this.skirt = skirt;
 	}
 	@ElementCollection(fetch=FetchType.EAGER)
-	public Set<String> getPants() {
+	public List<String> getPants() {
 		return pants;
 	}
-	public void setPants(Set<String> pants) {
+	public void setPants(List<String> pants) {
 		this.pants = pants;
 	}
 	@ElementCollection(fetch=FetchType.EAGER)
-	public Set<String> getStyle() {
+	public List<String> getStyle() {
 		return style;
 	}
-	public void setStyle(Set<String> style) {
+	public void setStyle(List<String> style) {
 		this.style = style;
 	}
 	public String getPrice() {

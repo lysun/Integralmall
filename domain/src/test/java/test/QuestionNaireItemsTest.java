@@ -22,8 +22,10 @@ public class QuestionNaireItemsTest {
 	
 	@Test
 	public void findOne() {
-		QuestionNaireItemsVo vo=service.findOne(0L);
+		QuestionNaireItemsVo vo=service.findOne(0L);		
+		QuestionNaireItemsVo vo1=service.findOne(0L);
 		System.out.println(RequestResult.success(vo).toJson());
+		System.out.println(RequestResult.success(vo1).toJson());
 	}
 	
 	//@Test
