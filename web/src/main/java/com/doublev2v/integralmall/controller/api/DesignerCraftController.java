@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doublev2v.integralmall.designerCraft.DesignerCraftService;
+import com.doublev2v.integralmall.designerCraft.DesignerMapper;
 import com.doublev2v.integralmall.util.RequestResult;
 
 @RestController("designerCraftController")
 public class DesignerCraftController{
 	
 	@Autowired
-	private DesignerCraftService service;
+	private DesignerMapper mapper;
 	
 	@RequestMapping(value="/getDesignerCraftsByIds",method=RequestMethod.GET)
 	public String getDesignerCrafts(String ids){
@@ -23,6 +23,6 @@ public class DesignerCraftController{
 		for(String id:ids.split(",")){
 			list.add(id);
 		}
-		return RequestResult.success(service.findList(list)).toJson();
+		return RequestResult.success(mapper.findCrafts(list)).toJson();
 	}
 }

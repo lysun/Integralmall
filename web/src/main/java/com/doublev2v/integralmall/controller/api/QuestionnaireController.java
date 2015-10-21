@@ -40,12 +40,15 @@ public class QuestionnaireController {
 	
 	@RequestMapping(value="user/couponses",method=RequestMethod.GET)
 	public @ResponseBody String mycouponses(String userId) {
+		Map<String, Object> result=new HashMap<>();
 		if(questionNaireService.hasAnswered(userId)) {
 			List<String> couponses=new ArrayList<String>();
 			couponses.add("http://doublev2v.com/integralmall/resources/img/coupons.jpg");
-			return RequestResult.success(couponses).toJson();
+			result.put("list", couponses);
+			return RequestResult.success(result).toJson();
 		} else {
-			return RequestResult.success(null).toJson();
+			result.put("list", null);
+			return RequestResult.success(result).toJson();
 		}		
 	}
 	
