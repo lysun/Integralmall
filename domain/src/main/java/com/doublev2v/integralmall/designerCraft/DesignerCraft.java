@@ -2,6 +2,7 @@ package com.doublev2v.integralmall.designerCraft;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -33,11 +34,11 @@ public class DesignerCraft {
 		this.id = id;
 	}
 	
-	@JsonIgnore
-	@OrderBy("id")
-	@OneToMany
+	
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name="craftphotosattachment",joinColumns={@JoinColumn(name="craftid")},
 	inverseJoinColumns={@JoinColumn(name="ATTACHMENTID")})
+	@OrderBy("id")
 	public Set<Attachments> getAttachments() {
 		return attachments;
 	}

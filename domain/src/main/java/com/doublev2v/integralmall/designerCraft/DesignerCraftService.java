@@ -21,9 +21,12 @@ public class DesignerCraftService extends AbstractPagingAndSortingService<Design
 		List<DesignerCraft> list=new ArrayList<DesignerCraft>();
 		for(String id:ids){
 			DesignerCraft dc=designerCraftRepository.findOne(id);
+			System.out.println("1:"+dc.getId());
+			System.out.println("2:"+dc.getAttachments());
 			dc.setPicUrl(Constant.REMOTE_PATH+dc.getAttachments().iterator().next().getSaveFileName());
 			list.add(dc);
 		}
+		System.out.println(list);
 		return list;	
 	}
 }
