@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -35,7 +36,7 @@ public class DesignerCraft {
 	}
 	
 	
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="craftphotosattachment",joinColumns={@JoinColumn(name="craftid")},
 	inverseJoinColumns={@JoinColumn(name="ATTACHMENTID")})
 	@OrderBy("id")
