@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.doublev2v.integralmall.controller.api.IntegralController;
 import com.doublev2v.integralmall.controller.api.IntegralOrderController;
 import com.doublev2v.integralmall.controller.api.MerchandiseController;
+import com.doublev2v.integralmall.controller.api.UserFavourController;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext-shiro-test.xml",
 									"classpath:applicationContext.xml"})
@@ -36,6 +37,8 @@ public class ApiControllerTest {
 	IntegralOrderController integralOrderRestController;
 	@Autowired
 	MerchandiseController mcontroller;
+	@Autowired
+	UserFavourController userFavourController;
 	
 	@Before
 	public void init(){
@@ -43,7 +46,7 @@ public class ApiControllerTest {
 		//设置securityManager
 		SecurityUtils.setSecurityManager(securityManager);
 		mockMvc = MockMvcBuilders.standaloneSetup(icontroller,integralOrderRestController
-				,mcontroller).build();
+				,mcontroller,userFavourController).build();
 	}
 	/**
 	 * 用户的积分
@@ -205,6 +208,20 @@ public class ApiControllerTest {
 	    				.param("token", "82bcf8fbe4e94f6a9031d4d802250beb")
 	    				.param("integral", "100")
 	    				.param("origin","0"))
+	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
+	    		.andDo(MockMvcResultHandlers.print())  
+		        .andReturn();
+	    MockHttpServletResponse response=result.getResponse();
+	    System.out.println(response.getContentAsString());//打印返回结果
+	}
+	
+	@Test
+	public void test10() throws Exception { 
+	    MvcResult result = mockMvc
+	    		.perform(MockMvcRequestBuilders
+	    				.post("/clickFavour")
+	    				.param("userId", "000000004aec8fac014b05e2df590072")
+	    				.param("originId", "4040409e4ed7e888014ed7ecbbf50001"))
 	    		.andExpect(MockMvcResultMatchers.status().isOk()) 
 	    		.andDo(MockMvcResultHandlers.print())  
 		        .andReturn();
