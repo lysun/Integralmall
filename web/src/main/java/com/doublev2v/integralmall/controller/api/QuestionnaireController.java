@@ -54,7 +54,13 @@ public class QuestionnaireController {
 	
 	@RequestMapping(value="questionnaire",method=RequestMethod.GET)
 	public ModelAndView questionnaire(@RequestParam String userId) {
-		ModelAndView view=new ModelAndView("qn/ask");
+		ModelAndView view;
+		if(questionNaireService.hasAnswered(userId)) {
+			view=new ModelAndView("qn/error");
+			view.addObject("error","您已经填写过调查问卷，请在个人中心查收您的优惠券，谢谢！");
+			return view;
+		}
+		view=new ModelAndView("qn/ask");
 		view.addObject("userId", userId);
 		QuestionNaireItemsVo items=itemService.findOne(0L);
 		view.addObject("items", items);
@@ -63,14 +69,14 @@ public class QuestionnaireController {
 	
 	@RequestMapping(value="questionnaire",method=RequestMethod.POST)
 	public ModelAndView save(QuestionNaire qn) {
-		boolean success=questionNaireService.save(qn);
-		String page;		
+		ModelAndView view;
+		boolean success=questionNaireService.save(qn);		
 		if(success) {
-			page="qn/success";
+			view=new ModelAndView("qn/success");
 		} else {
-			page="qn/error";
+			view=new ModelAndView("qn/error");
+			view.addObject("error", "问卷调查提交失败，请再试一次");
 		}
-		ModelAndView view=new ModelAndView(page);
 		return view;
 	}
 }

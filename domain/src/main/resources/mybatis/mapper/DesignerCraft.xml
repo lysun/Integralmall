@@ -8,6 +8,7 @@
 	<select id="findCrafts" resultType="com.doublev2v.integralmall.designerCraft.DesignerCraft">
   		select
   		d.index as id,
+  		d.id as craftid,
   		a.saveFileName as picUrl
   		from jefen.designercraft d
   		left join jefen.craftphotosattachment c on d.id=c.craftid

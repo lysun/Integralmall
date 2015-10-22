@@ -19,7 +19,7 @@
 </head>
 <body>
     <div style="margin-top:15em">
-    <h3 style="display:block;margin-left:auto;margin-right:auto;">感谢您的支持，令您满意是我们最大的动力！</h3>
+    <h3 style="text-align:center">感谢您参与问卷调查，<br>代金券300元可在个人中心查收</h3>
     <img src="<c:url value='/resources/img/coupons.jpg'/>" style="display:block;width:100%;height:auto;">
     </div>
 </body>
