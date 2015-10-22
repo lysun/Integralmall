@@ -75,6 +75,12 @@ public class FavourService extends AbstractPagingAndSortingService<Favour, Strin
 		if(user==null)throw new IllegalArgumentException("获取不到用户");
 		return favourRepository.findAll(getQueryClause(user,null)).size();
 	}
+	/**
+	 * 获取用户对某个商品是否点赞
+	 * @param user
+	 * @param originId
+	 * @return
+	 */
 	public int getUserFavourCount(UserInfo user,String originId){
 		if(user==null)throw new IllegalArgumentException("获取不到用户");
 		return favourRepository.findAll(getQueryClause(user,originId)).size();
