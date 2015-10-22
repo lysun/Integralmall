@@ -28,7 +28,9 @@ public class FavourController{
 	@RequestMapping(value="/clickFavour",method=RequestMethod.POST)
 	public String clickFavour(String userId,String originId) {
 		favourService.clickFavour(userInfoService.findOne(userId),originId);
-		return RequestResult.success(null).toJson();
+		Map<String,String> map=new HashMap<String,String>();
+		map.put("leftCount", String.valueOf(5-favourService.getUserFavourCount(userInfoService.findOne(userId))));
+		return RequestResult.success(map).toJson();
 	}
 	
 	/**
@@ -57,7 +59,7 @@ public class FavourController{
 	}
 	
 	/**
-	 * 获取某个用户对某个的点赞数
+	 * 获取某个用户对某个的点赞数,0或者1
 	 * @param userId
 	 * @param originId
 	 * @return
