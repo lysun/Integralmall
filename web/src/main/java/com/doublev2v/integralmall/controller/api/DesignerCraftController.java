@@ -1,7 +1,9 @@
 package com.doublev2v.integralmall.controller.api;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,8 @@ public class DesignerCraftController{
 		for(String id:ids.split(",")){
 			list.add(id);
 		}
-		return RequestResult.success(mapper.findCrafts(list)).toJson();
+		Map<String, Object> result=new HashMap<String, Object>();
+		result.put("list", mapper.findCrafts(list));
+		return RequestResult.success(result).toJson();
 	}
 }

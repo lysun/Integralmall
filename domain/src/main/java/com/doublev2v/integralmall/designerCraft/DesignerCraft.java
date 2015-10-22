@@ -11,7 +11,7 @@ public class DesignerCraft {
 		this.id = id;
 	}
 	public String getPicUrl() {
-		return picUrl;
+		return "http://122.112.15.152/jefen/images/"+picUrl;
 	}
 	public void setPicUrl(String picUrl) {
 		this.picUrl = picUrl;

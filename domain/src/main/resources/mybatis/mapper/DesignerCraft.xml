@@ -7,16 +7,16 @@
 	
 	<select id="findCrafts" resultType="com.doublev2v.integralmall.designerCraft.DesignerCraft">
   		select
-  		d.id,
+  		d.index as id,
   		a.saveFileName as picUrl
   		from jefen.designercraft d
   		left join jefen.craftphotosattachment c on d.id=c.craftid
   		left join jefen.attachments as a on c.ATTACHMENTID=a.id
-  		where d.id in
+  		where d.index in
   		<foreach collection="list" item="item" open="(" close=")" separator=",">
   			#{item}
   		</foreach>
-  		group by d.id
+  		group by d.index
   	</select>
   	
 </mapper>
