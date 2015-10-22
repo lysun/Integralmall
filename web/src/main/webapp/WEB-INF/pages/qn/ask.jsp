@@ -129,7 +129,7 @@
         </div>
         
         <div class="itv">
-        <label class="cr wbn">10.您比较能接受的服装价格，比如一件普通的女士外套？:</label>
+        <label class="cr wbn">10.您比较能接受的服装价格，比如一件普通的女士外套:</label>
         <c:forEach items="${items.price}" var="price">
         	<label><input required name="price" type="radio" value="${price }" />${price }</label>
         </c:forEach>

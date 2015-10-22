@@ -10,7 +10,19 @@
   		d.index as id,
   		d.id as craftid,
   		a.saveFileName as picUrl
+  		<if test="userId != null and userId != '' ">
+  		,count(case cc.customerid when 
+  		(select jc.id from jefen.customer jc where jc.userinfoid=#{userId})
+  		then 1 else null end) as isCollected
+  	    ,count(case uf.users when #{userId} then 1 else null end) as isFavored
+  		</if>
+  		
   		from jefen.designercraft d
+  		left join jefen.customercrafts cc on d.id=cc.craftid
+  		<if test="userId != null and userId != '' ">
+  		left join favour as f on d.id=f.origin_id
+  		left join user_favour as uf on f.id=uf.favour
+  		</if>  		
   		left join jefen.craftphotosattachment c on d.id=c.craftid
   		left join jefen.attachments as a on c.ATTACHMENTID=a.id
   		where d.index in

@@ -20,13 +20,13 @@ public class DesignerCraftController{
 	private DesignerMapper mapper;
 	
 	@RequestMapping(value="/getDesignerCraftsByIds",method=RequestMethod.GET)
-	public String getDesignerCrafts(String ids){
+	public String getDesignerCrafts(String ids, String userId){
 		List<String> list=new ArrayList<String>();
 		for(String id:ids.split(",")){
 			list.add(id);
 		}
 		Map<String, Object> result=new HashMap<String, Object>();
-		result.put("list", mapper.findCrafts(list));
+		result.put("list", mapper.findCrafts(list,userId));
 		return RequestResult.success(result).toJson();
 	}
 }

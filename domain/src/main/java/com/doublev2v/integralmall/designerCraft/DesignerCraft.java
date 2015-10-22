@@ -5,8 +5,8 @@ public class DesignerCraft {
 	private String id;
 	private String craftid;
 	private String picUrl;
-	private int isFavored;
-	private int isCollected;
+	private String isFavored="0";
+	private String isCollected="0";
 	
 	public String getId() {
 		return id;
@@ -26,18 +26,18 @@ public class DesignerCraft {
 	public void setPicUrl(String picUrl) {
 		this.picUrl = picUrl;
 	}
-	public int getIsFavored() {
-		if(isFavored==0) return 0;
-		return 1;
+	public String getIsFavored() {
+		if("0".equals(isFavored)) return "0";
+		return "1";
 	}
-	public void setIsFavored(int isFavored) {
+	public void setIsFavored(String isFavored) {
 		this.isFavored = isFavored;
 	}
-	public int getIsCollected() {
-		if(isCollected==0) return 0;
-		return 1;
+	public String getIsCollected() {
+		if("0".equals(isCollected)) return "0";
+		return "1";
 	}
-	public void setIsCollected(int isCollected) {
+	public void setIsCollected(String isCollected) {
 		this.isCollected = isCollected;
 	}
 }
