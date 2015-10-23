@@ -59,7 +59,6 @@
     <h2 style="text-align:center">时尚女性服装调查问卷</h2>
     <p>您好，欢迎您加尚活一族，您只需要两分钟填写以下问题，即可获得吉芬专柜代金券￥300，谢谢您的参与！</p>
     <form method="post" id="form">
-    	<input type="hidden" name="userId" value="${userId }">
         <div>
         <label>1.您的姓名:</label><input name="name" type="text" required="required">
         </div>

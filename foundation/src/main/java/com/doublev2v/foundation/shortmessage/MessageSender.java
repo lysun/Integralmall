@@ -23,7 +23,7 @@ public class MessageSender {
 	public void sendMessage(String telephone, String template, String[] datas) throws SendMessageException {
 		HashMap<String, Object> result=smsSDK.sendTemplateSMS(telephone, template, datas);
 		if(!"000000".equals(result.get("statusCode"))){
-			String message="错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg");
+			String message=""+result.get("statusMsg");
 			throw new SendMessageException(message);
 		}	
 	}

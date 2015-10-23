@@ -22,7 +22,7 @@ public class QuestionNaireServiceTest {
 	@Autowired
 	private QuestionNaireRepository repository;
 	
-	@Test
+	//@Test
 	public void exist() {
 		boolean exist=service.hasAnswered("1");
 		System.out.println(exist);
@@ -39,7 +39,7 @@ public class QuestionNaireServiceTest {
 		System.out.println(result);
 	}
 	
-	//@Test
+	@Test
 	public void clear() {
 		repository.deleteAll();
 	}
