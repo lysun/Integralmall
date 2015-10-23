@@ -20,7 +20,7 @@ public class QuestionNaireItemsTest {
 	@Autowired
 	private QuestionNaireItemsService service;
 	
-	@Test
+	//@Test
 	public void findOne() {
 		QuestionNaireItemsVo vo=service.findOne(0L);		
 		QuestionNaireItemsVo vo1=service.findOne(0L);
@@ -39,7 +39,7 @@ public class QuestionNaireItemsTest {
 		List<String> shirt=list("衬衫,针织衫,西服,短外套,大衣/风衣,皮衣,羽绒服,T恤");
 		List<String> size=list("XS,S,M,L,XL,XXL");
 		List<String> skirt=list("连衣裙,半裙");
-		List<String> style=list("优雅,商务,性感,OL,通勤,简约,淑女 ");
+		List<String> style=list("优雅,商务,性感,OL/通勤,简约,淑女 ");
 		vo.setAge(age);
 		vo.setColor(color);
 		vo.setOccupation(occupation);

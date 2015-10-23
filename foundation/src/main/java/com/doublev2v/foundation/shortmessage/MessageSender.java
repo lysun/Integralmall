@@ -2,6 +2,7 @@ package com.doublev2v.foundation.shortmessage;
 
 import java.util.HashMap;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import com.cloopen.rest.sdk.CCPRestSmsSDK;
@@ -24,6 +25,8 @@ public class MessageSender {
 		HashMap<String, Object> result=smsSDK.sendTemplateSMS(telephone, template, datas);
 		if(!"000000".equals(result.get("statusCode"))){
 			String message=""+result.get("statusMsg");
+			message=message.split(telephone)[0];
+			message=StringUtils.removeEnd(message, ":");
 			throw new SendMessageException(message);
 		}	
 	}
