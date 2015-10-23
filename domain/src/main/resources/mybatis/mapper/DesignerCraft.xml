@@ -18,8 +18,8 @@
   		</if>
   		
   		from jefen.designercraft d
-  		left join jefen.customercrafts cc on d.id=cc.craftid
   		<if test="userId != null and userId != '' ">
+  		left join jefen.customercrafts cc on d.id=cc.craftid  		
   		left join favour as f on d.id=f.origin_id
   		left join user_favour as uf on f.id=uf.favour
   		</if>  		
