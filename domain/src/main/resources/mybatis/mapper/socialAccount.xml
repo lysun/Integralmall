@@ -10,6 +10,7 @@
   		u.id as userId,
   		u.account as account,
   		u.username as nickname,
+  		s.social_avatar as socialAvatar,
   		t.token as userToken,
   		a.saveFileName as avatar,
   		count(c.id) as recordbodysize
