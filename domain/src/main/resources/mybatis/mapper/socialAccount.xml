@@ -10,7 +10,6 @@
   		u.id as userId,
   		u.account as account,
   		u.username as nickname,
-  		u.social_avatar as socialAvatar,
   		t.token as userToken,
   		a.saveFileName as avatar,
   		count(c.id) as recordbodysize
@@ -18,7 +17,8 @@
   		left join jefen.userinfotoken t on u.id=t.userinfoid
   		left join jefen.customer as c on u.id=c.userinfoid
   		left join jefen.attachments as a on u.avatarid=a.id
-  		where u.social_id=#{id}
+  		left join social_login as s on s.user_id=u.id
+  		where s.social_id=#{id}
   	</select>
   	
   	<update id="bindSocialAccount">
@@ -28,4 +28,8 @@
   		where u.account=#{account}
   	</update>
   	
+  	<insert id="bindSocialUser">
+  		insert into social_login (social_id,social_avatar,user_id) 
+  		values(#{social_id},#{social_avatar},#{user_id})
+  	</insert>
 </mapper>

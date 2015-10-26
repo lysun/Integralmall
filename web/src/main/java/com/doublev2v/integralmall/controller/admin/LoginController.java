@@ -62,9 +62,5 @@ public class LoginController{
 		userService.changePassword(SecurityUtils.getSubject().getPrincipal().toString(),password);
 		return RequestResult.success(null).toJson();
 	}
-	@RequestMapping(value="/nikankan",method=RequestMethod.GET)
-	public ModelAndView nikankan(){
-		ModelAndView view=new ModelAndView("qn/nikankan");
-		return view;
-	}
+	
 }

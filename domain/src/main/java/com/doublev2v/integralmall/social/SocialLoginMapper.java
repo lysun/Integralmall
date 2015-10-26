@@ -8,4 +8,7 @@ public interface SocialLoginMapper {
 	
 	void bindSocialAccount(@Param("account") String account,
 			@Param("socialId") String socialId, @Param("socialAvatar") String socialAvatar);
+	
+	void bindSocialUser(@Param("user_id") String user_id,@Param("social_id")String social_id,
+			@Param("social_avatar")String social_avatar);
 }

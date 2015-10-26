@@ -30,7 +30,7 @@ public class SocialLoginManager {
 		if(userInfo==null) {
 			regist(account, nickname, type);
 		}
-		mapper.bindSocialAccount(account, socialId, avatarUrl);
+		mapper.bindSocialUser(userInfoRepository.findByAccount(account).getId(), socialId, avatarUrl);
 		return login(socialId);
 	}
 	
