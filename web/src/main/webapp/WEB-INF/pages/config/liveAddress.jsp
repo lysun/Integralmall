@@ -5,7 +5,7 @@
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 <my:admin tab="user" subtab="perm">
 	<jsp:attribute name="script">
-	<script id="template" type="text/html">
+	<script>
 		$("#live").ajaxForm({
 			success:function(data) {
                 alert("保存成功!");
