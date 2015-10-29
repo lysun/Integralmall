@@ -43,11 +43,11 @@ public class UrlAccessFilter extends PathMatchingFilter{
 		Iterable<UrlAccessDefinition> list=urlAccessDefinitionManager.findAll();
 		if(list!=null){
 			for(UrlAccessDefinition u:list){//遍历所有url权限数据，如果url匹配当前请求，则判断当前用户是否拥有此url所具备的角色或权限
-				if(pathMatcher.matches(u.getUrl(), requestUrl)){
-					if(!SecurityUtils.getSubject().isAuthenticated()){
-						res.sendRedirect(getLoginUrl(req));
-						return false;
-					}
+				if(!SecurityUtils.getSubject().isAuthenticated()){
+					res.sendRedirect(getLoginUrl(req));
+					return false;
+				}
+				if(pathMatcher.matches(u.getUrl(), requestUrl)){					
 					boolean role=true;
 					if(StringUtils.isNotBlank(u.getRole())){
 						role=SecurityUtils.getSubject().hasRole(u.getRole());
