@@ -1,5 +1,8 @@
 package com.doublev2v.integralmall.controller.admin;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -23,20 +26,20 @@ public class LoginController{
 	private MenuService menuService;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)  
-	public ModelAndView submit(String username, String password) {
+	public ModelAndView submit(String username, String password,HttpServletRequest request) {
 	    try {
         	UsernamePasswordToken token = new UsernamePasswordToken(username, password);  
             Subject subject = SecurityUtils.getSubject();  
             subject.login(token);
-            if(subject.isPermitted("user:list"))
-            	return new ModelAndView("redirect:/admin/user");
-            else
-            	return new ModelAndView("redirect:/admin/merchandise"); 
+            String successUrl=(String)request.getSession().getAttribute("successUrl");
+            if(StringUtils.isNotBlank(successUrl))
+            	return new ModelAndView("redirect:"+successUrl);
+            return new ModelAndView("redirect:/admin/merchandise"); 
         } catch (Exception e) {  
             e.printStackTrace();  
         }
         return new ModelAndView("redirect:/login");  
-    } 
+    }
 	    
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public ModelAndView loginView(){
