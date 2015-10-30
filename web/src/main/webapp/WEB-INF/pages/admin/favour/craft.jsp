@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
-<my:admin tab="integralOrder" subtab="integralOrder">
+<my:admin tab="favour" subtab="craft">
 	<jsp:attribute name="script">
 		<script id="template" type="text/html">
 		{{each list as value i}}
@@ -19,12 +19,12 @@
 		var params="";
 		$(function(){
 			//初始化页面请求列表数据
-			ajax('<c:url value="/admin/favour/getlistdata"/>',null,"get",showList);
+			ajax('<c:url value="/admin/favour/craft/getdata"/>',null,"get",showList);
 			//给输入框绑定回车事件
 			$(document).on('keypress',"#search",function(event){
 				if(event.keyCode == "13"){
-					params="search="+$("#search").val()+"&startDate="+$("#startDate").val()+"&endDate="+$("#endDate").val();
-					ajax('<c:url value="/admin/favour/getlistdata"/>',params,"get",showList);
+					params="search="+$("#search").val();
+					ajax('<c:url value="/admin/favour/craft/getdata"/>',params,"get",showList);
 		        }
 	        });
 
@@ -33,7 +33,7 @@
 			var html=template("template",data.data);
 			$("tbody").html("");
 			$("tbody").append(html);
-			pagination(data.data.totalPages,data.data.size ,'<c:url value="/admin/favour/getlistdata"/>',
+			pagination(data.data.totalPages,data.data.size ,'<c:url value="/admin/favour/craft/getdata"/>',
 					params,showList);
 		}
 		</script>
