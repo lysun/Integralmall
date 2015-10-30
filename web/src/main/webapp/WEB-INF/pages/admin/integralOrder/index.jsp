@@ -23,17 +23,6 @@
 		{{/each}}
 		</script>
 		<script>
-		function ajax(url,params,type,showData){
-			$.ajax({
-				url:url,
-				data:params,
-				type:type,
-				dataType:"json",
-				success:function(data){
-					showData(data);
-				}
-			});
-		}
 		var params="";
 		$(function(){
 			//初始化页面请求列表数据
