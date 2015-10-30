@@ -6,7 +6,7 @@
 <my:admin tab="favour" subtab="craft">
 	<jsp:attribute name="script">
 		<script id="template" type="text/html">
-		{{each list as value i}}
+		{{each data as value i}}
 			<tr id="{{value.id }}">
                  <td>{{value.id }}</td>
                  <td>{{value.index }}</td>
@@ -30,16 +30,16 @@
 
 		});
 		function showList(data){
-			var html=template("template",data.data);
+			var html=template("template",data);
 			$("tbody").html("");
 			$("tbody").append(html);
-			pagination(data.data.totalPages,data.data.size ,'<c:url value="/admin/favour/craft/getdata"/>',
-					params,showList);
+			/* pagination(data.data.totalPages,data.data.size ,'<c:url value="/admin/favour/craft/getdata"/>',
+					params,showList); */
 		}
 		</script>
 	</jsp:attribute>
 	<jsp:body>
-		<input id="search" name="search" placeholder="请输入id/编号/名称查询" title="按回车查询"/>
+		<!-- <input id="search" name="search" placeholder="请输入id/编号/名称查询" title="按回车查询"/> -->
 		<table class="table table-bordered text-center mgt-2">
             <thead>
                 <tr>
