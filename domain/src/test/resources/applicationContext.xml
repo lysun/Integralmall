@@ -110,5 +110,5 @@
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
 		<property name="mapperLocations" value="classpath*:mybatis/mapper/**/*.xml" />
 	</bean> 
-  	<mybatis:scan base-package="com.doublev2v.integralmall.social,com.doublev2v.integralmall.designerCraft"/>
+  	<mybatis:scan base-package="com.doublev2v.integralmall"/>
 </beans>

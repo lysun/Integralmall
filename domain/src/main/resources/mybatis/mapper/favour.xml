@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.doublev2v.integralmall.favour.FavourMapper">
+	
+	<select id="userFavours" resultType="com.doublev2v.integralmall.favour.UserFavour">
+  		SELECT
+  		u.account as telephone
+  		,count(u.account) as `count`
+  		FROM user_favour f 
+  		join jefen.userinfo u on f.users=u.id
+  		group by u.account;
+  	</select>
+  	
+  	<select id="craftFavours" resultType="com.doublev2v.integralmall.favour.CraftFavour">
+  		SELECT
+		f.origin_id as id
+		,c.index as `index`
+		,c.name as name
+		,sum(f.total_count) as `count`
+		FROM favour f 
+		join jefen.designercraft c on f.origin_id=c.id
+		group by f.origin_id
+  	</select>
+  	
+</mapper>
