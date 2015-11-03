@@ -36,10 +36,8 @@ public class FavourController {
 	}
 	@RequestMapping(value="favour/user/getdata",method=RequestMethod.GET)
 	@ResponseBody
-	public String userFavours(@RequestParam(defaultValue="1") Integer page,
-			@RequestParam(defaultValue="12") Integer size) {
-		RowBounds rowBounds=RowBoundsBuilder.page(page, size);
-		List<UserFavour> list=mapper.userFavours(rowBounds);
+	public String userFavours() {
+		List<UserFavour> list=mapper.userFavours(new RowBounds());
 		return RequestResult.success(list).toJson();
 	}
 	@RequestMapping(value="favour/craft",method=RequestMethod.GET)
@@ -51,10 +49,8 @@ public class FavourController {
 	}
 	@RequestMapping(value="favour/craft/getdata",method=RequestMethod.GET)
 	@ResponseBody
-	public String craftFavours(@RequestParam(defaultValue="1") Integer page,
-			@RequestParam(defaultValue="12") Integer size) {
-		RowBounds rowBounds=RowBoundsBuilder.page(page, size);
-		List<CraftFavour> list=mapper.craftFavours(rowBounds);
+	public String craftFavours() {
+		List<CraftFavour> list=mapper.craftFavours(new RowBounds());
 		return RequestResult.success(list).toJson();
 	}
 }
