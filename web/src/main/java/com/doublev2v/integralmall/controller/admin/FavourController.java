@@ -28,7 +28,7 @@ public class FavourController {
 	private MenuService service;
 	
 	@RequestMapping(value="favour/user",method=RequestMethod.GET)
-	public ModelAndView userFavours() {
+	public ModelAndView userFavour() {
 		ModelAndView view=new ModelAndView("admin/favour/user");
 		view.addObject("top", service.getTopMenus());
 		view.addObject("subMenu", service.getSecondMenus("favour"));
@@ -41,7 +41,7 @@ public class FavourController {
 		return RequestResult.success(list).toJson();
 	}
 	@RequestMapping(value="favour/craft",method=RequestMethod.GET)
-	public ModelAndView craftFavours() {
+	public ModelAndView craftFavour() {
 		ModelAndView view=new ModelAndView("admin/favour/craft");
 		view.addObject("top", service.getTopMenus());
 		view.addObject("subMenu", service.getSecondMenus("favour"));
